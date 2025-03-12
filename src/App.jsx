@@ -1,6 +1,9 @@
 
 import './App.css'
 import Header from './components/Header'
+import Hero from './components/hero'
+
+
 
 function App() {
 
@@ -9,6 +12,7 @@ function App() {
     <>
       <div className="main">
         <Header />
+        <Hero />
       </div>
     </>
   )

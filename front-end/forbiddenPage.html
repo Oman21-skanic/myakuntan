@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>403 Forbidden</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f8d7da;
+        color: #721c24;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        padding: 20px;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      img {
+        width: 200px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+      }
+      h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+        background-color: #dc3545;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 18px;
+      }
+      a:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        src="https://static.vecteezy.com/system/resources/previews/013/775/692/large_2x/3d-render-forbidden-icon-transparent-free-png.png"
+        alt="Forbidden Access"
+      />
+      <!-- TEMPLATE FROM SERVER-->
+      <h1>{{statusCode}}</h1>
+      <p>{{errorMessage}}</p>
+      <a href="/">Go Back Home</a>
+    </div>
+  </body>
+</html>

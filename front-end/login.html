@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+      h2 {
+        color: #333;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        color: white;
+        margin: 10px 0;
+      }
+      .btn-login {
+        background-color: #2196f3;
+      }
+      .btn-register {
+        background-color: #4caf50;
+      }
+      .btn-google {
+        background-color: #db4437;
+      }
+      .btn:hover {
+        opacity: 0.8;
+      }
+      .error-msg {
+        color: red;
+        margin-top: 10px;
+      }
+      .success-msg {
+        color: green;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit" class="btn btn-login">Login</button>
+      </form>
+
+      <a href="/register" class="btn btn-register">Register</a>
+      <a href="/api/auth/google" class="btn btn-google"
+        >Lanjutkan dengan Google</a
+      >
+      <p class="error-msg" id="errorMsg"></p>
+      <p class="success-msg" id="successMsg"></p>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const errorMsg = document.getElementById("errorMsg");
+          const successMsg = document.getElementById("successMsg");
+
+          errorMsg.textContent = "";
+          successMsg.textContent = "";
+
+          try {
+            const response = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.message);
+
+            successMsg.textContent = "Login berhasil! Mengalihkan...";
+            setTimeout(() => (window.location.href = "/"), 2000);
+          } catch (error) {
+            errorMsg.textContent = error.message;
+          }
+        });
+    </script>
+  </body>
+</html>

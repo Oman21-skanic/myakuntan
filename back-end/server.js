@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const authRoutes = require("./routes/authRoutes");
 const usersRoutes = require("./routes/usersRoutes");
-const mainRoutes = require("./routes/mainRoute");
+const webRoutes = require("./routes/web.Routes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const { errorHandler, notFoundPath } = require("./middleware/errorMiddleware");
 const mongoose = require("mongoose");
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 
 //route main page
-app.use("/", mainRoutes);
+app.use("/", webRoutes);
 
 // users routes
 app.use("/api/users", usersRoutes);

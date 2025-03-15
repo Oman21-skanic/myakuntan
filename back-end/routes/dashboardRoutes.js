@@ -8,7 +8,7 @@ const {
 const {
   redirectDashboard,
   userDashboard,
-} = require("../controllers/dashboardControler");
+} = require("../controllers/dashboardController");
 
 // redirect dari dashboard ke dashboard user
 router.get("/", protectedMiddleware, isUser, redirectDashboard);

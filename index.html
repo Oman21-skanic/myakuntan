@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="sticky top-0">
+      <div class="header w-full flex bg-white h-[70px]">
+        <div class="header-comp w-full flex justify-between mx-42 items-center">
+          <div class="logo flex items-center hover:cursor-pointer">
+            <img id="logo" src="./src/assets/image/Logo.svg" alt="logo.svg" />
+            <span class="text-base text-black pl-2 font-semibold">
+              MyAkuntan
+            </span>
+          </div>
+          <div class="lang flex hover:cursor-pointer">
+            <img
+              src="./src/assets/image/id.png"
+              alt="IndonesiaFlag"
+              class="w-[30px] h-[20px] border-1 border-black"
+            />
+            <span class="text-base text-black pl-2 font-semibold">ID</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="page-wrapper">
+      <!-- Hero -->
+      <section
+        class="Hero w-full h-[85vh] flex flex-wrap items-center mt-[-70px]"
+      >
+        <figure>
+          <img
+            class="w-full h-full absolute -z-5 top-0 -right-0 opacity-60"
+            src="./src/assets/image/meshblur.png"
+            alt="meshblur/png"
+          />
+        </figure>
+        <div class="h-fit flex w-4/5 m-auto flex-wrap justify-between">
+          <div class="textaction mx-10 w-1/2">
+            <h1 class="text-5xl/15 font-semibold">
+              Let's create an
+              <span class="text-[#F8D200]">interesting financial</span>
+              management
+              <span class="text-[#03B321]">experience</span>
+            </h1>
+            <p class="italic text-sm mt-5">Get your experience here!</p>
+            <button
+              class="text-white text-base font-semibold mt-5 bg-[#03B321] hover:bg-[#03C725] active:bg-[#029F1E] w-[130px] h-[41px] rounded-xl"
+              onclick="window.location.href='login.html'"
+            >
+              START
+            </button>
+          </div>
+          <figure class="element1 mx-10">
+            <img
+              class="w-full"
+              src="./src/assets/image/element1.svg"
+              alt="element1/svg"
+            />
+          </figure>
+        </div>
+      </section>
+      <!-- Section1 -->
+      <section>
+        <h1 class="text-black text-4xl text-center font-semibold">
+          MyAkuntan is here for your convenience
+        </h1>
+        <div class="card-container w-4/5 grid">
+          <div class="card">
+            <figure>
+              <img src="" alt="" />
+              <div class="content">
+                <h2></h2>
+                <p></p>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

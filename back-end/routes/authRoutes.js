@@ -1,15 +1,14 @@
 const express = require("express");
+const router = express.Router();
 const {
   registerUser,
   loginUser,
   logoutUser,
   currentUser,
-} = require("../controllers/authController");
-const router = express.Router();
-const {
   googleLogin,
   googleCallback,
-} = require("../controllers/authGoogleController");
+  verifyUserOTP,
+} = require("../controllers/authController");
 const {
   protectedMiddleware,
   isGuest,
@@ -20,11 +19,14 @@ const {
 router.get("/google", isGuest, googleLogin);
 router.get("/google/callback", googleCallback);
 
-router.post("/login", isGuest, loginUser);
+router.post("/login", loginUser);
 
-router.post("/register", isGuest, registerUser);
+router.post("/register", registerUser);
 
 router.post("/logout", protectedMiddleware, isUser, logoutUser);
 
 router.get("/user", protectedMiddleware, currentUser);
+
+// otp verify
+router.post("/verify-otp", verifyUserOTP);
 module.exports = router;

@@ -20,6 +20,14 @@ router.get("/login", isGuest, (req, res) => {
   res.send(loginPage);
 });
 
+router.get("/login/verify", isGuest, (req, res) => {
+  const loginPage = fs.readFileSync(
+    path.resolve(__dirname, "../../front-end/verify-otp.html"),
+    "utf-8"
+  );
+  res.send(loginPage);
+});
+
 router.get("/register", isGuest, (req, res) => {
   const registerPage = fs.readFileSync(
     path.resolve(__dirname, "../../front-end/register.html"),

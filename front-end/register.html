@@ -126,8 +126,9 @@
               throw new Error(data.message || "Registrasi gagal");
             }
 
-            messageElement.textContent = "Registrasi berhasil! Mengalihkan...";
-            setTimeout(() => (window.location.href = "/"), 2000);
+            messageElement.textContent =
+              "Registrasi berhasil dibuat! Mengalihkan...";
+            setTimeout(() => (window.location.href = "/login/verify"), 2000);
           } catch (error) {
             messageElement.textContent = error.message;
           }

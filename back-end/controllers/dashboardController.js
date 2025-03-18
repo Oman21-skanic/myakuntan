@@ -13,6 +13,7 @@ const redirectDashboard = async (req, res) => {
   }
 };
 
+// dashboard user page
 const userDashboard = (req, res) => {
   const dashboardPage = fs.readFileSync(
     path.resolve(__dirname, "../../front-end/dashboard.html"),

@@ -1,6 +1,7 @@
 const asyncHandler = require("../middleware/asyncHandler");
 const User = require("../models/User");
 
+// ambil semua data user
 const allUser = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.status(200).json({
@@ -9,6 +10,7 @@ const allUser = asyncHandler(async (req, res) => {
   });
 });
 
+//ambil data user berdasarkan id
 const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;

@@ -26,21 +26,21 @@ const renderPage = async (filePath, res, next, error) => {
 };
 
 //error 400 bad request
-const badRequestHandler = (req, res, next, err) => {
+const badRequestHandler = (err, req, res, next) => {
   renderPage("../../front-end/bad-request.html", res, next, err);
 };
 
 //error 401 unauthorized request
-const unauthorizedHandler = (req, res, next, err) => {
+const unauthorizedHandler = (err, req, res, next) => {
   renderPage("../../front-end/unauthorized-page.html", res, next, err);
 };
 // error 403 no have access
-const forbiddenHandler = (req, res, next, err) => {
+const forbiddenHandler = (err, req, res, next) => {
   renderPage("../../front-end/forbiddenPage.html", res, next, err);
 };
 
 // eror 404 page not found
-const pageNotFoundHandler = (req, res, next, err) => {
+const pageNotFoundHandler = (err, req, res, next) => {
   renderPage("../../front-end/page-not-found.html", res, next, err);
 };
 

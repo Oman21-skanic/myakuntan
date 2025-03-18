@@ -1,13 +1,13 @@
 const {
-  pageNotFoundHandler,
   badRequestHandler,
   unauthorizedHandler,
   forbiddenHandler,
-} = require("../controllers/errorHandler");
+  pageNotFoundHandler,
+} = require("./errorHandler");
 
 // middleware error
 const errorHandler = (err, req, res, next) => {
-  let errStatusCode = err.statusCode;
+  let errStatusCode = err.statusCode ? err.statusCode : 500;
   let message = err.message;
 
   // Validasi mongoose
@@ -17,27 +17,22 @@ const errorHandler = (err, req, res, next) => {
       .join(",");
     errStatusCode = 400;
   }
-  //jika error code undefined
-  if (!errStatusCode) {
-    console.log(`error statuscode: ${errStatusCode}`);
-    res.redirect("/");
-    return;
-  }
+
   // Handling specific HTTP error status
   if (errStatusCode === 400) {
-    return badRequestHandler(req, res, next, err); // Bad Request handler
+    return badRequestHandler(err, req, res, next); // Bad Request handler
   }
 
   if (errStatusCode === 401) {
-    return unauthorizedHandler(req, res, next, err); // Unauthorized handler
+    return unauthorizedHandler(err, req, res, next); // Unauthorized handler
   }
 
   if (errStatusCode === 403) {
-    return forbiddenHandler(req, res, next, err); // Forbidden handler
+    return forbiddenHandler(err, req, res, next); // Forbidden handler
   }
 
   if (errStatusCode === 404) {
-    return pageNotFoundHandler(req, res, next, err); // Page Not Found handler
+    return pageNotFoundHandler(err, req, res, next); // Page Not Found handler
   }
 
   res.status(errStatusCode);

@@ -33,12 +33,12 @@ const userSchema = new Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  EmailVerifiedAt: {
+    type: Date,
+  },
   isVerified: {
     type: Boolean,
     default: false,
-  },
-  EmailVerifiedAt: {
-    type: Date,
   },
   is_oauth: {
     type: Boolean,
@@ -47,15 +47,15 @@ const userSchema = new Schema({
   picture: {
     type: String,
   },
+  otp: {
+    type: String,
+  },
+  otpExpires: {
+    type: Date,
+  },
 });
 
-userSchema.pre("save", async function () {
-  if (this.password && !this.is_oauth) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
-});
-
+// method untuk compare passsword
 userSchema.methods.comparePassword = async function (reqBody) {
   return await bcrypt.compare(reqBody, this.password);
 };

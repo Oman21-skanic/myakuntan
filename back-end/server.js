@@ -10,14 +10,16 @@ const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const host = "localhost";
-const port = 3000;
+//host dan port
+const host =
+  process.env.NODE_ENV === "production" ? process.env.HOST : "localhost";
+const port = process.env.NODE_ENV === "production" ? process.env.PORT : 3000;
 
 // middleware parsing body request
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//cookie
+//cookies
 app.use(cookieParser());
 
 //auth routes

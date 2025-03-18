@@ -78,7 +78,11 @@
           const response = await fetch("/api/auth/user", {
             credentials: "include",
           });
-          if (!response.ok) throw new Error("Not logged in");
+          if (!response.ok) {
+            authButton.textContent = "Login";
+            authButton.href = "/login";
+            throw new Error("Not logged in");
+          }
 
           const user = await response.json();
           const authButton = document.getElementById("authButton");

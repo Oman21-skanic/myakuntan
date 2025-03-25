@@ -3,7 +3,7 @@ const {
   unauthorizedHandler,
   forbiddenHandler,
   pageNotFoundHandler,
-} = require("./errorHandler");
+} = require('./errorHandler');
 
 // middleware error
 const errorHandler = (err, req, res, next) => {
@@ -11,10 +11,10 @@ const errorHandler = (err, req, res, next) => {
   let message = err.message;
 
   // Validasi mongoose
-  if (err.name === "ValidationError") {
+  if (err.name === 'ValidationError') {
     message = Object.values(err.errors)
-      .map((item) => item.message)
-      .join(",");
+        .map((item) => item.message)
+        .join(',');
     errStatusCode = 400;
   }
 
@@ -38,7 +38,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(errStatusCode);
   res.json({
     message,
-    stack: process.env.NODE_ENV === "production" ? null : err.stack,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 };
 
@@ -49,4 +49,4 @@ const notFoundPath = (req, res, next) => {
   next(error);
 };
 
-module.exports = { errorHandler, notFoundPath };
+module.exports = {errorHandler, notFoundPath};

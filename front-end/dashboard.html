@@ -83,45 +83,54 @@
 
     <script>
       // Ambil ID dari URL
-      const path = window.location.pathname;
-      const userId = path.split("/").pop();
+      // const path = window.location.pathname;
+      // const userId = path.split("/").pop();
 
       // Fetch data user berdasarkan ID
       async function fetchUserData() {
         try {
-          const response = await fetch(`/api/users/user/${userId}`);
-          if (!response.ok) throw new Error("Gagal mengambil data");
-          const data = await response.json();
-          document.getElementById("username").innerText = data.name;
+          // Request pertama: Ambil data user
+          const responseUser = await fetch(`/api/auth/me`)
+          if (!responseUser.ok) throw new Error("Gagal mengambil data user")
+
+          const { data: userData } = await responseUser.json()
+          document.getElementById("username").innerText = userData.name
+
+          // Request kedua: Ambil detail user (kalau beda dari yang pertama)
+          const responseDetails = await fetch(`/api/users/${userData._id}`)
+          if (!responseDetails.ok)
+            throw new Error("Gagal mengambil detail user")
+
+          const { data: userDetails } = await responseDetails.json()
           document.getElementById("user-data").innerText = JSON.stringify(
-            data,
+            userDetails,
             null,
             2
-          );
+          )
         } catch (error) {
-          console.error(error);
-          window.location.href = "/login"; // Redirect ke login kalau token invalid
+          console.error(error)
+          document.getElementById("user-data").innerText = `${error}`
         }
       }
 
       async function logout() {
         try {
-          const response = await fetch("/api/auth/logout", { method: "POST" });
+          const response = await fetch("/api/auth/logout", { method: "POST" })
           if (response.ok) {
-            window.location.href = "/login"; // Redirect ke login setelah logout
+            window.location.href = "/login" // Redirect ke login setelah logout
           } else {
-            alert("Gagal logout");
+            alert("Gagal logout")
           }
         } catch (error) {
-          console.error(error);
+          console.error(error)
         }
       }
 
       function goHome() {
-        window.location.href = "/"; // Redirect ke home
+        window.location.href = "/" // Redirect ke home
       }
 
-      fetchUserData();
+      fetchUserData()
     </script>
   </body>
 </html>

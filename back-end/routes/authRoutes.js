@@ -1,4 +1,5 @@
-const express = require("express");
+const express = require('express');
+// eslint-disable-next-line new-cap
 const router = express.Router();
 const {
   registerUser,
@@ -8,25 +9,21 @@ const {
   googleLogin,
   googleCallback,
   verifyUserOTP,
-} = require("../controllers/authController");
-const {
-  protectedMiddleware,
-  isGuest,
-  isUser,
-} = require("../middleware/authMiddleware");
+} = require('../controllers/authController');
+const {protectedMiddleware} = require('../middleware/authMiddleware');
 
 // google  route
-router.get("/google", isGuest, googleLogin);
-router.get("/google/callback", googleCallback);
+router.get('/google', googleLogin);
+router.get('/google/callback', googleCallback);
 
-router.post("/login", loginUser);
+router.post('/login', loginUser);
 
-router.post("/register", registerUser);
+router.post('/register', registerUser);
 
-router.post("/logout", protectedMiddleware, isUser, logoutUser);
+router.post('/logout', protectedMiddleware, logoutUser);
 
-router.get("/user", protectedMiddleware, currentUser);
+router.get('/me', protectedMiddleware, currentUser);
 
 // otp verify
-router.post("/verify-otp", verifyUserOTP);
+router.post('/verify-otp', verifyUserOTP);
 module.exports = router;

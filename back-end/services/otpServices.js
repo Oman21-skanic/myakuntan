@@ -1,13 +1,12 @@
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
-require("dotenv").config();
+const pendingOTPs = {}; // Simpan OTP sementara
 
-const pendingUsers = {}; // Menyimpan data user sementara
-
-// data dan options pengirim email
+// Konfigurasi transporter email (Nodemailer)
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: 'smtp.gmail.com',
   port: 465,
   secure: true,
   auth: {
@@ -16,72 +15,93 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// GENERATE code OTP
-const generateOTP = () =>
-  Math.floor(100000 + Math.random() * 900000).toString();
+// Fungsi generate OTP (6 digit)
+const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-//FUNCTION send OTP ke email user
-const sendOTP = async (email, username, password) => {
+// Fungsi generate JWT token untuk validasi OTP
+const generateTempToken = (email) => {
+  return jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: '10m'});
+};
+
+// Fungsi menyimpan OTP sementara
+const storeOTP = (email, otp, purpose) => {
+  pendingOTPs[email] = {otp, purpose, createdAt: Date.now()};
+};
+
+// Fungsi mendapatkan OTP yang tersimpan
+const getOTP = (email) => pendingOTPs[email];
+
+// Fungsi menghapus OTP setelah diverifikasi
+const deleteOTP = (email) => {
+  if (pendingOTPs[email]) {
+    delete pendingOTPs[email];
+    console.log(`✅ OTP untuk ${email} dihapus.`);
+  }
+};
+
+// Template email OTP
+const otpTemplate = (otp, purpose) => `
+  <div style="
+    font-family: Arial, sans-serif;
+    text-align: center;
+    max-width: 400px;
+    margin: auto;
+    background: linear-gradient(135deg, #f7e97a, #86c232);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  ">
+    <h2 style="color: #333; margin-bottom: 10px;">Kode OTP Anda</h2>
+    <p style="color: #555; font-size: 16px;">Gunakan kode berikut untuk ${purpose}:</p>
+    <p style="
+      font-size: 20px;
+      font-weight: bold;
+      color: #2c6e49;
+      background: #fff;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+    ">
+      ${otp}
+    </p>
+    <p style="color: #444; margin-top: 10px;">Berlaku selama <b>10 menit</b>.</p>
+  </div>
+`;
+
+// Fungsi utama untuk mengirim OTP
+const sendOTP = async (email, purpose) => {
   const otp = generateOTP();
+  storeOTP(email, otp, purpose);
 
-  // create user sementara
-  pendingUsers[email] = {
-    username,
-    email,
-    password,
-    otp,
-  };
-
-  // detail isi email
   const mailOptions = {
-    from: `"Verifikasi Akun" <${process.env.EMAIL_USER}>`,
+    from: `"MyAkuntan" <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: "Verifikasi OTP MyAkuntan Account Anda",
-    html: `<div style="font-family: Arial, sans-serif; text-align: center;">
-  <h2 style="color: #333;">Kode OTP Anda</h2>
-  <p style="font-size: 18px; font-weight: bold; color: #007bff;">${otp}</p>
-  <p style="color: #666;">Berlaku selama 10 menit.</p>
-</div>
-`,
+    subject: `Kode OTP untuk ${purpose}`,
+    html: otpTemplate(otp, purpose),
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("✅OTP berhasil dikirim ke:", email);
+    console.log(`✅ OTP "${purpose}" dikirim ke: ${email}`);
 
-    // mengemabalikan token jwt ke cookie, expires 10menit
-    return jwt.sign({ email }, process.env.JWT_SECRET, {
-      expiresIn: "10m",
-    });
+    return generateTempToken(email); // Kirim token JWT
   } catch (error) {
-    // jika gagal pending user di hapus
-    console.error("Gagal mengirim OTP:", error);
-    delete pendingUsers[email];
-    throw new Error("Gagal mengirim OTP");
+    console.error(`❌ Gagal mengirim OTP "${purpose}":`, error);
+    deleteOTP(email);
+    throw new Error(`Gagal mengirim OTP "${purpose}"`);
   }
 };
 
-// verifikasi code otp
+// Fungsi untuk verifikasi OTP
 const verifyOTP = (email, otp) => {
-  if (!pendingUsers[email]) {
-    return { success: false, message: "Data tidak ditemukan." };
-  }
-  // validasi code OTP
-  if (pendingUsers[email].otp !== otp) {
-    return { success: false, message: "OTP salah." };
-  }
-  const userData = pendingUsers[email];
+  const stored = getOTP(email);
+  if (!stored) return {success: false, message: 'OTP tidak ditemukan.'};
 
-  return { success: true, message: "OTP valid.", userData };
+  if (stored.otp !== otp) return {success: false, message: 'OTP salah.'};
+
+  deleteOTP(email);
+  return {success: true, message: `OTP valid untuk ${stored.purpose}.`};
 };
 
-// function hapus data pending user ketika sudah di add ke database
-const deletePendingUser = (email) => {
-  if (pendingUsers[email]) {
-    delete pendingUsers[email];
-    console.log(`✅ Pending user dengan email ${email} berhasil dihapus.`);
-  } else {
-    console.log(`❌ Pending user dengan email ${email} tidak ditemukan.`);
-  }
-};
-module.exports = { sendOTP, verifyOTP, deletePendingUser };
+module.exports = {sendOTP, verifyOTP, generateTempToken};

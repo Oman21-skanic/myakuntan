@@ -1,19 +1,16 @@
-const express = require("express");
+const express = require('express');
+// eslint-disable-next-line new-cap
 const router = express.Router();
 const {
   protectedMiddleware,
-  isUser,
   protectedUser,
-} = require("../middleware/authMiddleware");
+} = require('../middleware/authMiddleware');
 const {
   redirectDashboard,
   userDashboard,
-} = require("../controllers/dashboardController");
+} = require('../controllers/dashboardController');
 
-// redirect dari dashboard ke dashboard user
-router.get("/", protectedMiddleware, isUser, redirectDashboard);
-
-// dashboard user
-router.get("/user/:id", protectedMiddleware, protectedUser, userDashboard);
+// routes dashboard page
+router.get('/', protectedMiddleware, userDashboard);
 
 module.exports = router;

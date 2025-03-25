@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="210mm" height="297mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 21000 29700"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:cc="http://creativecommons.org/ns#"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:svg="http://www.w3.org/2000/svg"
+ enable-background="new -260.552 -146.192 720 340">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil1 {fill:#34A853;fill-rule:nonzero}
+    .fil0 {fill:#4285F4;fill-rule:nonzero}
+    .fil4 {fill:#C5221F;fill-rule:nonzero}
+    .fil3 {fill:#EA4335;fill-rule:nonzero}
+    .fil2 {fill:#FBBC04;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="Gmail.cdr">
+   <path id="path8" class="fil0" d="M3015 21350l2758 0 0 -6697 -3940 -2955 0 8470c0,653 529,1182 1182,1182z"/>
+   <path id="path10" class="fil1" d="M15227 21350l2758 0c653,0 1182,-529 1182,-1182l0 -8470 -3940 2955 0 6697z"/>
+   <path id="path12" class="fil2" d="M15227 9532l0 5121 3940 -2955 0 -1575c0,-979 -794,-1773 -1773,-1773 -384,0 -757,125 -1064,355l-1103 827z"/>
+   <polygon id="path14" class="fil3" points="5773,14653 5773,9532 10500,13077 15227,9532 15227,14653 10500,18198 "/>
+   <path id="path16" class="fil4" d="M1833 10123l0 1575 3940 2955 0 -5121 -1103 -827c-784,-588 -1895,-429 -2482,354 -231,307 -355,680 -355,1064z"/>
+  </g>
+ </g>
+</svg>

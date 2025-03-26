@@ -1,6 +1,6 @@
 import './style.css'
 
-import { initCarousel } from './utils/carousel';
+import { initCarousel } from './scripts/carousel';
 
 document.addEventListener('DOMContentLoaded', () => {
     initCarousel();

@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-
-const pendingOTPs = {}; // Simpan OTP sementara
-
+const fs = require('fs');
+const path = require('path');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 // Konfigurasi transporter email (Nodemailer)
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -18,90 +18,94 @@ const transporter = nodemailer.createTransport({
 // Fungsi generate OTP (6 digit)
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-// Fungsi generate JWT token untuk validasi OTP
+// fungsi generate temptoken untuk disimpan di cookie
 const generateTempToken = (email) => {
-  return jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: '10m'});
+  return jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: '30m'});
 };
-
-// Fungsi menyimpan OTP sementara
-const storeOTP = (email, otp, purpose) => {
-  pendingOTPs[email] = {otp, purpose, createdAt: Date.now()};
-};
-
-// Fungsi mendapatkan OTP yang tersimpan
-const getOTP = (email) => pendingOTPs[email];
-
-// Fungsi menghapus OTP setelah diverifikasi
-const deleteOTP = (email) => {
-  if (pendingOTPs[email]) {
-    delete pendingOTPs[email];
-    console.log(`✅ OTP untuk ${email} dihapus.`);
-  }
+const generateOtpExpires = (minutes = 10) => {
+  const currentTime = new Date();
+  currentTime.setMinutes(currentTime.getMinutes() + minutes); // Menambahkan 10 menit ke waktu sekarang
+  return currentTime.toISOString(); // Mengembalikan dalam format ISO string
 };
 
 // Template email OTP
-const otpTemplate = (otp, purpose) => `
-  <div style="
-    font-family: Arial, sans-serif;
-    text-align: center;
-    max-width: 400px;
-    margin: auto;
-    background: linear-gradient(135deg, #f7e97a, #86c232);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  ">
-    <h2 style="color: #333; margin-bottom: 10px;">Kode OTP Anda</h2>
-    <p style="color: #555; font-size: 16px;">Gunakan kode berikut untuk ${purpose}:</p>
-    <p style="
-      font-size: 20px;
-      font-weight: bold;
-      color: #2c6e49;
-      background: #fff;
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 5px;
-      box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
-    ">
-      ${otp}
-    </p>
-    <p style="color: #444; margin-top: 10px;">Berlaku selama <b>10 menit</b>.</p>
-  </div>
-`;
+const getHtmlTemplate = (otp, purpose) => {
+  // ambil template dari file html
+  const templatePath = path.join(__dirname, '../../front-end/otp_template.html');
+  let htmlContent = fs.readFileSync(templatePath, 'utf8');
+  htmlContent = htmlContent.replace('{{otp}}', otp);
+  htmlContent = htmlContent.replace('{{purpose}}', purpose);
+  return htmlContent;
+};
+
 
 // Fungsi utama untuk mengirim OTP
 const sendOTP = async (email, purpose) => {
+  // generate otp
   const otp = generateOTP();
-  storeOTP(email, otp, purpose);
-
+  const otpExpires = generateOtpExpires();
   const mailOptions = {
     from: `"MyAkuntan" <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: `Kode OTP untuk ${purpose}`,
-    html: otpTemplate(otp, purpose),
+    subject: `Kode OTP ${purpose}`,
+    html: getHtmlTemplate(otp, purpose),
   };
 
   try {
+    const user = await User.findOneAndUpdate(
+        {email},
+        {otp, otpExpires, updatedAt: new Date().toISOString()},
+        {new: true}, // Agar mengembalikan user yang sudah diperbarui
+    );
+
+    // Cek jika user tidak ditemukan
+    if (!user) {
+      throw new Error('User tidak ditemukan');
+    }
     await transporter.sendMail(mailOptions);
     console.log(`✅ OTP "${purpose}" dikirim ke: ${email}`);
-
-    return generateTempToken(email); // Kirim token JWT
+    return {tempToken: generateTempToken(email), otp};
   } catch (error) {
     console.error(`❌ Gagal mengirim OTP "${purpose}":`, error);
-    deleteOTP(email);
     throw new Error(`Gagal mengirim OTP "${purpose}"`);
   }
 };
 
 // Fungsi untuk verifikasi OTP
-const verifyOTP = (email, otp) => {
-  const stored = getOTP(email);
-  if (!stored) return {success: false, message: 'OTP tidak ditemukan.'};
+const verifyOTP = async (email, otp) => {
+  try {
+    const user = await User.findOne({email});
 
-  if (stored.otp !== otp) return {success: false, message: 'OTP salah.'};
+    console.log('📩 Email & OTP:', email, otp);
 
-  deleteOTP(email);
-  return {success: true, message: `OTP valid untuk ${stored.purpose}.`};
+    if (!user) {
+      throw new Error('User tidak ditemukan.');
+    }
+
+
+    if (user.otp !== otp || Date.now() > user.otpExpires) {
+      throw new Error('OTP tidak valid atau kadaluarsa.');
+    }
+
+    console.log('✅ OTP benar');
+
+    // Update status verifikasi dan hapus OTP
+    const updateUser = await User.updateOne(
+        {email},
+        {
+          $set: {isVerified: true},
+          $unset: {otp: '', otpExpires: ''},
+          $currentDate: {updatedAt: true},
+        },
+    );
+
+    return updateUser;
+  } catch (error) {
+    console.error('❌ Error verifikasi OTP:', error.message);
+    throw new Error(error.message); // Lempar error ke pemanggil
+  }
 };
 
-module.exports = {sendOTP, verifyOTP, generateTempToken};
+
+module.exports = {sendOTP, verifyOTP};
+

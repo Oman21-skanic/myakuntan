@@ -42,17 +42,20 @@
       .logout-btn {
         background-color: #e53935;
       }
-
       .logout-btn:hover {
         background-color: #c62828;
       }
-
       .home-btn {
         background-color: #4285f4;
       }
-
       .home-btn:hover {
         background-color: #3367d6;
+      }
+      .delete-btn {
+        background-color: #d32f2f;
+      }
+      .delete-btn:hover {
+        background-color: #b71c1c;
       }
 
       .user-data {
@@ -75,6 +78,7 @@
       <h2>Selamat Datang, <span id="username">User</span>!</h2>
       <button class="btn logout-btn" onclick="logout()">Logout</button>
       <button class="btn home-btn" onclick="goHome()">Kembali ke Home</button>
+      <button class="btn delete-btn" onclick="deleteUser()">Hapus Akun</button>
       <div class="user-data">
         <h3>Data Pengguna:</h3>
         <pre id="user-data">Memuat data...</pre>
@@ -82,55 +86,66 @@
     </div>
 
     <script>
-      // Ambil ID dari URL
-      // const path = window.location.pathname;
-      // const userId = path.split("/").pop();
+      let userId = "";
 
-      // Fetch data user berdasarkan ID
       async function fetchUserData() {
         try {
-          // Request pertama: Ambil data user
-          const responseUser = await fetch(`/api/auth/me`)
-          if (!responseUser.ok) throw new Error("Gagal mengambil data user")
+          const responseUser = await fetch("/api/auth/me");
+          if (!responseUser.ok) throw new Error("Gagal mengambil data user");
 
-          const { data: userData } = await responseUser.json()
-          document.getElementById("username").innerText = userData.name
+          const { data: userData } = await responseUser.json();
+          document.getElementById("username").innerText = userData.name;
+          userId = userData._id;
 
-          // Request kedua: Ambil detail user (kalau beda dari yang pertama)
-          const responseDetails = await fetch(`/api/users/${userData._id}`)
-          if (!responseDetails.ok)
-            throw new Error("Gagal mengambil detail user")
+          const responseDetails = await fetch(`/api/users/${userData._id}`);
+          if (!responseDetails.ok) throw new Error("Gagal mengambil detail user");
 
-          const { data: userDetails } = await responseDetails.json()
-          document.getElementById("user-data").innerText = JSON.stringify(
-            userDetails,
-            null,
-            2
-          )
+          const { data: userDetails } = await responseDetails.json();
+          document.getElementById("user-data").innerText = JSON.stringify(userDetails, null, 2);
         } catch (error) {
-          console.error(error)
-          document.getElementById("user-data").innerText = `${error}`
+          console.error(error);
+          document.getElementById("user-data").innerText = `${error}`;
         }
       }
 
       async function logout() {
         try {
-          const response = await fetch("/api/auth/logout", { method: "POST" })
+          const response = await fetch("/api/auth/logout", { method: "POST" });
           if (response.ok) {
-            window.location.href = "/login" // Redirect ke login setelah logout
+            window.location.href = "/login";
           } else {
-            alert("Gagal logout")
+            alert("Gagal logout");
           }
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       }
 
       function goHome() {
-        window.location.href = "/" // Redirect ke home
+        window.location.href = "/";
       }
 
-      fetchUserData()
+      async function deleteUser() {
+        if (!userId) {
+          alert("User ID tidak ditemukan");
+          return;
+        }
+        
+        if (!confirm("Apakah Anda yakin ingin menghapus akun ini?")) return;
+
+        try {
+          const response = await fetch(`/api/users/${userId}`, { method: "DELETE" });
+          if (!response.ok) throw new Error("Gagal menghapus akun");
+
+          alert("Akun berhasil dihapus");
+          window.location.href = "/";
+        } catch (error) {
+          console.error("Gagal menghapus akun:", error);
+          alert("Terjadi kesalahan, coba lagi");
+        }
+      }
+
+      fetchUserData();
     </script>
   </body>
 </html>

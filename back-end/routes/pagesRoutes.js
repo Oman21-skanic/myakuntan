@@ -37,4 +37,30 @@ router.get('/register', isGuest, (req, res) => {
   res.send(registerPage);
 });
 
+router.get('/users/reset-password', isGuest, (req, res) => {
+  const resetPasswordPage = fs.readFileSync(
+      path.resolve(__dirname, '../../front-end/reset-password.html'),
+      'utf-8',
+  );
+  res.send(resetPasswordPage);
+});
+
+router.get('/users/reset-password/verify', isGuest, (req, res) => {
+  const verifyOtpPage = fs.readFileSync(
+      path.resolve(__dirname, '../../front-end/verify-reset-password.html'),
+      'utf-8',
+  );
+  res.send(verifyOtpPage);
+});
+
+
+router.get('/users/reset-password/verify/update-password', isGuest, (req, res) => {
+  const updatePasswordByEmail = fs.readFileSync(
+      path.resolve(__dirname, '../../front-end/update-password-by-email.html'),
+      'utf-8',
+  );
+  res.send(updatePasswordByEmail);
+});
+
+
 module.exports = router;

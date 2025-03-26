@@ -46,7 +46,7 @@ const updateUserHandler = asyncHandler( async (req, res) => {
     if (email) updateData.email = email;
     updateData.updatedAt = updatedAt;
 
-    // update user
+    // update user di mongodb
     const updatedUser = await User.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
@@ -95,8 +95,15 @@ const deleteUserByIdHandler = asyncHandler( async (req, res) => {
     if (!deletedUser) {
       return res.status(400).json({status: 'fail', message: 'User tidak ditemukan'});
     }
+    // hapus token autentikasi
+    res.cookie('jwt', '', {
+      httpOnly: true,
+      expires: new Date(0), // Hapus cookie dengan mengatur expired time ke masa lalu
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict', // Tambahan keamanan
+    });
 
-    res.status(200).json({status: 'success', message: 'user berhasil dihapus'});
+    res.status(200).json({status: 'success', message: `user ${deletedUser.name} berhasil dihapus`});
   } catch (error) {
     console.error(error);
     res.status(500).json({status: 'fail', message: 'Terjadi kesalahan', error: error.message});

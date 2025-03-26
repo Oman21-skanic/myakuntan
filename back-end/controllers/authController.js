@@ -5,7 +5,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
-const {sendOTP, verifyOTP, deletePendingUser} = require('../services/otpServices');
+const {sendOTP, verifyOTP} = require('../services/otpServices');
 
 require('dotenv').config();
 
@@ -51,6 +51,33 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // cek apakah user sudah ada
   const userData = await User.findOne({email});
+
+
+  if (userData && !userData.isVerified) {
+    console.log('user ditemukan but not verified is running');
+    try {
+      const dataOTP = await sendOTP(email, 'registrasi account');
+      console.log('data otp:', dataOTP);
+
+      if (!dataOTP) {
+        return res.status(500).json({status: 'fail', message: 'Gagal Internal Server Error'});
+      }
+
+      const tempToken = dataOTP.tempToken;
+      return res.status(200)
+          .cookie('tempToken', tempToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 30 * 60 * 1000, // 10 menit
+          })
+          .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
+    } catch (error) {
+      console.error('❌ Error saat mengirim OTP:', error.message);
+      return res.status(500).json({status: 'fail', message: 'Gagal mengirim OTP', error: error.message});
+    }
+  }
+
+
   if (userData) {
     return res.status(400).json({status: 'fail', message: 'User sudah terdaftar'});
   }
@@ -58,112 +85,103 @@ const registerUser = asyncHandler(async (req, res) => {
   try {
     // hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
+    const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
-    // membuat token jwt sementara sebagai validasi apakah orang yang sama
-    const tempToken =
-      // mengirim code otp ke email user
-      await sendOTP(email, 'registrasi account');
+    // create newUser
+    const newUser = new User({
+      email,
+      name,
+      password: hashedPassword,
+      createdAt,
+      updatedAt,
+    });
+    await newUser.save();
+    // membuat token jwt sementara sebagai validasi dan sendOtp
+    const dataOTP = await sendOTP(email, 'registrasi account');
 
-    return res
-        .status(200)
+    const tempToken = dataOTP.tempToken;
+
+    // simpan user ke database
+    await newUser.save();
+    res.status(200)
         .cookie('tempToken', tempToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
-          maxAge: 10 * 60 * 1000, // 10 menit
+          maxAge: 30 * 60 * 1000, // 10 menit
         })
         .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
   } catch (error) {
-    return res.status(500).json({message: 'Gagal mengirim OTP, coba lagi nanti', error: error.message});
+    return res.status(500).json({status: 'fail', message: 'Gagal mengirim OTP, coba lagi nanti', error: error.message});
   }
 });
 
 // POST verify-otp {otp}
 const verifyUserOTP = asyncHandler(async (req, res) => {
-  // Ambil token jwt dari cookie
-  const tempToken = req.cookies.tempToken;
-  const otp = req.body.otp;
-
-  // validasi apakah otp diisi dan token valid
-  if (!otp) {
-    return res.status(400).json({message: 'OTP tidak valid.'});
+  try {
+    console.log('verifyOtp-running');
+    // Ambil token jwt dari cookie
+    const email = req.user?.email;
+    const {otp} = req.body;
+    // Validasi apakah OTP diisi
+    if (!otp || typeof otp !== 'string' || otp.length !== 6 || isNaN(Number(otp))) {
+      return res.status(400).json({status: 'fail', message: 'OTP harus berupa 6 digit angka.'});
+    }
+    console.log('📩 Email dari request:', email);
+    console.log('🔢 OTP dari request:', otp);
+    // Verifikasi apakah kode OTP benar
+    const userData = await verifyOTP(email, otp);
+    if (!userData) {
+      res.clearCookie('tempToken');
+      return res.status(400).json({status: 'fail', message: 'OTP salah atau sudah kadaluarsa.'});
+    }
+    console.log(`✅ User ${email} berhasil divalidasi`);
+    res.clearCookie('tempToken');
+    return res.status(201).json({status: 'success', message: 'Verifikasi berhasil, akun telah dibuat'});
+  } catch (error) {
+    console.error('❌ Error saat verifikasi OTP:', error.message);
+    return res.status(500).json({status: 'fail', message: 'Terjadi kesalahan saat verifikasi OTP.'});
   }
-  if (!tempToken) {
-    return res.status(400).json({message: 'TOKEN INVALID. register ulang!'});
-  }
-
-  // ambil email dari token jwt
-  const decoded = jwt.verify(tempToken, process.env.JWT_SECRET);
-  const email = decoded.email;
-
-  // verifikasi apakah kode otp benar
-  const verificationResult = verifyOTP(email, otp);
-  if (!verificationResult.success) {
-    return res.status(400).json({status: 'fail', message: verificationResult.message});
-  }
-
-  // Ambil data user dari pending user dan add ke database
-  const {username, password} = verificationResult.userData;
-
-  const isFirstUser = (await User.countDocuments()) === 0 ? 'admin' : 'user';
-
-  const newUser = await User.create({
-    name: username,
-    email,
-    password,
-    role: isFirstUser,
-    isVerified: true,
-  });
-
-  // hapus user dari pending users
-  deletePendingUser(email);
-
-  console.log(`user ditambahkan: ${newUser.name}`);
-  // kirim cookie jwt ke cookie dan kirim respon berhasil
-  createResToken(newUser, 201, res);
-  return res.json({message: 'Verifikasi berhasil, akun telah dibuat'});
 });
+
 
 // POST login user {email, password}
 const loginUser = asyncHandler(async (req, res) => {
   // validasi harus diisi
   if (!req.body.email || !req.body.password) {
-    return res.status(400).json({message: 'Email dan password harus diisi'});
+    return res.status(400).json({status: 'fail', message: 'Email dan password harus diisi'});
   }
-
   // search user di database
   const userData = await User.findOne({email: req.body.email});
-
   if (!userData) {
-    return res.status(404).json({message: 'User tidak ditemukan'});
+    return res.status(404).json({status: 'fail', message: 'User tidak ditemukan'});
   }
-
   // jika mendaftar dengan oauth harus login dengan cara yang sama
   if (userData.is_oauth) {
-    return res.status(401).json({message: 'Sepertinya anda menggunakan metode login yang salah'});
+    return res.status(401).json({status: 'fail', message: 'Sepertinya anda menggunakan metode login yang salah'});
   }
-
   // validasi password
   const isMatch = await userData.comparePassword(req.body.password);
   if (!isMatch) {
-    return res.status(400).json({message: 'Password salah'});
+    return res.status(400).json({status: 'fail', message: 'Password salah'});
   }
-
   // respon mengenbalikan jwt token jika benar
   await createResToken(userData, 200, res);
-
   console.log(`${userData.name} berhasil login.`);
-  res.json({message: 'Berhasil login'});
+  res.json({status: 'fail', message: 'Berhasil login'});
 });
 
 // GET user dari cookie token jwt. Res json data user
 const currentUser = asyncHandler(async (req, res) => {
   // mengambil data user di database tanpa password
-  const user = await User.findById(req.user.id).select('_id name email');
+  const user = await User.findById(req.user._id).select('-password');
+  console.log(user,
+  );
 
   if (user) {
     res.status(200).json({status: 'success', data: user});
   } else {
-    res.status(401).json({message: 'user not found'});
+    res.status(401).json({status: 'fail', message: 'user not found'});
   }
 });
 
@@ -193,6 +211,26 @@ const logoutUser = asyncHandler(async (req, res) => {
   }
 });
 
+// send kode otp {email, }
+const sendOtpHandler = asyncHandler(async (req, res) => {
+  const email = req.user.email;
+
+  const dataOTP = await sendOTP(email, 'registrasi account');
+  console.log(dataOTP);
+  if (!dataOTP) {
+    return res.status(500).json({status: 'fail', message: 'Gagal Internal Server Error'});
+  }
+  const tempToken = dataOTP.tempToken;
+  console.log(`resendotp cookie ${tempToken}`);
+  console.log('berhasil');
+  res.status(200)
+      .cookie('tempToken', tempToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 30 * 60 * 1000, // 10 menit
+      })
+      .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
+});
 
 // AUTH GOOGLE
 // data untuk terhubung google Oauth
@@ -228,7 +266,6 @@ const googleCallback = asyncHandler(async (req, res) => {
       // eslint-disable-next-line camelcase
       headers: {Authorization: `Bearer ${access_token}`},
     });
-    console.log(profile);
     // cari user di database
     let user = await User.findOne({email: profile.email});
     if (user && !user.is_oauth) {
@@ -260,13 +297,118 @@ const googleCallback = asyncHandler(async (req, res) => {
   }
 });
 
+// POST reset password dengan email {email}
+const resetPasswordByEmail = asyncHandler(async (req, res) => {
+  try {
+    const {email} = req.body;
+
+    // Cek apakah email diisi
+    if (!email) {
+      return res.status(400).json({status: 'fail', message: 'Email wajib diisi'});
+    }
+
+    // Cari user berdasarkan email
+    const userData = await User.findOne({email});
+
+    // Jika user tidak ditemukan atau belum diverifikasi
+    if (!userData || !userData.isVerified) {
+      return res.status(404).json({status: 'fail', message: 'User tidak ditemukan atau belum diverifikasi'});
+    }
+
+    // Kirim OTP dan buat token sementara
+    const dataOTP = await sendOTP(email, 'reset password');
+
+    if (!dataOTP) {
+      throw new Error('Gagal mengirim OTP');
+    }
+
+    const tempToken = dataOTP.tempToken;
+
+    // Set cookie tempToken
+    res.status(200)
+        .cookie('tempToken', tempToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 30 * 60 * 1000, // 10 menit
+        })
+        .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
+  } catch (error) {
+    console.error('❌ Error:', error.message);
+    res.status(500).json({status: 'fail', message: 'Terjadi kesalahan, coba lagi nanti', error: error.message});
+  }
+});
+
+
+const verifyResetPasswordByEmail = asyncHandler(async (req, res) => {
+  try {
+    console.log('verifyOtp-running');
+    // Ambil token jwt dari cookie
+    const email = req.user?.email;
+    const {otp} = req.body;
+    // Validasi apakah OTP diisi
+    if (!otp || typeof otp !== 'string' || otp.length !== 6 || isNaN(Number(otp))) {
+      return res.status(400).json({status: 'fail', message: 'OTP harus berupa 6 digit angka.'});
+    }
+    console.log('📩 Email dari request:', email);
+    console.log('🔢 OTP dari request:', otp);
+    // Verifikasi apakah kode OTP benar
+    const userData = await verifyOTP(email, otp);
+    if (!userData) {
+      res.clearCookie('tempToken');
+      return res.status(400).json({status: 'fail', message: 'OTP salah atau sudah kadaluarsa.'});
+    };
+    console.log(`✅ User ${email} berhasil divalidasi`);
+    res.clearCookie('tempToken');
+    const resetToken = jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: '30m'});
+
+    // 🔹 Set cookie resetToken
+    res.cookie('resetToken', resetToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 15 * 60 * 1000, // 15 menit
+    });
+
+    return res.status(201).json({status: 'success', message: 'Verifikasi berhasil, password bisa diupdate dalam 15 menit'});
+  } catch (error) {
+    console.error('❌ Error saat verifikasi OTP:', error.message);
+    return res.status(500).json({status: 'fail', message: error.message});
+  }
+});
+
+const updatePasswordByEmail = asyncHandler( async (req, res) =>{
+  try {
+    const {password} = req.body;
+
+    // 🔹 Pastikan password baru diisi
+    if (!password || password.length < 6) {
+      return res.status(400).json({status: 'fail', message: 'Password harus minimal 6 karakter'});
+    }
+
+    // 🔹 Ambil user dari req.user (sudah diverifikasi di middleware)
+    const user = req.user;
+    if (!user) {
+      return res.status(404).json({status: 'fail', message: 'User tidak ditemukan'});
+    }
+
+    // 🔹 Hash password baru
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+
+    // 🔹 Simpan perubahan di database
+    await user.save();
+
+    // 🔹 Hapus cookie `resetToken`
+    res.clearCookie('resetToken');
+
+    return res.status(200).json({status: 'success', message: 'Password berhasil diperbarui'});
+  } catch (error) {
+    console.error('❌ Error saat update password:', error.message);
+    return res.status(500).json({status: 'fail', message: 'Terjadi kesalahan saat update password'});
+  }
+});
+
 module.exports = {
-  registerUser,
-  loginUser,
-  createResToken,
-  currentUser,
-  logoutUser,
-  googleLogin,
-  googleCallback,
-  verifyUserOTP,
+  registerUser, loginUser, createResToken, currentUser, logoutUser,
+  googleLogin, googleCallback, verifyUserOTP, sendOtpHandler, resetPasswordByEmail,
+  verifyResetPasswordByEmail, updatePasswordByEmail,
 };

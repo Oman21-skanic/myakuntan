@@ -64,7 +64,7 @@
     </div>
 
     <div class="container">
-      <h1>Selamat Datang di Website Kami</h1>
+      <h1>Selamat Datang <span id="nameUser"></span></h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut sapien
         ut mi tincidunt tempus. Donec venenatis libero ac quam porta, ac
@@ -75,9 +75,7 @@
     <script>
       async function checkLoginStatus() {
         try {
-          const response = await fetch("/api/auth/user", {
-            credentials: "include",
-          });
+          const response = await fetch("/api/auth/me");
           if (!response.ok) {
             authButton.textContent = "Login";
             authButton.href = "/login";
@@ -88,6 +86,7 @@
           const authButton = document.getElementById("authButton");
           authButton.textContent = "Dashboard";
           authButton.href = "/dashboard";
+          document.getElementById('nameUser').textContent = user.data.name;
         } catch (error) {
           console.log("User not logged in.");
         }

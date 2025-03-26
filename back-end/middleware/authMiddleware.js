@@ -79,10 +79,43 @@ const protectedUser = (req, res, next) => {
   next();
 };
 
+const otpMiddleware = asyncHandler(async (req, res, next) => {
+  const token = req.cookies.tempToken;
+  try {
+    if (!token) {
+      throw new Error('invalid token. register ulang');
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      algorithms: ['HS256'],
+    });
+    console.log( decoded);
+    req.user = await User.findOne({email: decoded.email}).select('_id email name');
+    console.log(req.user);
+    next();
+  } catch (error) {
+    return res.status(401).json({status: 'fail', message: error.message ? error.message : 'invalid or error token', error: error.message});
+  }
+});
+
+const resetPasswordMiddleware = asyncHandler(async (req, res, next) => {
+  const token = req.cookies.resetToken;
+  try {
+    if (!token) {
+      throw new Error('invalid token. register ulang');
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      algorithms: ['HS256'],
+    });
+    console.log( decoded);
+    req.user = await User.findOne({email: decoded.email}).select('_id email name');
+    console.log(req.user);
+    next();
+  } catch (error) {
+    return res.status(401).json({status: 'fail', message: error.message ? error.message : 'invalid or error token', error: error.message});
+  }
+});
+
 module.exports = {
-  protectedMiddleware,
-  isAdmin,
-  isUser,
-  isGuest,
-  protectedUser,
+  protectedMiddleware, isAdmin, isUser, isGuest, protectedUser, otpMiddleware,
+  resetPasswordMiddleware,
 };

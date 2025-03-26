@@ -14,7 +14,7 @@ const protectedMiddleware = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET, {
       algorithms: ['HS256'],
     });
-    req.user = await User.findById(decoded.id).select('-password');
+    req.user = await User.findById(decoded.id).select('_id name email');
     next();
   } catch (error) {
     return res.status(401).json({status: 'fail', message: 'Invalid or expired token', error: error.message});

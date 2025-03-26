@@ -29,18 +29,19 @@ const generateOtpExpires = (minutes = 10) => {
 };
 
 // Template email OTP
-const getHtmlTemplate = (otp, purpose) => {
+const getHtmlTemplate = (otp, purpose, name) => {
   // ambil template dari file html
   const templatePath = path.join(__dirname, '../../front-end/otp_template.html');
   let htmlContent = fs.readFileSync(templatePath, 'utf8');
   htmlContent = htmlContent.replace('{{otp}}', otp);
   htmlContent = htmlContent.replace('{{purpose}}', purpose);
+  htmlContent = htmlContent.replace('{{name}}', name);
   return htmlContent;
 };
 
 
 // Fungsi utama untuk mengirim OTP
-const sendOTP = async (email, purpose) => {
+const sendOTP = async (email, purpose, name) => {
   // generate otp
   const otp = generateOTP();
   const otpExpires = generateOtpExpires();
@@ -48,7 +49,7 @@ const sendOTP = async (email, purpose) => {
     from: `"MyAkuntan" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: `Kode OTP ${purpose}`,
-    html: getHtmlTemplate(otp, purpose),
+    html: getHtmlTemplate(otp, purpose, name),
   };
 
   try {

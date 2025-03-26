@@ -45,6 +45,14 @@ router.get('/users/reset-password', isGuest, (req, res) => {
   res.send(resetPasswordPage);
 });
 
+router.get('/users/update-password', (req, res) => {
+  const updatePasswordPage = fs.readFileSync(
+      path.resolve(__dirname, '../../front-end/update-password.html'),
+      'utf-8',
+  );
+  res.send(updatePasswordPage);
+});
+
 router.get('/users/reset-password/verify', isGuest, (req, res) => {
   const verifyOtpPage = fs.readFileSync(
       path.resolve(__dirname, '../../front-end/verify-reset-password.html'),

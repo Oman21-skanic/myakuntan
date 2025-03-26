@@ -56,7 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (userData && !userData.isVerified) {
     console.log('user ditemukan but not verified is running');
     try {
-      const dataOTP = await sendOTP(email, 'registrasi account');
+      const dataOTP = await sendOTP(email, 'registrasi account', name);
       console.log('data otp:', dataOTP);
 
       if (!dataOTP) {
@@ -98,7 +98,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
     await newUser.save();
     // membuat token jwt sementara sebagai validasi dan sendOtp
-    const dataOTP = await sendOTP(email, 'registrasi account');
+    const dataOTP = await sendOTP(email, 'registrasi account', name);
 
     const tempToken = dataOTP.tempToken;
 
@@ -211,11 +211,12 @@ const logoutUser = asyncHandler(async (req, res) => {
   }
 });
 
-// send kode otp {email, }
+// resend kode otp {email}
 const sendOtpHandler = asyncHandler(async (req, res) => {
   const email = req.user.email;
+  const name = req.user.name;
 
-  const dataOTP = await sendOTP(email, 'registrasi account');
+  const dataOTP = await sendOTP(email, 'registrasi account', name);
   console.log(dataOTP);
   if (!dataOTP) {
     return res.status(500).json({status: 'fail', message: 'Gagal Internal Server Error'});
@@ -316,7 +317,7 @@ const resetPasswordByEmail = asyncHandler(async (req, res) => {
     }
 
     // Kirim OTP dan buat token sementara
-    const dataOTP = await sendOTP(email, 'reset password');
+    const dataOTP = await sendOTP(email, 'reset password', userData.name);
 
     if (!dataOTP) {
       throw new Error('Gagal mengirim OTP');

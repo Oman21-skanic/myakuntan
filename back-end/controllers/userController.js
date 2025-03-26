@@ -61,7 +61,8 @@ const updateUserHandler = asyncHandler( async (req, res) => {
 
 const updatePasswordHandler = asyncHandler( async (req, res) => {
   try {
-    const {id} = req.params;
+    const id = req.user._id;
+    console.log('id : ' + id);
     const {oldPassword, newPassword} = req.body;
 
     // cari user berdasarkan id

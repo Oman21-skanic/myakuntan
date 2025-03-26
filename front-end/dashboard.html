@@ -57,6 +57,12 @@
       .delete-btn:hover {
         background-color: #b71c1c;
       }
+      .change-password-btn {
+        background-color: #ffa000;
+      }
+      .change-password-btn:hover {
+        background-color: #ff8f00;
+      }
 
       .user-data {
         margin-top: 20px;
@@ -79,6 +85,7 @@
       <button class="btn logout-btn" onclick="logout()">Logout</button>
       <button class="btn home-btn" onclick="goHome()">Kembali ke Home</button>
       <button class="btn delete-btn" onclick="deleteUser()">Hapus Akun</button>
+      <button class="btn change-password-btn" onclick="changePassword()">Ganti Password</button>
       <div class="user-data">
         <h3>Data Pengguna:</h3>
         <pre id="user-data">Memuat data...</pre>
@@ -143,6 +150,10 @@
           console.error("Gagal menghapus akun:", error);
           alert("Terjadi kesalahan, coba lagi");
         }
+      }
+
+      function changePassword() {
+        window.location.href = "/users/update-password";
       }
 
       fetchUserData();

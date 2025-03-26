@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>401 Unauthorized</title>
+    <style>
+      body {
+        background-color: #f1c40f; /* Kuning */
+        color: #27ae60; /* Hijau */
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      img {
+        width: 100px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: 2em;
+      }
+      p {
+        font-size: 1.2em;
+      }
+      a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        color: white;
+        background-color: #27ae60;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      a:hover {
+        background-color: #219150;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/753/753345.png"
+        alt="Unauthorized Access"
+      />
+      <!-- TEMPLATE FROM SERVER-->
+      <h1>{{statusCode}}</h1>
+      <p>{{errorMessage}}</p>
+      <a href="/">Kembali ke Beranda</a>
+    </div>
+  </body>
+</html>

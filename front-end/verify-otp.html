@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verifikasi OTP</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ffeb3b; /* Kuning */
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+      }
+      input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #4caf50; /* Hijau */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background: #388e3c; /* Hijau lebih gelap */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Verifikasi OTP</h2>
+      <p>Masukkan kode OTP yang telah dikirim ke email Anda:</p>
+      <input type="text" id="otp" placeholder="Masukkan OTP" maxlength="6" />
+      <button onclick="verifyOTP()">Verifikasi</button>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      async function verifyOTP() {
+        const otp = document.getElementById("otp").value;
+
+        if (!otp) {
+          document.getElementById("result").innerText = "OTP wajib diisi!";
+          return;
+        }
+        console.log(otp);
+
+        const response = await fetch("/api/auth/verify-otp", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ otp }),
+        });
+
+        const data = await response.json();
+        document.getElementById("result").innerText = data.message;
+        if (!response.ok) {
+          console.error(`error : ${data.message}`);
+        }
+        document.getElementById("result").textContent =
+          "Register berhasil! Mengalihkan...";
+        setTimeout(() => (window.location.href = "/"), 2000);
+      }
+    </script>
+  </body>
+</html>

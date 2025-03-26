@@ -58,6 +58,13 @@
       .btn-google {
         background-color: #db4437;
       }
+      .btn-forgot {
+        background: none;
+        color: #2196f3;
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 14px;
+      }
       .btn:hover {
         opacity: 0.8;
       }
@@ -81,9 +88,13 @@
       </form>
 
       <a href="/register" class="btn btn-register">Register</a>
-      <a href="/api/auth/google" class="btn btn-google"
-        >Lanjutkan dengan Google</a
-      >
+      <a href="/api/auth/google" class="btn btn-google">Lanjutkan dengan Google</a>
+
+      <!-- Tombol Lupa Password -->
+      <button class="btn-forgot" onclick="location.href='/users/reset-password'">
+        Lupa Password?
+      </button>
+
       <p class="error-msg" id="errorMsg"></p>
       <p class="success-msg" id="successMsg"></p>
     </div>

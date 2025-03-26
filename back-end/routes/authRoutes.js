@@ -22,7 +22,7 @@ router.post('/logout', protectedMiddleware, logoutUser);
 
 router.get('/me', protectedMiddleware, currentUser);
 
-// send ulang kode otp {email}
+// send ulang kode otp 
 router.post('/otp', otpMiddleware, sendOtpHandler);
 // otp verify
 router.post('/otp/verify', otpMiddleware, verifyUserOTP);
@@ -34,5 +34,5 @@ router.post('/reset-password', resetPasswordByEmail);
 router.post('/reset-password/verify', otpMiddleware, verifyResetPasswordByEmail);
 
 // update password setelah verify otp {password}
-router.put('/reset-password', resetPasswordMiddleware, updatePasswordByEmail );
+router.put('/reset-password/verify/update-password', resetPasswordMiddleware, updatePasswordByEmail );
 module.exports = router;

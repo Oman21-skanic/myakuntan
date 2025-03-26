@@ -307,7 +307,7 @@ const resetPasswordByEmail = asyncHandler(async (req, res) => {
       return res.status(400).json({status: 'fail', message: 'Email wajib diisi'});
     }
 
-    // Cari user berdasarkan email
+    // Cari user berdasarkan email 
     const userData = await User.findOne({email});
 
     // Jika user tidak ditemukan atau belum diverifikasi
@@ -371,7 +371,7 @@ const verifyResetPasswordByEmail = asyncHandler(async (req, res) => {
     return res.status(201).json({status: 'success', message: 'Verifikasi berhasil, password bisa diupdate dalam 15 menit'});
   } catch (error) {
     console.error('❌ Error saat verifikasi OTP:', error.message);
-    return res.status(500).json({status: 'fail', message: 'Terjadi kesalahan saat verifikasi OTP.'});
+    return res.status(500).json({status: 'fail', message: error.message});
   }
 });
 

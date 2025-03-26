@@ -7,6 +7,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require("cors");
 
 require('dotenv').config();
 
@@ -14,6 +15,9 @@ require('dotenv').config();
 const host =
   process.env.NODE_ENV === 'production' ? process.env.HOST : 'localhost';
 const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
+
+//mengijinkan semua cors
+app.use(cors());
 
 // middleware parsing body request
 app.use(express.json()); // Middleware untuk parsing JSON

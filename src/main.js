@@ -5,4 +5,4 @@ import { initCarousel } from './scripts/carousel';
 document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
 
-});
+})

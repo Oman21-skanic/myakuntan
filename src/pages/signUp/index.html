@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/Logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link rel="stylesheet" href="../../styles/signup.css" />
+    <title>Signup To MyAkuntan</title>
+  </head>
+  <body>
+    <section class="signUpPage">
+      <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+        <div
+          class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-3xl flex justify-center flex-1 p-10"
+        >
+          <div class="signup-elements border-2 w-1/2 py-5">
+            <h1
+              class="text-black text-2xl/8 md:text-3xl text-center font-semibold transition-all duration-300 ease-in-out"
+            >
+              Create an account
+            </h1>
+            <p class="text-center text-gray-600 text-sm">
+              Daftar sekarang dan rasakan kemudahan mengelola keuangan Anda
+            </p>
+            <button type="button" class="buttonGoogle flex ml-15 mt-[10px] w-6/7 h-10 p-[10px] mx-auto border-[1px] border-solid border-[#ccc] bg-[white] rounded-[9px] justify-center items-center cursor-pointer font-semibold" onclick="loginWithGoogle()">
+              <img class="w-[30px] mr-[10px]" src="../../assets/images/google.svg" alt="google">
+              Continue with Google
+            </button>
+            <div class="form-container p-5">
+              <form class="flex flex-col gap-7" id="signupForm ">
+                <div class="nameGroup w-full h-fit flex gap-3 items-center">
+                  <i class="fa-solid fa-user text-2xl"></i>
+                  <input
+                    type="text"
+                    name="firstname"
+                    id="firstname"
+                    required
+                    maxlength="25"
+                    placeholder="First Name"
+                    autocomplete="given-name"
+                    pattern="[A-Za-z\s]+"
+                    title="Nama hanya boleh mengandung huruf dan spasi"
+                    class="shadow-sm rounded-md w-1/2 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  />
+                  <input
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    required
+                    maxlength="25"
+                    placeholder="last Name"
+                    autocomplete="family-name"
+                    pattern="[A-Za-z\s]+"
+                    title="Nama hanya boleh mengandung huruf dan spasi"
+                    class="shadow-sm rounded-md w-1/2 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+                <div class="emailGroup w-full h-fit flex gap-3 items-center">
+                  <i class="fa-solid fa-envelope text-[22px]"></i>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    placeholder="user@example.com"
+                    autocomplete="email"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    title="Masukkan email yang valid (contoh: user@example.com)"
+                    class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+                <div class="passwordGroup w-full h-fit flex gap-3 items-center">
+                  <i class="fa-solid fa-lock text-2xl"></i>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                    placeholder="Password"
+                    autocomplete="new-password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                    title="Password harus memiliki setidaknya satu huruf besar, satu huruf kecil, dan satu angka. Panjang minimal 8 karakter."
+                    class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+                <div class="terms ml-8 flex items-center">
+                  <input class="h-5 w-5 appearance-none rounded border-2 border-gray-300 checked:border-transparent checked:bg-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200 transition-colors duration-100" type="checkbox" name="terms" id="terms" id="terms" />
+                  <label for="terms" class="text-sm text-gray-600 ml-3">
+                    Ya, saya setuju dengan
+                    <a
+                      href="#"
+                      class="text-blue-600 hover:underline"
+                      required
+                      >Terms and Conditions</a
+                    >
+                  </label>
+                </div>
+                <button type="submit" class="signupBtn  bg-black text-white w-6/7 mx-auto h-[40px] rounded-xl">Create account</button>
+              </form>
+            </div>
+          </div>
+          <figure class="image border-2 border-green-400 w-1/2">
+            <img class="w-full" src="" alt="" />
+          </figure>
+        </div>
+      </div>
+    </section>
+    <script src="./signup.js"></script>
+    <script
+      src="https://kit.fontawesome.com/8c593ad833.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  </body>
+</html>

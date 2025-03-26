@@ -7,7 +7,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const cors = require("cors");
+const cors = require('cors');
 
 require('dotenv').config();
 
@@ -16,7 +16,7 @@ const host =
   process.env.NODE_ENV === 'production' ? process.env.HOST : 'localhost';
 const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
 
-//mengijinkan semua cors
+// mengijinkan semua cors
 app.use(cors());
 
 // middleware parsing body request
@@ -53,8 +53,9 @@ async function start() {
   }
 }
 
-start();
 
 app.listen(port, host, () => {
   console.log(`server running on http://${host}:${port}`);
 });
+
+module.exports = start;

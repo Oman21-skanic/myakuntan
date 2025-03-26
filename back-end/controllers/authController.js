@@ -307,7 +307,7 @@ const resetPasswordByEmail = asyncHandler(async (req, res) => {
       return res.status(400).json({status: 'fail', message: 'Email wajib diisi'});
     }
 
-    // Cari user berdasarkan email 
+    // Cari user berdasarkan email
     const userData = await User.findOne({email});
 
     // Jika user tidak ditemukan atau belum diverifikasi

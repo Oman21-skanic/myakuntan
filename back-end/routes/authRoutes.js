@@ -22,7 +22,7 @@ router.post('/logout', protectedMiddleware, logoutUser);
 
 router.get('/me', protectedMiddleware, currentUser);
 
-// send ulang kode otp 
+// send ulang kode otp
 router.post('/otp', otpMiddleware, sendOtpHandler);
 // otp verify
 router.post('/otp/verify', otpMiddleware, verifyUserOTP);

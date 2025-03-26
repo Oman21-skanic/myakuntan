@@ -3,10 +3,8 @@ const express = require('express');
 const router = express.Router();
 const {
   protectedMiddleware,
-  protectedUser,
 } = require('../middleware/authMiddleware');
 const {
-  redirectDashboard,
   userDashboard,
 } = require('../controllers/dashboardController');
 

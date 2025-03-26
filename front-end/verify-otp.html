@@ -11,7 +11,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: #ffeb3b; /* Kuning */
+        background-color: #ffeb3b;
       }
       .container {
         background: white;
@@ -31,7 +31,7 @@
       button {
         width: 100%;
         padding: 10px;
-        background: #4caf50; /* Hijau */
+        background: #4caf50;
         color: white;
         border: none;
         border-radius: 5px;
@@ -39,7 +39,25 @@
         font-size: 16px;
       }
       button:hover {
-        background: #388e3c; /* Hijau lebih gelap */
+        background: #388e3c;
+      }
+      #resendButton {
+        background: #ff9800;
+        margin-top: 10px;
+      }
+      #result {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      .error {
+        color: red;
+      }
+      .success {
+        color: green;
+      }
+      .loading {
+        opacity: 0.7;
+        cursor: not-allowed;
       }
     </style>
   </head>
@@ -48,35 +66,98 @@
       <h2>Verifikasi OTP</h2>
       <p>Masukkan kode OTP yang telah dikirim ke email Anda:</p>
       <input type="text" id="otp" placeholder="Masukkan OTP" maxlength="6" />
-      <button onclick="verifyOTP()">Verifikasi</button>
+      <button id="verifyButton" onclick="verifyOTP()">Verifikasi</button>
+      <button id="resendButton" onclick="resendOTP()">Kirim Ulang OTP</button>
       <p id="result"></p>
     </div>
 
     <script>
       async function verifyOTP() {
-        const otp = document.getElementById("otp").value;
+        const otpInput = document.getElementById("otp");
+        const verifyButton = document.getElementById("verifyButton");
+        const resultText = document.getElementById("result");
 
-        if (!otp) {
-          document.getElementById("result").innerText = "OTP wajib diisi!";
+        if (!otpInput.value) {
+          resultText.innerText = "OTP wajib diisi!";
+          resultText.className = "error";
           return;
         }
-        console.log(otp);
 
-        const response = await fetch("/api/auth/verify-otp", {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ otp }),
-        });
+        // Set tombol ke mode loading
+        verifyButton.innerText = "Memverifikasi...";
+        verifyButton.disabled = true;
+        verifyButton.classList.add("loading");
 
-        const data = await response.json();
-        document.getElementById("result").innerText = data.message;
-        if (!response.ok) {
-          console.error(`error : ${data.message}`);
+        try {
+          const response = await fetch("/api/auth/verify-otp", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ otp: otpInput.value }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            resultText.innerText = `Error: ${data.message}`;
+            resultText.className = "error";
+          } else {
+            resultText.innerText = data.message;
+            resultText.className = "success";
+
+            if (data.status === "success") {
+              setTimeout(() => {
+                window.location.href = "/login";
+              }, 2000);
+            }
+          }
+        } catch (error) {
+          resultText.innerText = "Terjadi kesalahan, coba lagi.";
+          resultText.className = "error";
+          console.error("Error:", error);
+        } finally {
+          // Reset tombol setelah selesai
+          verifyButton.innerText = "Verifikasi";
+          verifyButton.disabled = false;
+          verifyButton.classList.remove("loading");
         }
-        document.getElementById("result").textContent =
-          "Register berhasil! Mengalihkan...";
-        setTimeout(() => (window.location.href = "/"), 2000);
+      }
+
+      async function resendOTP() {
+        const resendButton = document.getElementById("resendButton");
+        const resultText = document.getElementById("result");
+
+        // Set tombol ke mode loading
+        resendButton.innerText = "Mengirim...";
+        resendButton.disabled = true;
+        resendButton.classList.add("loading");
+
+        try {
+          const response = await fetch("/api/auth/otp", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            resultText.innerText = `Error: ${data.message}`;
+            resultText.className = "error";
+          } else {
+            resultText.innerText = "OTP telah dikirim ulang ke email Anda.";
+            resultText.className = "success";
+          }
+        } catch (error) {
+          resultText.innerText = "Terjadi kesalahan, coba lagi.";
+          resultText.className = "error";
+          console.error("Error:", error);
+        } finally {
+          // Reset tombol setelah selesai
+          resendButton.innerText = "Kirim Ulang OTP";
+          resendButton.disabled = false;
+          resendButton.classList.remove("loading");
+        }
       }
     </script>
   </body>

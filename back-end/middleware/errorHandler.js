@@ -17,7 +17,7 @@ const renderPage = async (filePath, res, next, error) => {
         .replace(/{{statusCode}}/g, statusCode)
         .replace(/{{errorMessage}}/g, errorMessage);
 
-    res.send(pageContent);
+    res.status(statusCode).send(pageContent);
   } catch (error) {
     if (res.headersSent) {
       return; // ✅ Kalau header sudah dikirim, jangan kirim respons lagi

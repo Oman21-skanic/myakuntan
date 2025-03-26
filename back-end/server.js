@@ -16,8 +16,8 @@ const host =
 const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
 
 // middleware parsing body request
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.json()); // Middleware untuk parsing JSON
+app.use(express.urlencoded({extended: true})); // (Opsional) Parsing form-urlencoded
 
 // cookies
 app.use(cookieParser());

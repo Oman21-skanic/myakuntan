@@ -33,9 +33,6 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  EmailVerifiedAt: {
-    type: Date,
-  },
   isVerified: {
     type: Boolean,
     default: false,
@@ -51,6 +48,12 @@ const userSchema = new Schema({
     type: Date,
   },
   updatedAt: {
+    type: Date,
+  },
+  otp: {
+    type: String,
+  },
+  otpExpires: {
     type: Date,
   },
 });

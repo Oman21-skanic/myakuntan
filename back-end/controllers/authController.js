@@ -153,7 +153,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   // search user di database
   const userData = await User.findOne({email: req.body.email});
-  if (!userData) {
+  if (!userData || !userData.isVerified) {
     return res.status(404).json({status: 'fail', message: 'User tidak ditemukan'});
   }
   // jika mendaftar dengan oauth harus login dengan cara yang sama
@@ -204,7 +204,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   } catch (error) {
     console.log(`gagal logout ${error.message}`);
     res.status(500).json({
-      status: 'error',
+      status: 'fail',
       message: 'Terjadi kesalahan saat logout',
       error: error.message,
     });

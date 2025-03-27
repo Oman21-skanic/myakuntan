@@ -24,7 +24,7 @@ const getUserById = asyncHandler( async (req, res) => {
     res.json({status: 'success', message: 'data user berhasil diambil', data: user});
   } catch (error) {
     console.error(error);
-    res.status(500).json({message: 'Terjadi kesalahan server'});
+    res.status(500).json({status: 'fail', message: 'Terjadi kesalahan server'});
   }
 });
 

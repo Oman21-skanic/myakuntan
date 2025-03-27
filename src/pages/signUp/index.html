@@ -23,19 +23,31 @@
         <div
           class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-3xl flex justify-center flex-1 p-10"
         >
-          <div class="signup-elements border-2 w-1/2 py-5">
+          <div class="signup-elements w-1/2 py-5 my-auto">
             <h1
-              class="text-black text-2xl/8 md:text-3xl text-center font-semibold transition-all duration-300 ease-in-out"
+              class="text-black text-3xl/8 md:text-4xl text-center font-semibold transition-all duration-300 ease-in-out"
             >
               Create an account
             </h1>
-            <p class="text-center text-gray-600 text-sm">
-              Daftar sekarang dan rasakan kemudahan mengelola keuangan Anda
+            <p class="text-center text-gray-600 text-sm mb-10">
+              rasakan kemudahan mengelola keuangan Anda
             </p>
-            <button type="button" class="buttonGoogle flex ml-15 mt-[10px] w-6/7 h-10 p-[10px] mx-auto border-[1px] border-solid border-[#ccc] bg-[white] rounded-[9px] justify-center items-center cursor-pointer font-semibold" onclick="loginWithGoogle()">
-              <img class="w-[30px] mr-[10px]" src="../../assets/images/google.svg" alt="google">
+            <button
+              type="button"
+              class="buttonGoogle flex ml-15 mt-[10px] w-6/7 h-10 p-[10px] mx-auto border-[1px] border-solid border-[#ccc] bg-[white] rounded-[9px] justify-center items-center cursor-pointer font-semibold"
+              onclick="loginWithGoogle()"
+            >
+              <img
+                class="w-[30px] mr-[10px]"
+                src="../../assets/images/google.svg"
+                alt="google"
+              />
               Continue with Google
             </button>
+            <div class="line w-full flex items-center mt-3">
+              
+              <span class="text-center pl-7 mx-auto text-black font-semibold text-2xl">OR</span>
+            </div>
             <div class="form-container p-5">
               <form class="flex flex-col gap-7" id="signupForm ">
                 <div class="nameGroup w-full h-fit flex gap-3 items-center">
@@ -94,23 +106,30 @@
                   />
                 </div>
                 <div class="terms ml-8 flex items-center">
-                  <input class="h-5 w-5 appearance-none rounded border-2 border-gray-300 checked:border-transparent checked:bg-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200 transition-colors duration-100" type="checkbox" name="terms" id="terms" id="terms" />
+                  <input
+                    class="h-5 w-5 appearance-none rounded border-2 border-gray-300 checked:border-transparent checked:bg-green-500 focus:outline-none focus:ring-1 focus:ring-blue-200 transition-colors duration-100"
+                    type="checkbox"
+                    name="terms"
+                    id="terms"
+                    id="terms"
+                  />
                   <label for="terms" class="text-sm text-gray-600 ml-3">
                     Ya, saya setuju dengan
-                    <a
-                      href="#"
-                      class="text-blue-600 hover:underline"
-                      required
+                    <a href="#" class="text-blue-600 hover:underline" required
                       >Terms and Conditions</a
                     >
                   </label>
                 </div>
-                <button type="submit" class="signupBtn  bg-black text-white w-6/7 mx-auto h-[40px] rounded-xl">Create account</button>
+                <button
+                  type="submit"
+                  class="signupBtn bg-black text-white w-6/7 mx-auto h-[40px] rounded-xl"
+                >
+                  Create account
+                </button>
               </form>
             </div>
           </div>
-          <figure class="image border-2 border-green-400 w-1/2">
-            <img class="w-full" src="" alt="" />
+          <figure class="image rounded-tr-4xl rounded-bl-4xl w-1/2">
           </figure>
         </div>
       </div>

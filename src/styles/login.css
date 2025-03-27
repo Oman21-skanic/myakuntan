@@ -13,124 +13,100 @@
 box-sizing: border-box;
 }
 
-html {
-scroll-behavior: smooth;
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Fira Sans', sans-serif;
 }
 
 body {
-  font-family: "Fira Sans", sans-serif;
-  background-color: #ffffff;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.logogede {
-  position: absolute;
-  top: 150px;
-  left: -700px;
-  width: 400px;
-  height: 400px;
-  opacity: 1.2;
-  z-index: -1;
-  border-radius: 50%;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: #f4f7fc;
 }
 
 main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 350px;
+  background: #fff;
+  padding: 20px;
   border-radius: 10px;
-  position: relative;
-}
-
-h3 {
-  font-size: 18px;
-  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 100%;
 }
 
 .form-container {
+  flex: 1;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 10rem;
+  justify-content: center;
 }
 
-.loginInput {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+h3 {
+  text-align: center;
+  font-weight: 900;
+  margin-bottom: 20px;
 }
 
 .input-group {
   display: flex;
   align-items: center;
-  width: 180%;
-  margin-bottom: 10px;
-  background-color: var(--putih);
-  border: 1px solid #ccc;
-  border-radius: 9px;
-  padding: 5px;
+  background: #eef2f7;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
 
 .input-group img {
   width: 20px;
   margin-right: 10px;
-  margin-left: 10px;
 }
 
 .input-group input {
   flex: 1;
-  padding: 10px;
   border: none;
   outline: none;
-  font-size: 14px;
   background: transparent;
+  font-size: 14px;
 }
 
 .button {
-  width: 150%;
+  width: 100%;
   padding: 10px;
-  background-color: #28a745;
   border: none;
-  color: white;
+  border-radius: 5px;
+  background: var(--ijo);
+  color: #fff;
   font-size: 16px;
-  font-weight: bold;
-  border-radius: 9px;
+  font-weight: 500;
   cursor: pointer;
   margin-top: 10px;
-  margin-bottom: 12px;
 }
 
 .button:hover {
-  background-color: #218838;
+  background: var(--hijau);
 }
 
 .buttonGoogle {
-  margin-top: 10px;
-  width: 150%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background: white;
-  border-radius: 9px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  color: var(--hitam);
-  font-weight: 600;
-}
-
-.buttonGoogle:hover {
-  background-color: var(--abu);
+  margin-top: 10px;
+  border: 1px solid #ccc;
 }
 
 .buttonGoogle img {
@@ -138,24 +114,34 @@ h3 {
   margin-right: 10px;
 }
 
-
+.buttonGoogle:hover {
+  background: #f0f0f0;
+}
 
 p {
+  text-align: center;
   margin-top: 10px;
   font-size: 14px;
 }
 
 p a {
-  color: var(--hitam);
-  cursor: pointer;
-  font-weight: bold;
+  color: var(--ijo);
   text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+.ilustrasi {
+  width: 350px;
+  border-radius: 10px;
 }
 
 .toast {
   position: fixed;
   bottom: 20px; 
-  right: 20px; 
+  left: 20px; 
   background-color: var(--ijo);
   color: white;
   padding: 22px 44px;
@@ -177,35 +163,4 @@ p a {
 
 .toast.error {
   background-color: #cc0000;
-}
-
-@media screen and (max-width: 1024px) {
-  .logogede {
-    left: 0;
-    transform: translateX(-120%);
-  }
-}
-/* media query setengah layar laptop */
-@media screen and (max-width: 768px) {
-  .logogede {
-    left: 30px;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .input-group {
-    width: 140%;
-  }
-
-  .button {
-    width: 120%;
-  }
-
-  .buttonGoogle {
-    width: 120%;
-  }
-
-  .logogede {
-    left: 80px;
-  }
 }

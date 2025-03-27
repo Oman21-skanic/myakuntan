@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login myAkuntan</title>
+    <link rel="stylesheet" href="/src/styles/login.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+    <script>
+        fetch("/src/pages/navbar.html")
+            .then(response => response.text())
+            .then(data => document.getElementById("navbar-container").innerHTML = data);
+    </script>
+
+    <main>
+        <img src="/src/assets/images/Logo.svg" alt="logoguede" class="logogede">
+        <div class="form-container">
+            <h3>Login To MyAkuntan</h3>
+            <form action="" id="loginForm" class="loginInput">
+
+                <div class="input-group">
+                <img src="/src/assets/images/mail.svg" alt="email">
+                <input type="email" name="email" id="inputEmail" 
+                maxlength="100"
+                placeholder="Masukkan Email"
+                autocomplete="email"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                title="Masukkan email yang valid (contoh: user@example.com)"
+                required>
+                </div>
+
+                <div class="input-group">
+                <img src="/src/assets/images/pass.svg" alt="password">
+                <input type="password" 
+                name="password" 
+                id="inputPassword" 
+                maxlength="50"
+                minlength="8"
+                placeholder="Masukkan Password"
+                autocomplete="current-password"
+                title="Password harus minimal 8 karakter"
+                required
+                >
+                </div>
+
+                <button type="submit" class="button" id="buttonLogin">Let's Go</button>
+            </form>
+            <button type="button" class="buttonGoogle" onclick="loginWithGoogle()">
+                <img src="/src/assets/images/google 1.svg" alt="google">
+                Login With Google
+            </button>
+            <p>Don't have an account? <a href="/signup.html">Sign Up</a></p>
+        </div>
+    </main>
+
+    <script src="/src/script/login.js"></script>
+</body>
+</html>

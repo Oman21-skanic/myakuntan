@@ -5,28 +5,23 @@ const fs = require('fs');
 const path = require('path');
 const {isGuest} = require('../middleware/authMiddleware');
 
+const clientDistPath = path.join(__dirname, '../../client/dist');
+
 router.get('/', (req, res) => {
-  const landingPage = fs.readFileSync(
-      path.resolve(__dirname, '../../front-end/index.html'),
-      'utf-8',
-  );
-  res.send(landingPage);
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 router.get('/login', isGuest, (req, res) => {
-  const loginPage = fs.readFileSync(
-      path.resolve(__dirname, '../../front-end/login.html'),
-      'utf-8',
-  );
-  res.send(loginPage);
+  res.sendFile(path.join(__dirname, '../../../client/src/pages/login/login.html'));
 });
 
 router.get('/login/verify', isGuest, (req, res) => {
-  const loginPage = fs.readFileSync(
+  let htmlContent = fs.readFileSync(
       path.resolve(__dirname, '../../front-end/verify-otp.html'),
       'utf-8',
   );
-  res.send(loginPage);
+  htmlContent = htmlContent.replace('{{otp}}', 'otp');
+  res.send(htmlContent);
 });
 
 router.get('/register', isGuest, (req, res) => {
@@ -54,11 +49,12 @@ router.get('/users/update-password', (req, res) => {
 });
 
 router.get('/users/reset-password/verify', isGuest, (req, res) => {
-  const verifyOtpPage = fs.readFileSync(
-      path.resolve(__dirname, '../../front-end/verify-reset-password.html'),
+  let htmlContent = fs.readFileSync(
+      path.resolve(__dirname, '../../front-end/verify-otp.html'),
       'utf-8',
   );
-  res.send(verifyOtpPage);
+  htmlContent = htmlContent.replace('{{otp}}', 'reset-password');
+  res.send(htmlContent);
 });
 
 

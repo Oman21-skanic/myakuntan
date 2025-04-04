@@ -168,7 +168,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // respon mengenbalikan jwt token jika benar
   await createResToken(userData, 200, res);
   console.log(`${userData.name} berhasil login.`);
-  res.json({status: 'fail', message: 'Berhasil login'});
+  res.json({status: 'success', message: 'Berhasil login'});
 });
 
 // GET user dari cookie token jwt. Res json data user

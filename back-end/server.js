@@ -4,10 +4,14 @@ const authRoutes = require('./routes/authRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 const pageRoutes = require('./routes/pagesRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const ledgerRoutes = require('./routes/ledgersRoutes');
+const accountsRoutes = require('./routes/accountsRoutes');
+const transactionsRoutes = require('./routes/transactionsRoutes');
 const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -26,17 +30,34 @@ app.use(express.urlencoded({extended: true})); // (Opsional) Parsing form-urlenc
 // cookies
 app.use(cookieParser());
 
+// Menyajikan file statis dari folder dist (hasil build frontend)
+app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+app.use(express.static(path.join(__dirname, '../../client')));
+
+// Semua permintaan lain diarahkan ke index.html dari frontend
+app.use('/', pageRoutes);
+
 // auth routes
 app.use('/api/auth', authRoutes);
 
 // route main page
-app.use('/', pageRoutes);
+// app.use('/', pageRoutes);
 
 // users routes
 app.use('/api/users', usersRoutes);
 
 // dashboard routes
 app.use('/dashboard', dashboardRoutes);
+
+// ledger routes
+app.use('/api/ledgers', ledgerRoutes);
+
+// accounts routes
+app.use('/api/accounts', accountsRoutes);
+
+// transaction routes
+app.use('/api/transactions', transactionsRoutes);
 
 // error path Not found
 app.use(notFoundPath);

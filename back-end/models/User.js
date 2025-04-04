@@ -33,29 +33,15 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  is_oauth: {
-    type: Boolean,
-    default: false,
-  },
-  picture: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-  },
-  updatedAt: {
-    type: Date,
-  },
-  otp: {
-    type: String,
-  },
-  otpExpires: {
-    type: Date,
-  },
+  isVerified: {type: Boolean, default: false},
+  is_oauth: {type: Boolean, default: false},
+  picture: {type: String},
+  createdAt: {type: Date, default: Date.now},
+  updatedAt: {type: Date, default: Date.now},
+  otp: {type: String},
+  otpExpires: {type: Date},
+  ledgerId: {type: mongoose.Schema.Types.ObjectId, ref: 'Ledger'},
+  ledgerName: {type: String},
 });
 
 // method untuk compare passsword

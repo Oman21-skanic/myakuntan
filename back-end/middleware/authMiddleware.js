@@ -17,7 +17,7 @@ const protectedMiddleware = asyncHandler(async (req, res, next) => {
     req.user = await User.findById(decoded.id).select('_id name email');
     next();
   } catch (error) {
-    return res.status(401).json({status: 'fail', message: 'Invalid or expired token', error: error.message});
+    return res.status(401).json({status: 'fail', message: 'Invalid or expired token', data: error.message});
   }
 });
 
@@ -26,24 +26,17 @@ const isAdmin = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next();
   } else {
-    const error = new Error('Access denied, admin privileges required');
-    error.statusCode = 403;
-    throw error;
+    res.status(401).json({status: 'fail', message: 'You do not have permission'});
   }
 });
 
 // validasi user untuk akses pages web
 const isUser = (req, res, next) => {
   if (!req.user) {
-    const error = new Error('Unauthorized, please log in');
-    error.statusCode = 401;
-    throw error;
-  }
-
-  if (req.user.role !== 'user') {
-    const error = new Error('Forbidden, only users can access this');
-    error.statusCode = 403;
-    throw error; // Lempar error
+    return res.status(401).json({
+      status: 'fail',
+      message: 'Unauthorized, please log in',
+    });
   }
   next();
 };
@@ -60,20 +53,23 @@ const isGuest = (req, res, next) => {
 const protectedUser = (req, res, next) => {
   const userId = req.params.id;
 
-  // admin bisa akses setaip dashboard user
+  // admin bisa akses setiap dashboard user
   if (req.user && req.user.role === 'admin') {
-    next();
+    return next();
   }
+
   if (!req.user) {
-    const error = new Error('User not authenticated');
-    error.statusCode = 401;
-    throw error;
+    return res.status(401).json({
+      status: 'fail',
+      message: 'User not authenticated',
+    });
   }
 
   if (req.user._id.toString() !== userId) {
-    const error = new Error('Forbidden, access denied for this user');
-    error.statusCode = 403;
-    throw error;
+    return res.status(403).json({
+      status: 'fail',
+      message: 'Forbidden, access denied for this user',
+    });
   }
 
   next();
@@ -93,7 +89,7 @@ const otpMiddleware = asyncHandler(async (req, res, next) => {
     console.log(req.user);
     next();
   } catch (error) {
-    return res.status(401).json({status: 'fail', message: error.message ? error.message : 'invalid or error token', error: error.message});
+    return res.status(401).json({status: 'fail', message: error.message ? error.message : 'invalid or error token', data: error.message});
   }
 });
 

@@ -57,6 +57,7 @@ const createLedger = async function(userId, ledgerName, ledgerType) {
         selectedAccounts.map((acc) => ({
           ...acc,
           ledgerId: newLedger._id,
+          type: ledgerType,
           total_debit: 0,
           total_credit: 0,
         })),

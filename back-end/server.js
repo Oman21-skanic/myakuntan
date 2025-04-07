@@ -1,17 +1,16 @@
 const express = require('express');
 const app = express();
-const authRoutes = require('./routes/authRoutes');
-const usersRoutes = require('./routes/usersRoutes');
-const pageRoutes = require('./routes/pagesRoutes');
-const dashboardRoutes = require('./routes/dashboardRoutes');
-const ledgerRoutes = require('./routes/ledgersRoutes');
-const accountsRoutes = require('./routes/accountsRoutes');
-const transactionsRoutes = require('./routes/transactionsRoutes');
+const authRoutes = require('./routes/auth.routes');
+const usersRoutes = require('./routes/users.routes');
+const passwordResetRoutes = require('./routes/passwordReset.routes');
+const pageRoutes = require('./routes/pages.routes');
+const ledgerRoutes = require('./routes/ledgers.routes');
+const accountsRoutes = require('./routes/accounts.routes');
+const transactionsRoutes = require('./routes/transactions.routes');
 const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const path = require('path');
 
 require('dotenv').config();
 
@@ -30,34 +29,26 @@ app.use(express.urlencoded({extended: true})); // (Opsional) Parsing form-urlenc
 // cookies
 app.use(cookieParser());
 
-// Menyajikan file statis dari folder dist (hasil build frontend)
-app.use(express.static(path.join(__dirname, '../../client/dist')));
-
-app.use(express.static(path.join(__dirname, '../../client')));
-
 // Semua permintaan lain diarahkan ke index.html dari frontend
 app.use('/', pageRoutes);
 
 // auth routes
-app.use('/api/auth', authRoutes);
-
-// route main page
-// app.use('/', pageRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 // users routes
-app.use('/api/users', usersRoutes);
+app.use('/api/v1/users', usersRoutes);
 
-// dashboard routes
-app.use('/dashboard', dashboardRoutes);
+// reset password routes
+app.use('/api/v1/password-resets', passwordResetRoutes);
 
 // ledger routes
-app.use('/api/ledgers', ledgerRoutes);
+app.use('/api/v1/ledgers', ledgerRoutes);
 
 // accounts routes
-app.use('/api/accounts', accountsRoutes);
+app.use('/api/v1/accounts', accountsRoutes);
 
 // transaction routes
-app.use('/api/transactions', transactionsRoutes);
+app.use('/api/v1/transactions', transactionsRoutes);
 
 // error path Not found
 app.use(notFoundPath);

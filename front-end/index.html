@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Landing Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -37,13 +38,20 @@
       }
 
       .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 90vh;
-        text-align: center;
+        max-width: 900px;
+        margin: 40px auto;
         padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .markdown-body {
+        padding: 2rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        overflow-x: auto;
       }
 
       h1 {
@@ -66,16 +74,27 @@
     <div class="container">
       <h1>Selamat Datang <span id="nameUser"></span></h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut sapien
-        ut mi tincidunt tempus. Donec venenatis libero ac quam porta, ac
-        ullamcorper metus convallis.
+        Ini adalah dokumentasi API.
       </p>
+      <p>
+        Catatan: api Ledger, accounts dan transactions dapat berubah karena belum fix dengan erd yang dibutuhkan
+      </p>
+      <div id="markdownPreview" class="markdown-body"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
+      fetch('/documentation/api') 
+        .then(res => res.text())
+        .then(md => {
+          document.getElementById('markdownPreview').innerHTML = marked.parse(md);
+        });
+
       async function checkLoginStatus() {
         try {
-          const response = await fetch("/api/auth/me");
+          const response = await fetch("/api/v1/users/me");
+          const authButton = document.getElementById("authButton");
+
           if (!response.ok) {
             authButton.textContent = "Login";
             authButton.href = "/login";
@@ -83,7 +102,6 @@
           }
 
           const user = await response.json();
-          const authButton = document.getElementById("authButton");
           authButton.textContent = "Dashboard";
           authButton.href = "/dashboard";
           document.getElementById('nameUser').textContent = user.data.name;

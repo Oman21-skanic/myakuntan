@@ -32,10 +32,10 @@ const getUserById = asyncHandler( async (req, res) => {
 const updateUserHandler = asyncHandler( async (req, res) => {
   try {
     const {id} = req.params;
-    const {email, name} = req.body;
+    const {name} = req.body;
     // Cek apakah request body kosong
-    if (!email || !name) {
-      return res.status(400).json({status: 'fail', message: 'field name dan email harus di isi', error: `name: ${name}, email: ${email}`});
+    if ( !name) {
+      return res.status(400).json({status: 'fail', message: 'field name harus di isi', error: `name: ${name}`});
     }
 
     const updatedAt = new Date().toISOString();
@@ -43,7 +43,6 @@ const updateUserHandler = asyncHandler( async (req, res) => {
     // membuat penyimpanan data sementara
     const updateData = {};
     if (name) updateData.name = name;
-    if (email) updateData.email = email;
     updateData.updatedAt = updatedAt;
 
     // update user di mongodb
@@ -82,7 +81,7 @@ const updatePasswordHandler = asyncHandler( async (req, res) => {
 
     res.status(200).json({status: 'success', message: 'Password berhasil diperbarui'});
   } catch (error) {
-    res.status(500).json({status: 'fail', message: 'Terjadi kesalahan', error: error.message});
+    res.status(500).json({status: 'fail', message: 'Terjadi kesalahan', data: error.message});
   }
 });
 

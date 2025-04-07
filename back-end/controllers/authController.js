@@ -68,15 +68,14 @@ const registerUser = asyncHandler(async (req, res) => {
           .cookie('tempToken', tempToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 30 * 60 * 1000, // 10 menit
+            maxAge: 30 * 60 * 1000, // 30 menit
           })
           .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
     } catch (error) {
       console.error('❌ Error saat mengirim OTP:', error.message);
-      return res.status(500).json({status: 'fail', message: 'Gagal mengirim OTP', error: error.message});
+      return res.status(500).json({status: 'fail', message: 'Gagal mengirim OTP', data: error.message});
     }
   }
-
 
   if (userData) {
     return res.status(400).json({status: 'fail', message: 'User sudah terdaftar'});
@@ -112,7 +111,7 @@ const registerUser = asyncHandler(async (req, res) => {
         })
         .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
   } catch (error) {
-    return res.status(500).json({status: 'fail', message: 'Gagal mengirim OTP, coba lagi nanti', error: error.message});
+    return res.status(500).json({status: 'fail', message: 'Gagal mengirim OTP, coba lagi nanti', data: error.message});
   }
 });
 
@@ -174,7 +173,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // GET user dari cookie token jwt. Res json data user
 const currentUser = asyncHandler(async (req, res) => {
   // mengambil data user di database tanpa password
-  const user = await User.findById(req.user._id).select('-password');
+  const user = await User.findById(req.user._id).select('_id name email');
   console.log(user,
   );
 
@@ -206,7 +205,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     res.status(500).json({
       status: 'fail',
       message: 'Terjadi kesalahan saat logout',
-      error: error.message,
+      data: error.message,
     });
   }
 });
@@ -239,18 +238,19 @@ const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 
-// REDIRECT insialisasi login
-const googleLogin = (req, res) => {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=profile email`;
-  res.redirect(url);
-};
 
-// callback Handler
-const googleCallback = asyncHandler(async (req, res) => {
-  const {code} = req.query;
+// GOOGLE CALLBACK handler
+const googleOAuthApiHandler = asyncHandler(async (req, res) => {
+  const {code} = req.body;
+
+  if (!code) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Kode otorisasi tidak ditemukan',
+    });
+  }
 
   try {
-    // Exchange authorization code for access token
     const {data} = await axios.post('https://oauth2.googleapis.com/token', {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
@@ -262,20 +262,19 @@ const googleCallback = asyncHandler(async (req, res) => {
     // eslint-disable-next-line camelcase
     const {access_token} = data;
 
-    // Get user profile from Google
     const {data: profile} = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
       // eslint-disable-next-line camelcase
       headers: {Authorization: `Bearer ${access_token}`},
     });
-    // cari user di database
+
     let user = await User.findOne({email: profile.email});
     if (user && !user.is_oauth) {
-      const error = new Error('sepertinya anda menggunakan metode login yang salah');
-      error.statusCode = 401;
-      throw error;
+      return res.status(401).json({
+        status: 'fail',
+        message: 'Anda menggunakan metode login yang salah',
+      });
     }
 
-    // jika tidak ada add user to database
     if (!user) {
       user = await User.create({
         name: profile.name,
@@ -286,17 +285,20 @@ const googleCallback = asyncHandler(async (req, res) => {
       });
     }
 
-    createResToken(user, 201, res);
-    // jika berhasil redirect ke home page
-    res.redirect('/');
-  } catch (error) {
-    // tangkap error
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
-    throw error;
+    createResToken(user, 200, res);
+    return res.status(200).json({
+      status: 'success',
+      message: 'Login dengan Google berhasil',
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      status: 'fail',
+      message: err.message || 'Terjadi kesalahan',
+    });
   }
 });
+
 
 // POST reset password dengan email {email}
 const resetPasswordByEmail = asyncHandler(async (req, res) => {
@@ -410,6 +412,6 @@ const updatePasswordByEmail = asyncHandler( async (req, res) =>{
 
 module.exports = {
   registerUser, loginUser, createResToken, currentUser, logoutUser,
-  googleLogin, googleCallback, verifyUserOTP, sendOtpHandler, resetPasswordByEmail,
+  googleOAuthApiHandler, verifyUserOTP, sendOtpHandler, resetPasswordByEmail,
   verifyResetPasswordByEmail, updatePasswordByEmail,
 };

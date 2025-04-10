@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Halaman Tidak Ditemukan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f8f9fa;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+      }
+      h1 {
+        color: #dc3545;
+      }
+      p {
+        color: #6c757d;
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+      .error-image {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 20px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <h1>404 - Halaman Tidak Ditemukan</h1>
+      <p>Maaf, halaman yang Anda cari tidak tersedia.</p> -->
+
+      <!-- TEMPLATE FROM SERVER-->
+      <h1>{{statusCode}}</h1>
+      <p>{{errorMessage}}</p>
+      <img
+        class="error-image"
+        src="https://w3.onera.fr/sites/default/files/404-error-not-found-page-lost-1024x788.png"
+        alt="Error 404"
+      />
+      <br />
+      <a href="/" class="btn">Kembali ke Beranda</a>
+    </div>
+  </body>
+</html>

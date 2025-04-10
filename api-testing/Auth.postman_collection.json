@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "fa580ba1-bcf3-4178-88d6-d5faeea0b08b",
+		"name": "login user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "42349141"
+	},
+	"item": [
+		{
+			"name": "logout-user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{URL}}/auth/logout"
+			},
+			"response": []
+		},
+		{
+			"name": "delete user by id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/:id",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67e39721d7f505ad6091f6f6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update password by old password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "oldPassword",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "newPassword",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/:id/password",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						":id",
+						"password"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67e3d116029e452bb2ab64e1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update new Password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{URL}}/api/auth/reset-password"
+			},
+			"response": []
+		},
+		{
+			"name": "verifyResetPassword",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "otp",
+							"value": "598320",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{URL}}/api/auth/reset-password/verify"
+			},
+			"response": []
+		},
+		{
+			"name": "resetPasswordByEmail",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "putraf9207@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{URL}}/api/auth/reset-password"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "putraf9207@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{URL}}/api/auth/login"
+			},
+			"response": []
+		}
+	]
+}

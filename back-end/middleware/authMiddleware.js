@@ -49,11 +49,12 @@ const isGuest = (req, res, next) => {
   next();
 };
 
-// proteksi user berdasarkan id url dan token jwt
 const protectedUser = (req, res, next) => {
-  const userId = req.params.id;
+  const paramUserId = req.params.id;
+  const queryUserId = req.query.userId;
+  const currentUserId = req.user?._id?.toString();
 
-  // admin bisa akses setiap dashboard user
+  // Admin bisa akses semua user
   if (req.user && req.user.role === 'admin') {
     return next();
   }
@@ -65,7 +66,8 @@ const protectedUser = (req, res, next) => {
     });
   }
 
-  if (req.user._id.toString() !== userId) {
+  // Cek apakah userId dari params atau query sesuai dengan ID user yang sedang login
+  if (currentUserId !== paramUserId && currentUserId !== queryUserId) {
     return res.status(403).json({
       status: 'fail',
       message: 'Forbidden, access denied for this user',
@@ -74,6 +76,7 @@ const protectedUser = (req, res, next) => {
 
   next();
 };
+
 
 const otpMiddleware = asyncHandler(async (req, res, next) => {
   const token = req.cookies.tempToken;

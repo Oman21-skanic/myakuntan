@@ -1,7 +1,7 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const Account = require('../models/Account');
 
-const getAccountHandler = asyncHandler( async (req, res) => {
+const getDetailAccountHandler = asyncHandler( async (req, res) => {
   try {
     const {accountId} = req.params;
     if (!accountId) {
@@ -18,19 +18,20 @@ const getAccountHandler = asyncHandler( async (req, res) => {
   }
 });
 
-// GET ALL ACCOUNTS BY LEDGER ID
-const getAllAccountsHandler = asyncHandler(async (req, res) => {
-  try {
-    const {ledgerId} = req.params;
-    if (!ledgerId) {
-      return res.status(400).json({status: 'fail', message: 'Invalid ledger ID'});
-    }
-    const accounts = await Account.find({ledgerId}).populate('transactions');
-    res.json({status: 'success', message: 'Berhasil mendapat data semua account', data: accounts});
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({status: 'fail', message: 'Terjadi kesalahan server', error: error.message});
-  }
-});
+// GET /accounts?userId=xxx
+const getAccountsByUserId = asyncHandler(async (req, res) => {
+  const {userId} = req.query;
 
-module.exports = {getAccountHandler, getAllAccountsHandler};
+  if (!userId) {
+    return res.status(400).json({status: 'fail', message: 'userId tidak ditemukan di query'});
+  }
+
+  const accounts = await Account.find({user_id: userId});
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Berhasil mengambil semua akun milik user',
+    data: accounts,
+  });
+});
+module.exports = {getDetailAccountHandler, getAccountsByUserId};

@@ -4,7 +4,6 @@ const authRoutes = require('./routes/auth.routes');
 const usersRoutes = require('./routes/users.routes');
 const passwordResetRoutes = require('./routes/passwordReset.routes');
 const pageRoutes = require('./routes/pages.routes');
-const ledgerRoutes = require('./routes/ledgers.routes');
 const accountsRoutes = require('./routes/accounts.routes');
 const transactionsRoutes = require('./routes/transactions.routes');
 const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
@@ -29,7 +28,7 @@ app.use(express.urlencoded({extended: true})); // (Opsional) Parsing form-urlenc
 // cookies
 app.use(cookieParser());
 
-// Semua permintaan lain diarahkan ke index.html dari frontend
+// pages Routes
 app.use('/', pageRoutes);
 
 // auth routes
@@ -40,9 +39,6 @@ app.use('/api/v1/users', usersRoutes);
 
 // reset password routes
 app.use('/api/v1/password-resets', passwordResetRoutes);
-
-// ledger routes
-app.use('/api/v1/ledgers', ledgerRoutes);
 
 // accounts routes
 app.use('/api/v1/accounts', accountsRoutes);

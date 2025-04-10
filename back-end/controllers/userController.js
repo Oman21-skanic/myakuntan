@@ -1,7 +1,9 @@
 const asyncHandler = require('../middleware/asyncHandler');
-const User = require('../models/User');
+const models = require('../models'); // mengambil models dari models/index.js
+const User = models.User;
 const bcrypt = require('bcryptjs');
-// ambil semua data user role admin
+const {createAccounts} = require('../services/accountServices');
+// ambil semua data user previlege admin
 const allUser = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.status(200).json({
@@ -85,29 +87,62 @@ const updatePasswordHandler = asyncHandler( async (req, res) => {
   }
 });
 
-const deleteUserByIdHandler = asyncHandler( async (req, res) => {
+
+const deleteUserByIdHandler = asyncHandler(async (req, res) => {
   try {
     const {id} = req.params;
 
-    // cari dan hapus user berdasarkan ID
+    // Cari dan hapus user
     const deletedUser = await User.findByIdAndDelete(id);
 
     if (!deletedUser) {
-      return res.status(400).json({status: 'fail', message: 'User tidak ditemukan'});
+      return res.status(400).json({
+        status: 'fail',
+        message: 'User tidak ditemukan',
+      });
     }
-    // hapus token autentikasi
+
+    // Hapus semua dokumen lain yang punya field user_id = id
+    const deletePromises = [];
+
+    for (const [name, model] of Object.entries(models)) {
+      if (name === 'User') continue;
+
+      if (model.schema?.paths?.user_id) {
+        deletePromises.push(model.deleteMany({user_id: id}));
+      }
+    }
+
+    await Promise.all(deletePromises);
+
+    // Hapus cookie JWT
     res.cookie('jwt', '', {
       httpOnly: true,
-      expires: new Date(0), // Hapus cookie dengan mengatur expired time ke masa lalu
+      expires: new Date(0),
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict', // Tambahan keamanan
+      sameSite: 'strict',
     });
 
-    res.status(200).json({status: 'success', message: `user ${deletedUser.name} berhasil dihapus`});
+    res.status(200).json({
+      status: 'success',
+      message: `User ${deletedUser.name} dan semua data terkait berhasil dihapus`,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({status: 'fail', message: 'Terjadi kesalahan', error: error.message});
+    res.status(500).json({
+      status: 'fail',
+      message: 'Terjadi kesalahan',
+      error: error.message,
+    });
   }
 });
+
+const createAccountsByRoleHandler = asyncHandler( async (req, res) => {
+  const userId = req.params.id;
+  const {bidangUsaha} = req.body;
+  const result = await createAccounts(userId, bidangUsaha);
+  res.status(result.status === 'success' ? 200 : 400).json(result);
+});
+
 module.exports = {allUser, getUserById, updateUserHandler, updatePasswordHandler,
-  deleteUserByIdHandler};
+  deleteUserByIdHandler, createAccountsByRoleHandler};

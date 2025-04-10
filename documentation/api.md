@@ -439,6 +439,7 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 **Method:** `DELETE`  
 **API:** `/v1/users/:id`  
 **Credentials:** `'include'`
+**Description:** `ketika user dihapus maka semua entitas data yang berhubungan dengan user tersebut juga akan dihapus`
 
 **Response berhasil:**
 ```json
@@ -552,123 +553,41 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
   "message": "OTP belum diverifikasi atau request tidak valid."
 }
 ```
-# 📒 API Ledger (Buku Besar)
 
-## 1. Buat Buku Besar Baru
+## 🧑‍💼 USER ACCOUNTS API
+
+### 1. Buat Akun Baru untuk User
 
 **Method**: `POST`  
-**Endpoint**: `/v1/ledgers`  
+**Endpoint**: `/v1/users/:id/accounts`  
 **Credentials**: `include`  
-**Deskripsi**: Membuat buku besar (ledger) baru untuk user.
+**Deskripsi**: Membuat akun baru untuk user tertentu berdasarkan ID user.
 
-### Request Body
+#### 🔸 Body
 ```json
 {
-  "userId": "123",
-  "ledgerName": "Toko ABC",
-  "ledgerType": "dagang/jasa"
+  "bidangUsaha": "Jasa" // atau "Manufaktur" / "Perdagangan"
 }
 ```
 
-### ✅ Response Berhasil
+#### ✅ Response Berhasil
 ```json
 {
   "status": "success",
-  "message": "Buku besar berhasil dibuat.",
-  "data": { ... }
+  "message": "Accounts berhasil dibuat!"
 }
 ```
 
-### ❌ Response Gagal
+#### ❌ Response Gagal
 ```json
 {
   "status": "fail",
-  "message": "field harus di isi"
+  "message": "User sudah memiliki accounts"
 }
 ```
 
 ---
 
-## 2. Ambil Buku Besar
-
-**Method**: `GET`  
-**Endpoint**: `/v1/ledgers/:ledgerId`  
-**Credentials**: `include`  
-**Deskripsi**: Mengambil detail buku besar berdasarkan ID.
-
-### ✅ Response Berhasil
-```json
-{
-  "status": "success",
-  "message": "Buku besar ditemukan",
-  "data": { ... }
-}
-```
-
-### ❌ Response Gagal
-```json
-{
-  "status": "error",
-  "message": "ID buku besar tidak valid"
-}
-```
-
----
-
-## 3. Ubah Nama Buku Besar
-
-**Method**: `PUT`  
-**Endpoint**: `/v1/ledgers/:ledgerId`  
-**Credentials**: `include`  
-**Deskripsi**: Mengubah nama buku besar berdasarkan ID.
-
-### Request Body
-```json
-{
-  "name": "Toko Baru ABC"
-}
-```
-
-### ✅ Response Berhasil
-```json
-{
-  "status": "success",
-  "message": "Nama buku besar berhasil diubah"
-}
-```
-
-### ❌ Response Gagal
-```json
-{
-  "status": "fail",
-  "message": "ID buku besar dan nama harus diisi"
-}
-```
-
----
-
-## 4. Hapus Buku Besar
-
-**Method**: `DELETE`  
-**Endpoint**: `/v1/ledgers/:ledgerId`  
-**Credentials**: `include`  
-**Deskripsi**: Menghapus buku besar berdasarkan ID.
-
-### ✅ Response Berhasil
-```json
-{
-  "status": "success",
-  "message": "Buku besar berhasil dihapus"
-}
-```
-
-### ❌ Response Gagal
-```json
-{
-  "status": "fail",
-  "message": "Anda tidak memiliki akses untuk menghapus buku besar ini"
-}
-```
 # 🧾 API Accounts
 
 ## 1. Ambil Detail Akun
@@ -697,29 +616,33 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 
 ---
 
-## 2. Ambil Semua Akun Berdasarkan Ledger ID
+### 2. Ambil Semua Akun Milik User
 
 **Method**: `GET`  
-**Endpoint**: `/v1/accounts/ledger/:ledgerId`  
+**Endpoint**: `/v1/accounts?userId=USER_ID`  
 **Credentials**: `include`  
-**Deskripsi**: Mengambil semua akun yang terkait dengan ledger tertentu.
+**Deskripsi**: Mengambil semua akun milik user berdasarkan query `userId`.
 
-### ✅ Response Berhasil
+#### ✅ Response Berhasil
 ```json
 {
   "status": "success",
-  "message": "Berhasil mendapat data semua account",
-  "data": [ ... ]
+  "message": "Berhasil mengambil semua akun milik user",
+  "data": accounts
 }
 ```
 
-### ❌ Response Gagal
+#### ❌ Response Gagal
 ```json
 {
   "status": "fail",
-  "message": "Invalid ledger ID"
+  "message": "Forbidden, access denied for this user"
 }
 ```
+
+---
+
+
 # 💸 API Transaksi
 
 ## 1. Buat Transaksi Baru
@@ -727,41 +650,23 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 **Method**: `POST`  
 **Endpoint**: `/v1/transactions`  
 **Credentials**: `include`  
-**Deskripsi**: Membuat transaksi baru (debit/kredit) pada akun dalam ledger tertentu.
+**Deskripsi**: Membuat transaksi baru 
 
-### 📥 Request Body
+### 📥 Request Body{sedang diperbaiki}
 ```json
 {
-  "accountId": "6612123abc123abc123abc12",
-  "ledgerId": "660fe456abc456abc456abc45",
-  "amount": 250000,
-  "description": "Pembelian alat tulis",
-  "action": "debit"
 }
 ```
 
 ### ✅ Response Berhasil
 ```json
 {
-  "status": "success",
-  "message": "Transaksi berhasil dibuat",
-  "data": {
-    "_id": "661355789abc789abc789abc7",
-    "accountId": "6612123abc123abc123abc12",
-    "ledgerId": "660fe456abc456abc456abc45",
-    "amount": 250000,
-    "description": "Pembelian alat tulis",
-    "action": "debit",
-    "createdAt": "2025-04-07T10:30:00.000Z"
-  }
 }
 ```
 
 ### ❌ Response Gagal
 ```json
 {
-  "status": "fail",
-  "message": "Account atau Ledger tidak ditemukan"
 }
 ```
 
@@ -774,20 +679,10 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 **Credentials**: `include`  
 **Deskripsi**: Mengambil detail satu transaksi berdasarkan ID.
 
-### ✅ Response Berhasil
+### ✅ Response Berhasil {json sedang diperbaiki}
 ```json
 {
-  "status": "success",
-  "message": "Berhasil mendapat transaksi",
-  "data": {
-    "_id": "661355789abc789abc789abc7",
-    "accountId": "6612123abc123abc123abc12",
-    "ledgerId": "660fe456abc456abc456abc45",
-    "amount": 250000,
-    "description": "Pembelian alat tulis",
-    "action": "debit",
-    "createdAt": "2025-04-07T10:30:00.000Z"
-  }
+  status: 'success', message: 'berhasil mendapat data transaksi', data: transaction
 }
 ```
 
@@ -801,99 +696,104 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 
 ---
 
-## 3. Ambil Semua Transaksi Berdasarkan Ledger ID
+### 3. Ambil Semua Transaksi Milik User
 
 **Method**: `GET`  
-**Endpoint**: `/v1/transactions/ledger/:ledgerId`  
+**Endpoint**: `/v1/transactions?userId=USER_ID`  
 **Credentials**: `include`  
-**Deskripsi**: Mengambil semua transaksi dalam satu buku besar (ledger).
+**Deskripsi**: Mengambil semua transaksi berdasarkan ID user (dari query `userId`).
 
-### ✅ Response Berhasil
+#### ✅ Response Berhasil
 ```json
 {
   "status": "success",
-  "message": "Berhasil mendapat semua transaksi untuk ledger",
-  "data": [ ... ]
+  "message": "berhasil mendapat transaksi",
+  "results": transactions.length,
+  "data": transactions
 }
 ```
 
-### ❌ Response Gagal
+#### ❌ Response Gagal
 ```json
 {
   "status": "fail",
-  "message": "Ledger ID tidak ditemukan atau tidak ada transaksi"
+  "message": "Access denied: not your transactions"
 }
 ```
 
 ---
 
-## 4. Ambil Semua Transaksi Berdasarkan Account ID
+### 4. Ambil Semua Transaksi Berdasarkan Account
 
 **Method**: `GET`  
-**Endpoint**: `/v1/transactions/account/:accountId`  
+**Endpoint**: `/v1/transactions?accountId=ACCOUNT_ID`  
 **Credentials**: `include`  
-**Deskripsi**: Mengambil semua transaksi berdasarkan akun.
+**Deskripsi**: Mengambil semua transaksi berdasarkan `accountId`.
 
-### ✅ Response Berhasil
+#### ✅ Response Berhasil
 ```json
 {
   "status": "success",
-  "message": "Berhasil mendapat semua transaksi untuk akun",
-  "data": [ ... ]
+  "message": "berhasil mendapat transaksi",
+  "results": transactions.length,
+  "data": transactions
 }
 ```
 
-### ❌ Response Gagal
+#### ❌ Response Gagal
 ```json
 {
   "status": "fail",
-  "message": "Account ID tidak ditemukan atau tidak ada transaksi"
+  "message": "Access denied: not your transactions"
 }
 ```
 
 ---
 
-## 5. Update Transaksi
+### 5. Ambil Semua Transaksi (Admin Only)
+
+**Method**: `GET`  
+**Endpoint**: `/v1/transactions`  
+**Credentials**: `include`  
+**Deskripsi**: Mengambil semua transaksi di database. Hanya bisa diakses oleh admin.
+
+#### ✅ Response Berhasil
+```json
+{
+  "status": "success",
+  "message": "berhasil mendapat transaksi",
+  "results": transactions.length,
+  "data": transactions
+}
+```
+
+#### ❌ Response Gagal
+```json
+{
+  "status": "fail",
+  "message": "Only admin can access all transactions"
+}
+```
+
+---
+---
+
+## 6. Update Transaksi
 
 **Method**: `PUT`  
 **Endpoint**: `/v1/transactions/:transactionId`  
 **Credentials**: `include`  
 **Deskripsi**: Mengubah data transaksi yang sudah ada.
 
-### 📥 Request Body
+### 📥 Request Body (sedang diperbaiki)
 ```json
 {
-  "amount": 300000,
-  "description": "Update: Pembelian ATK",
-  "action": "debit"
-}
-```
-
-### ✅ Response Berhasil
-```json
-{
-  "status": "success",
-  "message": "Transaksi berhasil diperbarui",
-  "data": {
-    "_id": "661355789abc789abc789abc7",
-    "amount": 300000,
-    "description": "Update: Pembelian ATK",
-    "action": "debit"
-  }
-}
-```
-
-### ❌ Response Gagal
-```json
-{
-  "status": "fail",
-  "message": "Transaksi tidak ditemukan"
 }
 ```
 
 ---
 
-## 6. Hapus Transaksi
+## 7. Hapus Transaksi
 
 **Method**: `DELETE`  
 **Endpoint**: `/v1/transactions/:transactionId`  

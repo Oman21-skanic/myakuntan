@@ -94,7 +94,7 @@ const verifyOTP = async (email, otp) => {
     const updateUser = await User.updateOne(
         {email},
         {
-          $set: {isVerified: true},
+          $set: {is_verified: true},
           $unset: {otp: '', otpExpires: ''},
           $currentDate: {updatedAt: true},
         },

@@ -1,14 +1,13 @@
 /* eslint-disable new-cap */
 const express = require('express');
-const {protectedMiddleware} = require('../middleware/authMiddleware');
-const {getAccountHandler, getAllAccountsHandler} = require('../controllers/accountController');
+const {protectedMiddleware, protectedUser} = require('../middleware/authMiddleware');
+const {getDetailAccountHandler, getAccountsByUserId} = require('../controllers/accountController');
 
 const router = express.Router();
 
+// mengambil data semua account dari user id
+router.get('/', protectedMiddleware, protectedUser, getAccountsByUserId);
+
 // mengambil data detail account by id account
-router.get('/:accountId', protectedMiddleware, getAccountHandler);
-
-// mengambil data all account by ledger id
-router.get('/ledger/:ledgerId', protectedMiddleware, getAllAccountsHandler);
-
+router.get('/:accountId', protectedMiddleware, protectedUser, getDetailAccountHandler);
 module.exports = router;

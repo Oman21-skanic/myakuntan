@@ -1,6 +1,6 @@
 const express = require('express');
 const {protectedMiddleware, isAdmin, protectedUser} = require('../middleware/authMiddleware');
-const {allUser, getUserById, updateUserHandler, updatePasswordHandler, deleteUserByIdHandler} = require('../controllers/userController');
+const {allUser, getUserById, updateUserHandler, updatePasswordHandler, deleteUserByIdHandler, createAccountsByRoleHandler} = require('../controllers/userController');
 const {registerUser, currentUser} = require('../controllers/authController');
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -27,5 +27,7 @@ router.put('/:id/password', protectedMiddleware, protectedUser, updatePasswordHa
 // end points delete user by id
 router.delete('/:id', protectedMiddleware, protectedUser, deleteUserByIdHandler);
 
+// create accounts/ select bidang_usaha
+router.post('/:id/accounts', protectedMiddleware, createAccountsByRoleHandler);
 
 module.exports = router;

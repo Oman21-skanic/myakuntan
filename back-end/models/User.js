@@ -33,16 +33,24 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  isVerified: {type: Boolean, default: false},
+  is_verified: {type: Boolean, default: false},
   is_oauth: {type: Boolean, default: false},
   picture: {type: String},
-  createdAt: {type: Date, default: Date.now},
-  updatedAt: {type: Date, default: Date.now},
   otp: {type: String},
   otpExpires: {type: Date},
-  ledgerId: {type: mongoose.Schema.Types.ObjectId, ref: 'Ledger'},
-  ledgerName: {type: String},
-});
+  bidang_usaha: {
+    type: String,
+    enum: ['Manufaktur', 'Jasa', 'Perdagangan'],
+  },
+  nama_usaha: {
+    type: String,
+    maxlength: [100, 'terlalu panjang maksmial 100 karakter.'],
+  },
+  alamat: {
+    type: String,
+    maxlength: [256, 'terlalu panjang maksimal 256 karakter.'],
+  },
+}, {timestamps: true});
 
 // method untuk compare passsword
 userSchema.methods.comparePassword = async function(reqBody) {

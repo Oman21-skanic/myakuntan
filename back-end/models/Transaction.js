@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
 const transactionSchema = new mongoose.Schema({
-  ledgerId: {type: mongoose.Schema.Types.ObjectId, ref: 'Ledger', required: true},
-  accountId: {type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true},
-  description: {type: String, required: true}, // Keterangan transaksi
-  amount: {type: Number, required: true},
-  action: {type: String, enum: ['increase', 'decrease'], required: true},
-}, {timestamps: true});
+  user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+  tanggal: {type: Date, default: Date.now, required: true},
+  keterangan: {type: String, required: true}, // Keterangan transaksi
+  nominal: {type: Number, required: true},
+  akun_debit_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
+  akun_credit_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
+  jenis_transaksi: {type: String},
+});
 
 module.exports = mongoose.model('Transaction', transactionSchema);

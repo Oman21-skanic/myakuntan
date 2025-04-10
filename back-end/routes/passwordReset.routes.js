@@ -5,7 +5,7 @@ const {
   verifyResetPasswordByEmail,
   updatePasswordByEmail,
   resetPasswordByEmail,
-} = require('../controllers/authController');
+} = require('../controllers/passwordResetController');
 const {otpMiddleware, resetPasswordMiddleware} = require('../middleware/authMiddleware');
 
 // reset password by email kirim otp {email}

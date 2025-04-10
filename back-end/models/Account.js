@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 
 const accountSchema = new mongoose.Schema({
-  ledgerId: {type: mongoose.Schema.Types.ObjectId, ref: 'Ledger', required: true}, // Hubungan ke buku besar
-  name: {type: String, required: true}, // Nama akun (ex: Buku Modal, Buku Kas)
-  category: {
+  user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+  akun_type: {
     type: String,
-    enum: ['Kas', 'Modal', 'Pendapatan', 'Persediaan', 'Inventaris', 'HPP', 'Utang', 'Piutang', 'Beban', 'Prive'],
+    enum: ['Kas', 'Modal', 'Pendapatan', 'Beban', 'Hutang', 'Piutang', 'Prive',
+      'HPP', 'BahanBaku', 'BahanDalamProses', 'BarangJadi', 'PersediaanBarangDagang'],
     required: true,
   },
-  transactions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Transaction'}],
+  debit: {type: Number, default: 0},
+  credit: {type: Number, default: 0},
+  saldo: {type: Number, default: 0},
   normal_balance: {type: String, enum: ['debit', 'credit'], required: true},
-  total_debit: {type: Number, default: 0}, // Total debit masuk
-  total_credit: {type: Number, default: 0}, // Total kredit masuk
+
 }, {timestamps: true}); // create && update timestamp
 
 

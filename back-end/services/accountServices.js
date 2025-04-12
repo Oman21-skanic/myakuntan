@@ -14,31 +14,32 @@ const createAccounts = async function(userId, bidangUsaha) {
     }
 
     // Default akun
-    const defaultAccount =
-    [
-      {akun_type: 'Kas', normal_balance: 'debit'},
+    const defaultAccount = [
+      {akun_type: 'Kas'},
       {akun_type: 'Modal', normal_balance: 'credit'},
       {akun_type: 'Pendapatan', normal_balance: 'credit'},
-      {akun_type: 'Beban', normal_balance: 'debit'},
+      {akun_type: 'Beban'},
       {akun_type: 'Hutang', normal_balance: 'credit'},
-      {akun_type: 'Piutang', normal_balance: 'debit'},
-      {akun_type: 'Prive', normal_balance: 'debit'},
+      {akun_type: 'Piutang'},
+      {akun_type: 'Prive'},
     ];
 
     const jasaAccount = [...defaultAccount];
+
     const manufakturAccount = [
       ...defaultAccount,
-      {akun_type: 'HPP', normal_balance: 'debit'},
-      {akun_type: 'BahanBaku', normal_balance: 'debit'},
-      {akun_type: 'BahanDalamProses', normal_balance: 'debit'},
-      {akun_type: 'BarangJadi', normal_balance: 'debit'},
+      {akun_type: 'HPP'},
+      {akun_type: 'BahanBaku'},
+      {akun_type: 'BahanDalamProses'},
+      {akun_type: 'BarangJadi'},
     ];
 
     const perdaganganAccount = [
       ...defaultAccount,
-      {akun_type: 'HPP', normal_balance: 'debit'},
-      {akun_type: 'PersediaanBarangDagang', normal_balance: 'debit'},
+      {akun_type: 'HPP'},
+      {akun_type: 'PersediaanBarangDagang'},
     ];
+
 
     // Pilih akun berdasarkan tipe ledger yang dipilih user
     const selectedAccounts =

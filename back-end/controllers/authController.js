@@ -284,11 +284,18 @@ const googleOAuthApiHandler = asyncHandler(async (req, res) => {
         picture: profile.picture,
       });
     }
+    if (!user) {
+      return res.status(500).json({
+        status: 'fail',
+        message: 'Gagal membuat akun user baru dari OAuth',
+      });
+    }
 
     createResToken(user, 200, res);
     return res.status(200).json({
       status: 'success',
       message: 'Login dengan Google berhasil',
+      data: user,
     });
   } catch (err) {
     console.error(err);

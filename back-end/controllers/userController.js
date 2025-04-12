@@ -8,7 +8,8 @@ const allUser = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.status(200).json({
     status: 'success',
-    messsage: 'all user:',
+    messsage: 'all user',
+    results: users.length,
     data: users,
   });
 });
@@ -69,6 +70,7 @@ const updatePasswordHandler = asyncHandler( async (req, res) => {
     // cari user berdasarkan id
     const user = await User.findById(id);
     if (!user) return res.status(404).json({status: 'fail', message: 'User tidak ditemukan'});
+    if (user && user.is_oauth) return res.status(403).json({status: 'fail', message: 'User login menggunakan google, tidak dapat mengupdate password'});
 
     // Cek apakah password lama benar
     const isMatch = await user.comparePassword(oldPassword);

@@ -6,7 +6,7 @@ const {getDetailAccountHandler, getAccountsByUserId} = require('../controllers/a
 const router = express.Router();
 
 // mengambil data semua account dari user id
-router.get('/', protectedMiddleware, protectedUser, getAccountsByUserId);
+router.get('/', getAccountsByUserId);
 
 // mengambil data detail account by id account
 router.get('/:accountId', protectedMiddleware, protectedUser, getDetailAccountHandler);

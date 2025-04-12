@@ -11,9 +11,8 @@ const accountSchema = new mongoose.Schema({
   debit: {type: Number, default: 0},
   credit: {type: Number, default: 0},
   saldo: {type: Number, default: 0},
-  normal_balance: {type: String, enum: ['debit', 'credit'], required: true},
-
-}, {timestamps: true}); // create && update timestamp
+  normal_balance: {type: String, enum: ['debit', 'credit'], default: 'debit'},
+}, {timestamps: true});
 
 
 module.exports = mongoose.model('Account', accountSchema);

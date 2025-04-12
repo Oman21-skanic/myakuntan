@@ -94,7 +94,7 @@ async function handleGoogleLogin() {
 {
   "status": "success",
   "message": "Login berhasil",
-  "data": { ... }
+  "data": { user }
 }
 ```
 
@@ -289,9 +289,10 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 **Response berhasil:**
 ```json
 {
-  "status": "success",
-  "messsage": "all user:",
-  "data": [{}, {}]
+    status: 'success',
+    messsage: 'all user',
+    results: users.length,
+    data: users,
 }
 ```
 
@@ -646,27 +647,48 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 # 💸 API Transaksi
 
 ## 1. Buat Transaksi Baru
+- **Method**: `POST`  
+- **Endpoint**: `/v1/transactions`  
+- **Credentials**: include  
+- **Deskripsi**: Membuat transaksi baru untuk akun milik user.
 
-**Method**: `POST`  
-**Endpoint**: `/v1/transactions`  
-**Credentials**: `include`  
-**Deskripsi**: Membuat transaksi baru 
-
-### 📥 Request Body{sedang diperbaiki}
+### 📥 Request Body
 ```json
 {
+  "tanggal": "2025-04-11T10:30:00.000Z",
+  "keterangan": "Pembelian alat tulis",
+  "nominal": 50000,
+  "akun_debit_id": "6617f7c1207d5bfc2ad439e1",
+  "akun_credit_id": "6617f7c1207d5bfc2ad439e1"
+  
 }
 ```
+
+> tanggal harus berformat iso. akun debit dan akun kredit wajib di isi dengan id dari akun yang bersangkutan. untuk mendapat id akun dapat mengunakan get all account user (api account no 2).
 
 ### ✅ Response Berhasil
 ```json
 {
+  "status": "success",
+  "message": "Transaksi berhasil dibuat & akun diupdate",
+  "data": {
+    "_id": "6617fa48207d5bfc2ad439f3",
+    "user_id": "6617f7b0207d5bfc2ad439de",
+    "tanggal": "2025-04-11T10:30:00.000Z",
+    "keterangan": "Pembelian alat tulis",
+    "nominal": 50000,
+    "akun_debit_id": "6617f7c1207d5bfc2ad439e1",
+    "akun_credit_id": "6617f7c1207d5bfc2ad439e1",
+    "createdAt": "2025-04-11T12:00:00.000Z",
+    "updatedAt": "2025-04-11T12:00:00.000Z"
+  }
 }
 ```
-
-### ❌ Response Gagal
+## ❌ Response Gagal
 ```json
 {
+  "status": "fail",
+  "message": "message"
 }
 ```
 
@@ -779,39 +801,70 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 ---
 
 ## 6. Update Transaksi
+- **Method**: `PUT`  
+- **Endpoint**: `/v1/transactions/:transactionId`  
+- **Credentials**: include  
+- **Deskripsi**: Memperbarui transaksi milik user. Hanya `tanggal`, `keterangan`, dan `nominal` yang dapat diperbarui.
 
-**Method**: `PUT`  
-**Endpoint**: `/v1/transactions/:transactionId`  
-**Credentials**: `include`  
-**Deskripsi**: Mengubah data transaksi yang sudah ada.
-
-### 📥 Request Body (sedang diperbaiki)
+### 📥 Request Body
 ```json
 {
+  "userId": "67f973fa4505491174b4aaa9",
+  "tanggal": "2025-04-11T10:30:00.000Z",
+  "keterangan": "Penambahan modal awal",
+  "nominal": 50000,
+  "akun_debit_id": "67f97685f1dc4eb3c89c78f8",
+  "akun_credit_id": "67f97685f1dc4eb3c89c78f9"
+}
+
+```
+
+### ✅ Response Berhasil
+```json
+{
+    "status": "success",
+    "message": "Transaksi berhasil dibuat & akun diupdate",
+    "data": {
+        "user_id": "67f973fa4505491174b4aaa9",
+        "tanggal": "2025-04-11T10:30:00.000Z",
+        "keterangan": "Penambahan modal awal",
+        "nominal": 50000,
+        "akun_debit_id": "67f97685f1dc4eb3c89c78f8",
+        "akun_credit_id": "67f97685f1dc4eb3c89c78f9",
+        "_id": "67f977922bebf786fdd962ab",
+        "__v": 0
+    }
+}
+```
+
+### ❌ Response Gagal (Update)
+```json
+{
+  "status": "fail",
+  "message": "Transaksi tidak ditemukan atau bukan milik user"
 }
 ```
 
 ---
 
 ## 7. Hapus Transaksi
-
-**Method**: `DELETE`  
-**Endpoint**: `/v1/transactions/:transactionId`  
-**Credentials**: `include`  
-**Deskripsi**: Menghapus transaksi dari database.
+- **Method**: `DELETE`  
+- **Endpoint**: `/v1/transactions/:transactionId`  
+- **Credentials**: include  
+- **Deskripsi**: Menghapus transaksi milik user, serta mengembalikan nominal transaksi ke akun terkait.
 
 ### ✅ Response Berhasil
 ```json
 {
   "status": "success",
-  "message": "Transaksi berhasil dihapus"
+  "message": "Transaksi berhasil dihapus & saldo akun diperbarui"
 }
 ```
 
-### ❌ Response Gagal
+### ❌ Response Gagal (Delete)
 ```json
 {
   "status": "fail",
-  "message": "Transaksi tidak ditemukan"
+  "message": "Transaksi tidak ditemukan atau bukan milik user"
 }
 ```

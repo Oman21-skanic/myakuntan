@@ -89,7 +89,7 @@
         verifyButton.classList.add("loading");
 
         try {
-          const response = await fetch("/api/auth/{{otp}}/verify", { 
+          const response = await fetch("/api/v1/auth/otp/verify", { 
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },

@@ -16,7 +16,7 @@ router.get('/', protectedMiddleware, isAdmin, allUser);
 router.get('/me', protectedMiddleware, currentUser);
 
 // get user berdasarkan id
-router.get('/:id', protectedMiddleware, getUserById);
+router.get('/:id', protectedMiddleware, protectedUser, getUserById);
 
 // update user {name}
 router.put('/:id', protectedMiddleware, protectedUser, updateUserHandler);
@@ -28,6 +28,6 @@ router.put('/:id/password', protectedMiddleware, protectedUser, updatePasswordHa
 router.delete('/:id', protectedMiddleware, protectedUser, deleteUserByIdHandler);
 
 // create accounts/ select bidang_usaha
-router.post('/:id/accounts', protectedMiddleware, createAccountsByRoleHandler);
+router.post('/:id/accounts', protectedMiddleware, protectedUser, createAccountsByRoleHandler);
 
 module.exports = router;

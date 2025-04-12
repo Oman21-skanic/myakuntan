@@ -1,6 +1,6 @@
 :root {
     --hijau: #44EA2F;
-    --kuning: #FFC517;
+    --kuning: #ffc517;
     --abu: #E9E9E9;
     --putih: #FBFBFE;
     --hitam: #050315; 
@@ -154,7 +154,7 @@ main .content3 h3 {
 
 .teams-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     column-gap: 34px;
     row-gap: 38px;
     justify-items: center;
@@ -372,5 +372,4 @@ main .content3 h3 {
             text-align: center;
             font-size: 13px;
         }    
-
  }

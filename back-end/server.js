@@ -6,7 +6,8 @@ const passwordResetRoutes = require('./routes/passwordReset.routes');
 const pageRoutes = require('./routes/pages.routes');
 const accountsRoutes = require('./routes/accounts.routes');
 const transactionsRoutes = require('./routes/transactions.routes');
-const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
+const { errorHandler, notFoundPath } = require('./middleware/errorMiddleware');
+const { authLimiter, apiLimiter, userLimiter, redisClient } = require('./middleware/rateLimiter');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -23,7 +24,7 @@ app.use(cors());
 
 // middleware parsing body request
 app.use(express.json()); // Middleware untuk parsing JSON
-app.use(express.urlencoded({extended: true})); // (Opsional) Parsing form-urlencoded
+app.use(express.urlencoded({ extended: true })); // (Opsional) Parsing form-urlencoded
 
 // cookies
 app.use(cookieParser());
@@ -32,19 +33,19 @@ app.use(cookieParser());
 app.use('/', pageRoutes);
 
 // auth routes
-app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/auth', authLimiter, authRoutes);
 
 // users routes
-app.use('/api/v1/users', usersRoutes);
+app.use('/api/v1/users', userLimiter, usersRoutes);
 
 // reset password routes
-app.use('/api/v1/password-resets', passwordResetRoutes);
+app.use('/api/v1/password-resets', authLimiter, passwordResetRoutes);
 
 // accounts routes
-app.use('/api/v1/accounts', accountsRoutes);
+app.use('/api/v1/accounts', userLimiter, accountsRoutes);
 
 // transaction routes
-app.use('/api/v1/transactions', transactionsRoutes);
+app.use('/api/v1/transactions', userLimiter, transactionsRoutes);
 
 // error path Not found
 app.use(notFoundPath);
@@ -56,6 +57,9 @@ async function start() {
   try {
     await mongoose.connect(process.env.DATABASE);
     console.log('berhasil terhubung ke database');
+    // Connect ke Redis
+    await redisClient.connect();
+    console.log('Berhasil terhubung ke Redis Cloud');
   } catch (error) {
     console.log(`gagal terhubung ke databse : ${error.message}`);
   }

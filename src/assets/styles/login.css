@@ -41,13 +41,14 @@ main {
 
 .form-container {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 h3 {
+  font-size: 24px;
   text-align: center;
   font-weight: 900;
   margin-bottom: 20px;
@@ -56,8 +57,8 @@ h3 {
 .input-group {
   display: flex;
   align-items: center;
-  background: #eef2f7;
-  padding: 10px;
+  background: var(--abu);
+  padding: 15px;
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -89,7 +90,7 @@ h3 {
 }
 
 .button:hover {
-  background: var(--hijau);
+  background: #218838;
 }
 
 .buttonGoogle {
@@ -97,7 +98,7 @@ h3 {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   border: none;
   border-radius: 5px;
   background: #fff;
@@ -105,8 +106,14 @@ h3 {
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 9px;
   border: 1px solid #ccc;
+}
+
+.buttonGoogle a {
+  text-decoration: none;
+  color: #050315;
+  margin-bottom: 7px;
 }
 
 .buttonGoogle img {
@@ -133,8 +140,21 @@ p a:hover {
   text-decoration: underline;
 }
 
+a {
+  text-decoration: underline;
+  color: var(--ijo);
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .ilustrasi {
   width: 350px;
+  height: auto;
   border-radius: 10px;
 }
 
@@ -163,4 +183,29 @@ p a:hover {
 
 .toast.error {
   background-color: #cc0000;
+}
+
+@media screen and (max-width: 1024px) {
+  main {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ilustrasi {
+    width: 220px;
+  }
+
+  main {
+    padding: 20px;
+    max-width: 1000;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 576px)  {
+  .ilustrasi {
+    display: none;
+  }
+
 }

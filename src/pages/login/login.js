@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const dummyUsers = [
-        { email: "user1@gmail.com", password: "password123" },
+        { email: "myakuntan@gmail.com", password: "password123" },
         { email: "user2@gmail.com", password: "securepass" }
     ];
 
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         showToast("Berhasil Login!", "success");
         setTimeout(() => {
-            window.location.href = "/dashboard";
+            window.location.href = "/src/pages/dashboard/index.html";
         }, 3000);
     });
 

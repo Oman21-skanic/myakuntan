@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/src/assets/styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav id="navbar-container"></nav>
+        <script>
+            fetch("/src/pages/navbar.html")
+                .then(response => response.text())
+                .then(data => document.getElementById("navbar-container").innerHTML = data);
+        </script>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="dashboard">
+                  <img src="/src/assets/images/kotakdash.svg" alt="dashboardLogo">
+                  <h2 style="font-size: 14px; margin-top: 0.5rem;">Dashboard</h2>
+                </div>
+                <div class="item-sidebar">
+                  <a href="#">Aktivitas</a>
+                  <a href="#">Transaksi</a>
+                  <div class="dropdown-center">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #E7F8E7; color: #050315; border: none; font-weight: 600;">
+                      Buku Besar
+                    </button>
+                    <ul class="dropdown-menu" style="border: none; font-size: 12px;">
+                      <li><a class="dropdown-item" href="./buku/kas.html">Buku Kas</a></li>
+                      <li><a class="dropdown-item" href="./buku/modal.html">Buku Modal</a></li>
+                      <li><a class="dropdown-item" href="./buku/persediaan.html">Buku Persediaan</a></li>
+                      <li><a class="dropdown-item" href="./buku/invetaris.html">Buku Inventaris</a></li>
+                      <li><a class="dropdown-item" href="./buku/hpp.html">Buku HPP</a></li>
+                      <li><a class="dropdown-item" href="./buku/utang.html">Buku Utang</a></li>
+                      <li><a class="dropdown-item" href="./buku/piutang.html">Buku Piutang</a></li>
+                      <li><a class="dropdown-item" href="./buku/beban.html">Buku Beban</a></li>
+                      <li><a class="dropdown-item" href="./buku/prive.html">Buku Prive</a></li>
+                    </ul>
+                  </div>
+                  <a href="./neraca.html">Neraca Saldo</a>
+                </div>
+            </aside>
+            <section class="content">
+                <div class="content-inner">
+                    <div class="profile">
+                        <img src="/src/assets/images/profile1.png" alt="ProfileDashboard" class="img-profile">
+                        <div class="profile-text">
+                            <h2>Welcome, Member!</h2>
+                            <p>Bergabung sejak 15 Februari 2025</p>
+                        </div>
+                        <button class="profile-edit"><a href="#"><h2>Edit</h2></a></button>
+                    </div>
+
+                    <div class="buku">
+                        <div class="pembukuan1">
+                          <h2>Buku Kas</h2>
+                        </div>
+                        <div class="pembukuan2">
+                          <h2>Buku Kas</h2>
+                        </div>
+                    </div>
+
+                    <div class="aktivitas">
+                      <h3>Aktivitas</h3>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>Anda memperbarui data profile.</td>
+                            <td>20 menit yang lalu</td>
+                          </tr>
+                          <tr>
+                            <td>Anda memperbarui data profile.</td>
+                            <td>20 menit yang lalu</td>
+                          </tr>
+                          <tr>
+                            <td>Anda memperbarui data profile.</td>
+                            <td>20 menit yang lalu</td>
+                          </tr>
+                          <tr>
+                            <td>Anda memperbarui data profile.</td>
+                            <td>20 menit yang lalu</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" style="text-align: center;"><a href="#" style="color: #aaa9a9; text-decoration: none;">Lihat lainnya</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="grafik">
+                      <div class="diagram-batang">
+                        <div class="chart-box">
+                          <div class="chart-title">Sample Charts</div>
+                          <div class="bar-chart">
+                            <div class="bar" style="height: 50%;"></div>
+                            <div class="bar" style="height: 65%;"></div>
+                            <div class="bar" style="height: 75%;"></div>
+                            <div class="bar" style="height: 65%;"></div>
+                            <div class="bar" style="height: 55%;"></div>
+                            <div class="bar" style="height: 75%;"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="diagram-lingkaran">
+                        <div class="chart-box">
+                          <div class="chart-title">Sample Charts</div>
+                          <div class="donut-container">
+                            <div class="donut"></div>
+                            <div class="legend">
+                              <div class="legend-item">
+                                <div class="legend-color debit"></div>
+                                <div>Debit</div>
+                              </div>
+                              <div class="legend-item">
+                                <div class="legend-color kredit"></div>
+                                <div>Kredit</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="transaksi">
+                      <div class="bar-atas">
+                        <div class="search-bar">
+                          <button><img src="/src/assets/images/search.png" alt="Logo-search"></button>
+                          <input type="text" name="search" id="cari" placeholder="Cari Transaksi Kamu" >
+                        </div>
+                        <div class="filter-dropdown" style="margin-right: 20px;">
+                          <div class="btn-group">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #FBFBFE; color: #44EA2F; font-weight: 600; border: none;">
+                              Filter by
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Menu item</a></li>
+                              <li><a class="dropdown-item" href="#">Menu item</a></li>
+                              <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            </ul>
+                          </div>
+                          <div class="btn-group">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #FBFBFE; color: #44EA2F; font-weight: 600; border: none;">
+                              Sort by
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Menu item</a></li>
+                              <li><a class="dropdown-item" href="#">Menu item</a></li>
+                              <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="tambah">
+                          <button><img src="/src/assets/images/plus.png" alt="Logo-search"></button>
+                        </div>
+                      </div>
+                      <div style="max-height: 500px; overflow-y: auto; border: 1px solid var(--ijolagi);">
+
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Transaksi</th>
+                              <th>Tanggal</th>
+                              <th>Akun</th>
+                              <th>Debit</th>
+                              <th>Kredit</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- Contoh 10 baris -->
+                            <!-- Kamu bisa generate dengan JavaScript kalau dinamis -->
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <tr>
+                              <td>Uang Makan</td>
+                              <td>2025-09-12</td>
+                              <td>Kas</td>
+                              <td>100.000</td>
+                              <td>0</td>
+                              <td class="action-btn">⋮</td>
+                            </tr>
+                            <!-- Ulangi sesuai kebutuhan -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  </body>
+</html>

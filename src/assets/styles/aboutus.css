@@ -255,9 +255,23 @@ main .content3 h3 {
         font-size: 25px;
         padding: 1rem;
     }
-    main .awal .bunga1 {
+    /* main .awal .bunga1 {
         margin-left: 23rem;
         width: 65px;
+    } */
+    main .awal .bunga1 {
+        margin-left: auto;
+        margin-right: auto;
+        width: 65px;
+        display: block;
+    }
+    
+    main .content2 img {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        margin: 1rem auto;
+        display: block;
     }
 
     main .content1 {
@@ -279,15 +293,15 @@ main .content3 h3 {
         display: block;
         padding: 0rem 1rem 3rem 0rem;
     }
-
+/* 
     main .content2 img {
         width: 25rem;
         height: 20rem;   
         margin-left: 5rem;
-    }
+    } */
 
     main .content2 p {
-        font-size: 10px;
+        font-size: 14px;
         padding: 5px;   
     }
     .teams-container {
@@ -322,6 +336,36 @@ main .content3 h3 {
 
     
  @media screen and (max-width: 576px) {
+    main .awal .bunga1,
+main .awal .bunga {
+    width: 45px;
+    margin: 0 auto;
+    display: block;
+}
+
+main .content2 img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
+}
+
+main .content2 .title h3 {
+    margin-left: 0;
+    text-align: center;
+}
+
+.header {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.logo,
+.language {
+    margin: 0.5rem;
+}
+
     main {
         padding: 1rem;
         margin-top: 3rem;
@@ -332,16 +376,16 @@ main .content3 h3 {
         padding: 1rem;
     }
 
-    main .awal .bunga1 {
+    /* main .awal .bunga1 {
         margin-left: 13rem;
         width: 45px;
     }
     main .awal .bunga {
         width: 45px;
-    }
+    } */
 
     main .content1 p {
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 500;
     }
 
@@ -350,16 +394,16 @@ main .content3 h3 {
         padding: 0rem 1rem 1rem 0rem;
     }
 
-    main .content2 .title h3 {
+    /* main .content2 .title h3 {
         margin-left: 1rem;
         font-size: 16px;
-    }
+    } */
 
-    main .content2 img {
+    /* main .content2 img {
         width: 20rem;
         height: 12rem;   
         margin-left: 3rem;
-    }
+    } */
 
     .teams-container {
         grid-template-columns: repeat(2, 1fr);

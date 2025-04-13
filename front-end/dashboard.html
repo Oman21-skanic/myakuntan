@@ -150,17 +150,22 @@
         if (!confirm("Apakah Anda yakin ingin menghapus akun ini?")) return;
 
         try {
-          const response = await fetch(`/api/v1/users/${userId}`, {
-            method: "DELETE",
-          });
-          if (!response.ok) throw new Error("Gagal menghapus akun");
+        const response = await fetch(`/api/v1/users/${userId}`, {
+          method: "DELETE",
+        });
 
-          alert("Akun berhasil dihapus");
-          window.location.href = "/";
-        } catch (error) {
-          console.error("Gagal menghapus akun:", error);
-          alert("Terjadi kesalahan, coba lagi");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Gagal menghapus akun");
         }
+
+        alert("Akun berhasil dihapus");
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Gagal menghapus akun:", error);
+        alert(error.message || "Terjadi kesalahan, coba lagi");
+      }
+
       }
 
       function changePassword() {

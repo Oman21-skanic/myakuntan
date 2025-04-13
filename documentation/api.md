@@ -607,9 +607,10 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 ### ✅ Response Berhasil
 ```json
 {
-  "status": "success",
-  "message": "Berhasil mendapat data account",
-  "data": { ... }
+   "status": "success",
+    "message": "Berhasil mengambil semua akun milik user",
+    "results": 11,
+    "data": [{ ... }]
 }
 ```
 
@@ -871,3 +872,97 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
   "message": "Transaksi tidak ditemukan atau bukan milik user"
 }
 ```
+## 📄 Pagination Transaksi
+- **Method**: `GET`  
+- **Endpoint**: `/v1/transactions`  
+- **Credentials**: include  
+- **Deskripsi**: Mendapatkan daftar transaksi. Mendukung fitur **pagination** dan **filter berdasarkan `userId` atau `accountId`**.
+
+---
+
+### 🔍 Query Parameters
+| Parameter   | Tipe    | Default | Deskripsi |
+|-------------|---------|---------|-----------|
+| `page`      | Number  | 1       | Halaman yang ingin diambil |
+| `limit`     | Number  | 10      | Jumlah data per halaman |
+| `userId`    | String  | -       | ID user untuk melihat transaksi miliknya |
+| `accountId` | String  | -       | ID akun untuk melihat transaksi yang melibatkan akun tersebut |
+
+---
+
+## 🧪 Contoh Penggunaan
+
+### 1. 🔐 Admin melihat semua transaksi (tanpa filter)
+```
+GET /v1/transactions?page=1&limit=10
+```
+- Menampilkan **halaman 1** dari seluruh transaksi, **10 transaksi per halaman**.
+- Hanya bisa dilakukan oleh **admin**.
+
+---
+
+### 2. 🙋‍♂️ User melihat semua transaksinya sendiri
+```
+GET /v1/transactions?userId=64fdc21ad203dc8d902f1234&page=2&limit=5
+```
+- Menampilkan **halaman 2** dari transaksi milik user dengan ID tersebut.
+- **User hanya bisa melihat transaksinya sendiri**, tidak bisa melihat user lain (kecuali admin).
+
+---
+
+### 3. 🧾 User melihat transaksi berdasarkan akun tertentu
+```
+GET /v1/transactions?accountId=64fdc9cbd203dc8d902f1235&page=1&limit=20
+```
+- Menampilkan transaksi di mana akun tersebut terlibat (baik debit maupun kredit).
+- Akses dibatasi: user hanya bisa melihat **akunnya sendiri**, kecuali dia admin.
+
+---
+
+
+
+## ✅ Contoh Response Berhasil
+```json
+### ✅ Response Berhasil (Dengan Pagination)
+```json
+{
+  "status": "success",
+  "message": "Berhasil mendapat transaksi",
+  "results": 2,
+  "pagination": {
+    "total": 13,
+    "page": 2,
+    "limit": 5,
+    "totalPages": 3
+  },
+  "data": [
+    {
+      "_id": "661a23123abc123abc123abc",
+      "tanggal": "2025-04-11T10:30:00.000Z",
+      "keterangan": "Pembelian bahan baku",
+      "nominal": 20000,
+      "akun_debit_id": "661a1abc123abc123abc1234",
+      "akun_credit_id": "661a1abc123abc123abc1235",
+      "user_id": "661a1abc123abc123abc1222"
+    },
+    {
+      "_id": "661a23123abc123abc123abd",
+      "tanggal": "2025-04-11T11:30:00.000Z",
+      "keterangan": "Penjualan produk",
+      "nominal": 30000,
+      "akun_debit_id": "661a1abc123abc123abc1236",
+      "akun_credit_id": "661a1abc123abc123abc1237",
+      "user_id": "661a1abc123abc123abc1222"
+    }
+  ]
+}
+```
+
+---
+
+## ⚠️ Catatan Penting
+- Jika `page` dan `limit` tidak diisi, default-nya: **page 1, limit 10**
+- Jika tidak pakai `userId` atau `accountId`, **hanya admin** yang bisa akses
+- Validasi dilakukan agar user **tidak bisa akses data orang lain**
+
+---

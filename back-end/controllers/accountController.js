@@ -31,6 +31,7 @@ const getAccountsByUserId = asyncHandler(async (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Berhasil mengambil semua akun milik user',
+    results: accounts.length,
     data: accounts,
   });
 });

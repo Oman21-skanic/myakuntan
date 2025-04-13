@@ -84,16 +84,12 @@ const registerUser = asyncHandler(async (req, res) => {
   try {
     // hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const createdAt = new Date().toISOString();
-    const updatedAt = createdAt;
 
     // create newUser
     const newUser = new User({
       email,
       name,
       password: hashedPassword,
-      createdAt,
-      updatedAt,
     });
     await newUser.save();
     // membuat token jwt sementara sebagai validasi dan sendOtp

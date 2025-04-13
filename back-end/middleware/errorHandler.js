@@ -1,48 +1,33 @@
-const fs = require('fs').promises;
-const path = require('path');
-
-const renderPage = async (filePath, res, next, error) => {
-  try {
-    let pageContent = await fs.readFile(
-        path.resolve(__dirname, filePath),
-        'utf-8',
-    );
-
-    // ambil data error
-    const statusCode = error.statusCode || 500;
-    const errorMessage = error.message || 'Something went wrong';
-
-    // Mengganti placeholder file html dengan error message dan status code
-    pageContent = pageContent
-        .replace(/{{statusCode}}/g, statusCode)
-        .replace(/{{errorMessage}}/g, errorMessage);
-
-    res.status(statusCode).send(pageContent);
-  } catch (error) {
-    if (res.headersSent) {
-      return; // ✅ Kalau header sudah dikirim, jangan kirim respons lagi
-    }
-    res.status(500).json({status: 'fail', message: error.message});
-  }
-};
-
-// error 400 bad request
 const badRequestHandler = (err, req, res, next) => {
-  renderPage('../../front-end/bad-request.html', res, next, err);
+  res.status(400).json({
+    status: 'fail',
+    message: err.message || 'Bad Request',
+    stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,
+  });
 };
 
-// error 401 unauthorized request
 const unauthorizedHandler = (err, req, res, next) => {
-  renderPage('../../front-end/unauthorized-page.html', res, next, err);
-};
-// error 403 no have access
-const forbiddenHandler = (err, req, res, next) => {
-  renderPage('../../front-end/forbiddenPage.html', res, next, err);
+  res.status(401).json({
+    status: 'fail',
+    message: err.message || 'Unauthorized',
+    stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,
+  });
 };
 
-// eror 404 page not found
+const forbiddenHandler = (err, req, res, next) => {
+  res.status(403).json({
+    status: 'fail',
+    message: err.message || 'Forbidden',
+    stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,
+  });
+};
+
 const pageNotFoundHandler = (err, req, res, next) => {
-  renderPage('../../front-end/page-not-found.html', res, next, err);
+  res.status(404).json({
+    status: 'fail',
+    message: err.message || 'Page Not Found',
+    stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,
+  });
 };
 
 module.exports = {

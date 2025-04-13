@@ -30,13 +30,12 @@ const getTransactionById = asyncHandler( async (req, res) => {
     res.status(500).json({status: 'fail', message: 'Terjadi kesalahan server', data: error.message});
   }
 });
-
 const getTransactions = asyncHandler(async (req, res) => {
-  const {userId, accountId} = req.query;
+  const {userId, accountId, page = 1, limit = 10} = req.query;
   const currentUser = req.user;
   const filter = {};
 
-  // === Validasi userId dan accountId ===
+  // === Validasi ID ===
   if (userId && !mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({
       status: 'fail',
@@ -51,7 +50,7 @@ const getTransactions = asyncHandler(async (req, res) => {
     });
   }
 
-  // === Akses berdasarkan userId ===
+  // === Filter by userId ===
   if (userId) {
     const isNotOwner = currentUser._id.toString() !== userId;
     if (currentUser.role !== 'admin' && isNotOwner) {
@@ -63,7 +62,7 @@ const getTransactions = asyncHandler(async (req, res) => {
     filter.user_id = userId;
   }
 
-  // === Akses berdasarkan accountId ===
+  // === Filter by accountId ===
   if (accountId) {
     const account = await Account.findById(accountId);
     if (!account) {
@@ -81,14 +80,13 @@ const getTransactions = asyncHandler(async (req, res) => {
       });
     }
 
-    // Cari semua transaksi yang melibatkan account ini, baik sebagai debit atau credit
     filter.$or = [
       {akun_debit_id: accountId},
       {akun_credit_id: accountId},
     ];
   }
 
-  // === Admin-only untuk akses tanpa query ===
+  // === Admin-only jika tanpa userId/accountId ===
   if (!userId && !accountId && currentUser.role !== 'admin') {
     return res.status(403).json({
       status: 'fail',
@@ -96,15 +94,27 @@ const getTransactions = asyncHandler(async (req, res) => {
     });
   }
 
-  const transactions = await Transaction.find(filter);
+  const skip = (parseInt(page) - 1) * parseInt(limit);
+  const total = await Transaction.countDocuments(filter);
+  const transactions = await Transaction.find(filter)
+      .skip(skip)
+      .limit(parseInt(limit))
+      .sort({createdAt: -1}); // Optional: urut dari yang terbaru
 
   res.status(200).json({
     status: 'success',
     message: 'Berhasil mendapat transaksi',
     results: transactions.length,
+    pagination: {
+      total,
+      page: parseInt(page),
+      limit: parseInt(limit),
+      totalPages: Math.ceil(total / limit),
+    },
     data: transactions,
   });
 });
+
 
 const createTransaction = asyncHandler(async (req, res) => {
   try {

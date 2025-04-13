@@ -18,7 +18,7 @@ router.get('/me', protectedMiddleware, currentUser);
 // get user berdasarkan id
 router.get('/:id', protectedMiddleware, protectedUser, getUserById);
 
-// update user {name}
+// update user {bidangUsaha, name, email, password};
 router.put('/:id', protectedMiddleware, protectedUser, updateUserHandler);
 
 // end points update password {oldPassword, newPassword}

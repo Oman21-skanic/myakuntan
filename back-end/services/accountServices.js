@@ -3,6 +3,9 @@ const User = require('../models/User'); // Import model User
 
 const createAccounts = async function(userId, bidangUsaha) {
   try {
+    if (bidangUsaha !== 'Jasa' && bidangUsaha !== 'Manufaktur' && bidangUsaha !== 'Perdagangan') {
+      return {status: 'fail', message: 'bidangUsaha salah atau tidak terdaftar'};
+    }
     // Cari user berdasarkan ID
     const user = await User.findById(userId);
     if (!user) {

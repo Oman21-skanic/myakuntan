@@ -30,6 +30,7 @@ const getTransactionById = asyncHandler( async (req, res) => {
     res.status(500).json({status: 'fail', message: 'Terjadi kesalahan server', data: error.message});
   }
 });
+
 const getTransactions = asyncHandler(async (req, res) => {
   const {userId, accountId} = req.query;
   const currentUser = req.user;
@@ -108,6 +109,7 @@ const getTransactions = asyncHandler(async (req, res) => {
 const createTransaction = asyncHandler(async (req, res) => {
   try {
     const {userId, tanggal, keterangan, nominal, akun_debit_id, akun_credit_id} = req.body;
+    const parsedDate = new Date(tanggal);
 
     // Validasi field wajib
     if (!userId || !tanggal || !keterangan || !nominal || !akun_debit_id || !akun_credit_id) {
@@ -116,6 +118,13 @@ const createTransaction = asyncHandler(async (req, res) => {
         message: 'semua field wajib diisi nominal wajib diisi',
       });
     }
+    if (isNaN(parsedDate.getTime())) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Tanggal tidak valid',
+      });
+    }
+
 
     // Validasi nominal angka positif
     if (isNaN(nominal) || Number(nominal) <= 0) {
@@ -139,20 +148,21 @@ const createTransaction = asyncHandler(async (req, res) => {
         message: 'Akun tidak ditemukan atau bukan milik user',
       });
     }
+    const nominalNumber = Number(nominal);
 
     // Buat transaksi
     const newTransaction = new Transaction({
       user_id: userId,
-      tanggal: new Date(tanggal),
+      tanggal: parsedDate,
       keterangan,
-      nominal,
+      nominal: nominalNumber,
       akun_debit_id: akun_debit_id,
       akun_credit_id: akun_credit_id,
     });
 
     // handler penambahan field credit atau debit dan saldo di account yang bersangkutan
-    applyTransaction(accountDebit, nominal, 'debit');
-    applyTransaction(accountCredit, nominal, 'credit');
+    applyTransaction(accountDebit, nominalNumber, 'debit');
+    applyTransaction(accountCredit, nominalNumber, 'credit');
     await accountDebit.save();
     await accountCredit.save();
     await newTransaction.save();
@@ -190,38 +200,47 @@ const updateTransaction = asyncHandler(async (req, res) => {
         message: 'Transaksi tidak ditemukan',
       });
     }
+    const parsedDate = new Date(tanggal);
+
+    if (isNaN(parsedDate.getTime())) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Tanggal tidak valid',
+      });
+    }
+
 
     const oldNominal = transaction.nominal;
-    const selisih = Number(nominal) - oldNominal;
+    const nominalNumber = Number(nominal);
 
-    const accountId = transaction.akun_debit_id || transaction.akun_credit_id;
-    const account = await Account.findById(accountId);
-    if (!account) {
+    const accountDebit = await Account.findById(transaction.akun_debit_id);
+    const accountCredit = await Account.findById(transaction.akun_credit_id);
+
+    if (!accountDebit || !accountCredit) {
       return res.status(404).json({
         status: 'fail',
         message: 'Akun terkait tidak ditemukan',
       });
     }
+    // rollback transaction lama
+    applyTransaction(accountDebit, -oldNominal, 'debit');
+    applyTransaction(accountCredit, -oldNominal, 'credit');
 
     // Update saldo akun berdasarkan jenis transaksi dan selisih nominal
-    if (transaction.akun_debit_id) {
-      account.debit += selisih;
-      account.saldo += account.normal_balance === 'debit' ? selisih : -selisih;
-    } else {
-      account.credit += selisih;
-      account.saldo += account.normal_balance === 'credit' ? selisih : -selisih;
-    }
-    await account.save();
+    applyTransaction(accountDebit, nominalNumber, 'debit');
+    applyTransaction(accountCredit, nominalNumber, 'credit');
+    await accountDebit.save();
+    await accountCredit.save();
 
     // Update transaksi
-    transaction.tanggal = new Date(tanggal);
+    transaction.tanggal = parsedDate;
     transaction.keterangan = keterangan;
-    transaction.nominal = Number(nominal);
+    transaction.nominal = nominalNumber;
     await transaction.save();
 
     res.status(200).json({
       status: 'success',
-      message: 'Transaksi berhasil diperbarui & saldo akun disesuaikan',
+      message: 'Transaksi berhasil diperbarui & akun diperbarui',
       data: transaction,
     });
   } catch (error) {
@@ -245,32 +264,24 @@ const deleteTransaction = asyncHandler(async (req, res) => {
         message: 'Transaksi tidak ditemukan',
       });
     }
+    const oldNominal = transaction.nominal;
 
-    // Ambil akun terkait
-    const accountId = transaction.akun_debit_id || transaction.akun_credit_id;
-    const account = await Account.findById(accountId);
-    if (!account) {
+    // ambil akun terkait
+    const accountDebit = await Account.findById(transaction.akun_debit_id);
+    const accountCredit = await Account.findById(transaction.akun_credit_id);
+
+    if (!accountDebit || !accountCredit) {
       return res.status(404).json({
         status: 'fail',
-        message: 'Akun tidak ditemukan',
+        message: 'Akun terkait tidak ditemukan',
       });
     }
+    // rollback akun terkait
+    applyTransaction(accountDebit, -oldNominal, 'debit');
+    applyTransaction(accountCredit, -oldNominal, 'credit');
+    await accountDebit.save();
+    await accountCredit.save();
 
-    // Rollback nilai di akun
-    if (transaction.akun_debit_id) {
-      account.debit -= transaction.nominal;
-      account.saldo += account.normal_balance === 'credit' ?
-        transaction.nominal :
-        -transaction.nominal;
-    } else {
-      account.credit -= transaction.nominal;
-      account.saldo += account.normal_balance === 'debit' ?
-        transaction.nominal :
-        -transaction.nominal;
-    }
-    await account.save();
-
-    // Hapus transaksi
     await transaction.deleteOne();
 
     res.status(200).json({

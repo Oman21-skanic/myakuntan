@@ -6,8 +6,8 @@ const passwordResetRoutes = require('./routes/passwordReset.routes');
 const pageRoutes = require('./routes/pages.routes');
 const accountsRoutes = require('./routes/accounts.routes');
 const transactionsRoutes = require('./routes/transactions.routes');
-const { errorHandler, notFoundPath } = require('./middleware/errorMiddleware');
-const { authLimiter, apiLimiter, userLimiter, redisClient } = require('./middleware/rateLimiter');
+const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
+const {authLimiter, apiLimiter, userLimiter, redisClient} = require('./middleware/rateLimiter');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -24,7 +24,7 @@ app.use(cors());
 
 // middleware parsing body request
 app.use(express.json()); // Middleware untuk parsing JSON
-app.use(express.urlencoded({ extended: true })); // (Opsional) Parsing form-urlencoded
+app.use(express.urlencoded({extended: true})); // (Opsional) Parsing form-urlencoded
 
 // cookies
 app.use(cookieParser());

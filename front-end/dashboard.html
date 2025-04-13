@@ -85,7 +85,9 @@
       <button class="btn logout-btn" onclick="logout()">Logout</button>
       <button class="btn home-btn" onclick="goHome()">Kembali ke Home</button>
       <button class="btn delete-btn" onclick="deleteUser()">Hapus Akun</button>
-      <button class="btn change-password-btn" onclick="changePassword()">Ganti Password</button>
+      <button class="btn change-password-btn" onclick="changePassword()">
+        Ganti Password
+      </button>
       <div class="user-data">
         <h3>Data Pengguna:</h3>
         <pre id="user-data">Memuat data...</pre>
@@ -105,10 +107,15 @@
           userId = userData._id;
 
           const responseDetails = await fetch(`/api/v1/users/${userData._id}`);
-          if (!responseDetails.ok) throw new Error("Gagal mengambil detail user");
+          if (!responseDetails.ok)
+            throw new Error("Gagal mengambil detail user");
 
           const { data: userDetails } = await responseDetails.json();
-          document.getElementById("user-data").innerText = JSON.stringify(userDetails, null, 2);
+          document.getElementById("user-data").innerText = JSON.stringify(
+            userDetails,
+            null,
+            2
+          );
         } catch (error) {
           console.error(error);
           document.getElementById("user-data").innerText = `${error}`;
@@ -117,7 +124,9 @@
 
       async function logout() {
         try {
-          const response = await fetch("/api/auth/logout", { method: "POST" });
+          const response = await fetch("/api/v1/auth/sessions", {
+            method: "DELETE",
+          });
           if (response.ok) {
             window.location.href = "/login";
           } else {
@@ -137,11 +146,13 @@
           alert("User ID tidak ditemukan");
           return;
         }
-        
+
         if (!confirm("Apakah Anda yakin ingin menghapus akun ini?")) return;
 
         try {
-          const response = await fetch(`/api/v1/users/${userId}`, { method: "DELETE" });
+          const response = await fetch(`/api/v1/users/${userId}`, {
+            method: "DELETE",
+          });
           if (!response.ok) throw new Error("Gagal menghapus akun");
 
           alert("Akun berhasil dihapus");

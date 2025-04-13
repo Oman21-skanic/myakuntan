@@ -371,16 +371,22 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 
 ---
 
-## 5. UPDATE DATA USER (NAME)
+## 5. UPDATE DATA USER (bidangUsaha, name, email, password)
 
 **Method:** `PUT`  
 **API:** `/v1/users/:id`  
 **Credentials:** `'include'`
+- **Deskripsi**: note: jika mengganti bidang usaha maka semua akun dan transaksi yang lama akan hilang.
+
+
 
 **Body:**
 ```json
 {
-  "name": "Nama Baru"
+  "bidangUsaha": "Jasa", // atau "Manufaktur" / "Perdagangan"
+  "name": "Nama Baru",
+  "email": "emaibaru@gmail.com",
+  "password" : "password",
 }
 ```
 
@@ -809,12 +815,9 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 ### 📥 Request Body
 ```json
 {
-  "userId": "67f973fa4505491174b4aaa9",
   "tanggal": "2025-04-11T10:30:00.000Z",
   "keterangan": "Penambahan modal awal",
   "nominal": 50000,
-  "akun_debit_id": "67f97685f1dc4eb3c89c78f8",
-  "akun_credit_id": "67f97685f1dc4eb3c89c78f9"
 }
 
 ```
@@ -823,7 +826,7 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 ```json
 {
     "status": "success",
-    "message": "Transaksi berhasil dibuat & akun diupdate",
+    "message": "Transaksi berhasil diperbarui & akun diperbarui",
     "data": {
         "user_id": "67f973fa4505491174b4aaa9",
         "tanggal": "2025-04-11T10:30:00.000Z",
@@ -851,13 +854,13 @@ Server akan mengambil data email dari temptoken, memperbarui OTP, dan mengirim u
 - **Method**: `DELETE`  
 - **Endpoint**: `/v1/transactions/:transactionId`  
 - **Credentials**: include  
-- **Deskripsi**: Menghapus transaksi milik user, serta mengembalikan nominal transaksi ke akun terkait.
+- **Deskripsi**: Menghapus transaksi milik user.
 
 ### ✅ Response Berhasil
 ```json
 {
   "status": "success",
-  "message": "Transaksi berhasil dihapus & saldo akun diperbarui"
+  "message": "Transaksi berhasil dihapus dan akun diperbarui"
 }
 ```
 

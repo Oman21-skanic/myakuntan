@@ -1,0 +1,24 @@
+<svg width="239" height="239" viewBox="0 0 239 239" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_290_413)">
+<ellipse cx="119.29" cy="119.499" rx="93.2901" ry="93.4911" fill="#FFDD00"/>
+<ellipse cx="119.291" cy="119.5" rx="86.2048" ry="86.3905" fill="#F8D200"/>
+<rect width="4.72355" height="186.982" transform="matrix(0.999992 -0.00408234 0.00399595 0.999992 116.946 26.0194)" fill="#F8D200"/>
+<rect width="4.73372" height="186.58" transform="matrix(-0.0126495 0.99992 -0.999919 -0.0127041 212.998 118.318)" fill="#F8D200"/>
+<rect width="4.72864" height="186.615" transform="matrix(0.706345 -0.707867 0.706345 0.707867 52.0479 55.0643)" fill="#F8D200"/>
+<rect width="4.72864" height="186.444" transform="matrix(0.706345 0.707867 -0.706345 0.707867 183.743 51.9564)" fill="#F8D200"/>
+<circle cx="119.076" cy="119.318" r="63.0914" fill="#D9B800"/>
+<circle cx="119.076" cy="120.159" r="54.6792" fill="#F8D200"/>
+<rect width="119.186" height="8.18333" transform="matrix(0.707102 -0.707102 0.710444 0.703745 74.4917 159.037)" fill="#D9B800"/>
+</g>
+<defs>
+<filter id="filter0_d_290_413" x="23" y="26.0001" width="189.998" height="192" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-3" dy="5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.251638 0 0 0 0 0.112674 0 0 0 0 0.491667 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_290_413"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_290_413" result="shape"/>
+</filter>
+</defs>
+</svg>

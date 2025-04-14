@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/landingpage.css" />
     <title>MyAkuntan</title>
   </head>
   <body>
@@ -39,8 +39,60 @@
     </header>
     <main class="page-wrapper">
       <div
-        class="w-full h-40 bg-amber-400 xl:bg-blue-400 md:bg-amber-600 lg:bg-amber-900"
-      ></div>
+        id="simple-nav-devOnly"
+        class="w-full h-40 bg-amber-400  xl:bg-blue-400 md:bg-amber-600 lg:bg-amber-900"
+      >
+      <ul class="p-5 flex gap-2">
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/error-pages/badrequest.html">
+          Bad-Req 400
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/error-pages/forbidden.html">
+          forbiden 403
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/error-pages/notfound.html">
+          not-found 404
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/error-pages/unauthorized.html">
+          unauthorized 401 
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/front-end/dashboard.html">
+          Dashboard
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/front-end/otp_template.html">
+          otp template
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/front-end/verify-otp.html">
+          otp verf
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/front-end/update-password-by-email.html">
+          update password
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/front-end/reset-password.html">
+          reset password
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/front-end/verify-reset-password.html">
+          verf reset-password
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/login/login.html">
+          login
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/signup/index.html">
+          register
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/aboutus/aboutus.html">
+          Aboutus
+        </a></li>
+        <li><a class="inline-blockhover:underline hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/table-field/table-field.html">
+          table-field
+        </a></li>
+        <li><a class="inline-blockhover:underline  hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/roleumkm/roleumkm.html">
+          role-select
+        </a></li>
+        <li><a class="inline-blockhover:underline  hover:rotate-2 hover:scale-110 transition-all duration-100 ease-in-out bg-teal-100 p-2 rounded-lg " href="/src/pages/profile/profile.html">
+          editprofile
+        </a></li>
+      </ul>
+    </div>
       <section 
         class="Hero w-full h-[80vh] md:h-[100vh] max-h-[800px] flex items-center mt-[-70px] justify-center"
       >
@@ -71,7 +123,7 @@
               START
             </button>
           </div>
-          <figure class="element1 md:min-w-80 lg:min-w-96 items-center hidden lg:inline-block">
+          <figure class="element1 md:min-w-80 lg:min-w-96  items-center hidden lg:inline-block">
             <img
               class="w-full hidden lg:block"
               src="./src/assets/images/element1.svg"
@@ -374,6 +426,6 @@
           © 2025 MyAkuntan- All rights reserved.
         </p>
       </section>
-      <script src="./src/main.js" type="module"></script>
+      <script src="./src/scripts/main.js" type="module"></script>
   </body>
 </html>

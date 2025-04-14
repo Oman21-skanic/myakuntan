@@ -1,73 +1,63 @@
-document.getElementById('signupForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-  
-    const firstName = document.getElementById('firstname').value;
-    const lastName = document.getElementById('lastname').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const messageElement = document.getElementById("message");
 
     const notyfLogin = new Notyf({
       duration: 1000,
-      ripple : true,
+      ripple: true,
       position: {
-        x: 'right',
-        y: 'bottom',
+        x: "right",
+        y: "bottom",
       },
       types: [
         {
-          type: 'warning',
-          background: 'orange',
+          type: "warning",
+          background: "orange",
           icon: {
-            className: 'material-icons',
-            tagName: 'i',
-            text: 'warning'
-          }
+            className: "material-icons",
+            tagName: "i",
+            text: "warning",
+          },
         },
         {
-          type: 'error',
-          background: 'indianred',
+          type: "error",
+          background: "indianred",
           duration: 2000,
-          dismissible: true
+          dismissible: true,
         },
         {
-          type: 'success',
-          background: 'green',
+          type: "success",
+          background: "green",
           duration: 2000,
-          dismissible: true
-        }
-      ]
+          dismissible: true,
+        },
+      ],
     });
-  
-    const formdata = {
-      firstName,
-      lastName,
-      email,
-      password
-    };
-  
+
+    messageElement.textContent = "Sedang mendaftar...";
+
     try {
-      const response = await fetch('APIIII', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-         },
-
-         body: JSON.stringify(formdata)
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
       });
-  
+
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Signup failed');
+        throw new Error(data.message || "Registrasi gagal");
       }
-  
-      const result = await response.json();
-      notyfLogin.success(result.message);
-      console.log(result.message);
 
-      document.getElementById('signupForm').reset();
-  
+      messageElement.textContent = "Registrasi berhasil dibuat! Mengalihkan...";
+      setTimeout(() => (window.location.href = "/login/verify"), 2000);
     } catch (error) {
-      console.error(error.message);
+      messageElement.textContent = error.message;
     }
-
-    notyfLogin.success('Akun berhasil dibuat! 🎉')
   });

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>400 - Bad Request</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #721c24;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      a:hover {
+        background: #a94442;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- TEMPLATE FROM SERVER-->
+      <h1>{{statusCode}}</h1>
+      <p>{{errorMessage}}</p>
+      <img
+        src="https://th.bing.com/th/id/OIP._lw_uzE82qNXhNr6J92BWwHaF1?rs=1&pid=ImgDetMain"
+        alt="400 Bad Request"
+      />
+      <br />
+      <a href="/">Kembali ke Beranda</a>
+    </div>
+  </body>
+</html>

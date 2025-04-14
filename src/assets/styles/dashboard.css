@@ -13,7 +13,7 @@
   body, html {
       margin: 0;
       padding: 0;
-      height: 100%;
+      height: 50%;
       background-color: var(--ijomuda);
     }
     
@@ -589,14 +589,181 @@
     }
 
     .buku .pembukuan1 , .buku .pembukuan2{
-      height: 150px;
+      height: 120px;
     }
 
     .buku h2 {
       font-size: 13px;
     }
+    .grafik .diagram-batang, .grafik .diagram-lingkaran{
+      height: 200px;
+    }
+
+    .donut-container {
+      height: 130px;
+    }
+
+    .donut {
+      width: 200px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #FFD700 25%,
+        #00CC00 0 100%
+      );
+      mask: radial-gradient(white 40%, transparent 41%);
+      -webkit-mask: radial-gradient(white 40%, transparent 41%);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* BAR CHART */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-evenly;
+      height: 120px;
+      padding: 0px 2rem;
+      margin-left: 0rem;
+      margin-top: 2rem;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .bar {
+      width: 40px;
+      background-color: var(--hijau);
+      border-radius: 2px;
+      margin-left: 1rem;
+    }
+
+    .search-bar input {
+      height: 2rem;
+      margin-right: 0rem;
+    } 
+
+    .grafik .diagram-batang {
+      background-color: var(--putih);
+      margin-right: 5px;
+      width: 50%;
+      height: 200px;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
+
+    .grafik .diagram-lingkaran {
+      background-color: var(--putih);
+      width: 50%;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
   }
-
+    
   @media screen and (max-width: 576px)  {
+.profile-edit {
+      height: 30px;
+      width: 80px;
+      /* margin-top: 0.5rem; */
+      margin-left: 10rem;
+    }
 
+    .profile .profile-text p, .profile .profile-text h2 {
+      font-size: 10px;
+      margin-right: -150px;
+    }
+
+    .buku .pembukuan1 , .buku .pembukuan2{
+      height: 150px;
+      width: 100%;
+      margin: 5px 0;
+    }
+
+    .buku {
+      display: block;
+    }
+
+    .buku h2 {
+      font-size: 12px;
+    }
+
+    .grafik {
+      display: block;
+    }
+    .grafik .diagram-batang, .grafik .diagram-lingkaran{
+      height: 200px;
+      margin: 5px 0;
+    }
+
+    .donut-container {
+      height: 120px;
+    }
+
+    .donut {
+      width: 180px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #FFD700 25%,
+        #00CC00 0 100%
+      );
+      mask: radial-gradient(white 40%, transparent 41%);
+      -webkit-mask: radial-gradient(white 40%, transparent 41%);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* BAR CHART */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-evenly;
+      height: 100px;
+      padding: 0px 2rem;
+      margin-left: 0rem;
+      margin-top: 1rem;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .bar {
+      width: 40px;
+      background-color: var(--hijau);
+      border-radius: 2px;
+      margin-left: 1rem;
+    }
+
+    .search-bar input {
+      height: 2rem;
+      margin-right: 6.5rem;
+    } 
+
+    .grafik .diagram-batang {
+      background-color: var(--putih);
+      margin-right: 5px;
+      width: 100%;
+      height: 180px;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
+
+    .grafik .diagram-lingkaran {
+      background-color: var(--putih);
+      width: 100%;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
   }

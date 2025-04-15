@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      .navbar {
+        width: 100%;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-login {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #2196f3;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .btn-login:hover {
+        background-color: #1976d2;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .markdown-body {
+        padding: 2rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        overflow-x: auto;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #666;
+        max-width: 600px;
+        margin-bottom: 20px;
+      }
+      .markdown-body {
+        color: #24292f; /* warna teks default GitHub */
+        background-color: white; /* biar lebih kontras */
+      }
+
+      .markdown-body h1,
+      .markdown-body h2,
+      .markdown-body h3,
+      .markdown-body h4,
+      .markdown-body h5,
+      .markdown-body h6 {
+        color: #1f2328; /* warna heading */
+      }
+
+      .markdown-body code {
+        color: #e01e5a; /* warna inline code biar pop-up */
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 90%;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="/login" class="btn-login" id="authButton">Login</a>
+    </div>
+
+    <div class="container">
+      <h1>Selamat Datang <span id="nameUser"></span></h1>
+      <p>
+        Ini adalah dokumentasi API.
+      </p>
+      <p>
+        Catatan: api accounts untuk pemilihan bidang usaha mendapat perubahan endpoint menjadi /v1/users/:id/accounts detailnya bisa di cek dibawah;
+
+      </p>
+      <p>api dan request body sekarang sudah fiks dan kemungkinnan tidak akan mengalami perubahan lagi </p>
+      <p>api memiliki pengamanan yang ketat terutama transaksi account dan user, kecuali akun dengan role admin memiliki kendali dan dapat mengakses semua api</p>
+      <div id="markdownPreview" class="markdown-body"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      fetch('/documentation/api') 
+        .then(res => res.text())
+        .then(md => {
+          document.getElementById('markdownPreview').innerHTML = marked.parse(md);
+        });
+
+      async function checkLoginStatus() {
+        try {
+          const response = await fetch("/api/v1/users/me");
+          const authButton = document.getElementById("authButton");
+
+          if (!response.ok) {
+            authButton.textContent = "Login";
+            authButton.href = "/login";
+            throw new Error("Not logged in");
+          }
+
+          const user = await response.json();
+          authButton.textContent = "Dashboard";
+          authButton.href = "/dashboard";
+          document.getElementById('nameUser').textContent = user.data.name;
+        } catch (error) {
+          console.log("User not logged in.");
+        }
+      }
+
+      checkLoginStatus();
+    </script>
+  </body>
+</html>

@@ -1,12 +1,7 @@
 const User = require('./User');
 const Transaction = require('./Transaction');
 const Account = require('./Account');
-const LaporanNeraca = require('./LaporanNeraca');
-const LaporanLabaRugi = require('./LaporanLabaRugi');
-const LaporanPerubahanModal = require('./LaporanPerubahanModal');
-const LaporanNeracaSaldo = require('./LaporanNeracaSaldo');
-
+const Laporanlabarugi = require('./LaporanLabaRugi');
 module.exports = {
-  User, LaporanNeraca, LaporanLabaRugi, LaporanPerubahanModal, LaporanNeracaSaldo,
-  Transaction, Account,
+  User, Transaction, Account, Laporanlabarugi,
 };

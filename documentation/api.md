@@ -966,3 +966,108 @@ GET /v1/transactions?accountId=64fdc9cbd203dc8d902f1235&page=1&limit=20
 - Validasi dilakukan agar user **tidak bisa akses data orang lain**
 
 ---
+
+
+## 📕 Laporan laba rugi
+
+## 1. Buat Laporan Laba Rugi  
+- **Method**: `POST`  
+- **Endpoint**: `/v1/laporan/`  
+- **Credentials**: include  
+- **Deskripsi**: Menghasilkan prediksi laporan laba rugi berdasarkan data akun milik user dan mengirimnya ke backend ML.
+
+### 📥 Request Body
+```json
+{
+  "user_id": 123
+}
+```
+
+### ✅ Response Berhasil
+```json
+{
+  "status": "success",
+  "prediction": {
+    "User_ID": 123,
+    "Bidang_Usaha": "Kuliner",
+    "Tahun": 2025,
+    "Bulan": 4,
+    "Pendapatan": 1500000,
+    "Beban_Operasional": 500000,
+    "Pajak": 75000,
+    "Laba_Rugi_Lag": 200000,
+    "Prediksi_Laba_Rugi": 925000
+  }
+}
+```
+
+### ❌ Response Gagal
+```json
+{
+  "error": "User tidak ditemukan"
+}
+```
+
+---
+
+## 2. Riwayat Laporan  
+- **Method**: `GET`  
+- **Endpoint**: `/v1/laporan/history`  
+- **Credentials**: include  
+- **Deskripsi**: Mengambil data riwayat laporan laba rugi. Dapat difilter berdasarkan tahun, bulan, dan mendukung pagination.
+
+### 📤 Query Parameters
+- `tahun` (opsional): contoh `2025`  
+- `bulan` (opsional): contoh `4`  
+- `page` (opsional): default `1`  
+- `limit` (opsional): default `10`  
+
+### ✅ Contoh URL
+```
+/v1/laporan/history?tahun=2025&bulan=4&page=1&limit=10
+```
+
+### ✅ Response Berhasil
+```json
+[
+  {
+    "User_ID": 123,
+    "Tahun": 2025,
+    "Bulan": 4,
+    "Pendapatan": 1000000,
+    "Beban_Operasional": 300000,
+    "Pajak": 50000,
+    "Laba_Rugi_Lag": 0,
+    "Prediksi_Laba_Rugi": 650000
+  }
+]
+```
+
+---
+
+## 3. Export Laporan (Excel)  
+- **Method**: `GET`  
+- **Endpoint**: `/v1/laporan/export`  
+- **Credentials**: include  
+- **Deskripsi**: Mengekspor laporan laba rugi dalam format Excel (.xlsx) berdasarkan filter.
+
+### 📤 Query Parameters
+- `tahun` (opsional): contoh `2025`  
+- `bulan` (opsional): contoh `4`  
+- `user_id` (wajib): contoh `123`
+
+### ✅ Contoh URL
+```
+/v1/laporan/export?tahun=2025&bulan=4&user_id=123
+```
+
+### ✅ Response Berhasil
+- File Excel akan otomatis diunduh dengan nama `riwayat_prediksi.xlsx`.
+
+### ❌ Response Gagal
+```json
+{
+  "status": "fail",
+  "message": "Data kosong di sistem prediksi"
+}
+```

@@ -6,12 +6,17 @@ const passwordResetRoutes = require('./routes/passwordReset.routes');
 const pageRoutes = require('./routes/pages.routes');
 const accountsRoutes = require('./routes/accounts.routes');
 const transactionsRoutes = require('./routes/transactions.routes');
+const laporanRoutes = require('./routes/laporan.routes');
 const {errorHandler, notFoundPath} = require('./middleware/errorMiddleware');
-const {authLimiter, apiLimiter, userLimiter, redisClient} = require('./middleware/rateLimiter');
+const {
+  authLimiter,
+  userLimiter,
+  redisClient,
+  apiLimiter,
+} = require('./middleware/rateLimiter');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-
 require('dotenv').config();
 
 // host dan port
@@ -32,6 +37,8 @@ app.use(cookieParser());
 // pages Routes
 app.use('/', pageRoutes);
 
+app.use('/api/v1/laporan', apiLimiter, laporanRoutes );
+
 // auth routes
 app.use('/api/v1/auth', authLimiter, authRoutes);
 
@@ -46,6 +53,8 @@ app.use('/api/v1/accounts', userLimiter, accountsRoutes);
 
 // transaction routes
 app.use('/api/v1/transactions', userLimiter, transactionsRoutes);
+
+app.use('/api/v1/laporan', userLimiter, transactionsRoutes);
 
 // error path Not found
 app.use(notFoundPath);
@@ -64,7 +73,6 @@ async function start() {
     console.log(`gagal terhubung ke databse : ${error.message}`);
   }
 }
-
 
 app.listen(port, host, () => {
   console.log(`server running on http://${host}:${port}`);

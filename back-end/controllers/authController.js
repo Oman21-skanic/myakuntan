@@ -29,7 +29,7 @@ const createResToken = (user, statusCode, res) => {
       expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 hari
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Strict',
+      sameSite: 'None',
     };
 
     res.cookie('jwt', token, cookieOption);
@@ -69,6 +69,7 @@ const registerUser = asyncHandler(async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 30 * 60 * 1000, // 30 menit
+            sameSite: 'None',
           })
           .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
     } catch (error) {
@@ -104,6 +105,7 @@ const registerUser = asyncHandler(async (req, res) => {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
           maxAge: 30 * 60 * 1000, // 10 menit
+          sameSite: 'None',
         })
         .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
   } catch (error) {
@@ -188,7 +190,7 @@ const logoutUser = asyncHandler(async (req, res) => {
       httpOnly: true,
       expires: new Date(0), // Hapus cookie dengan mengatur expired time ke masa lalu
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict', // Tambahan keamanan
+      sameSite: 'None', // Tambahan keamanan
     });
     console.log('log out dijalankan');
 
@@ -224,6 +226,7 @@ const sendOtpHandler = asyncHandler(async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         maxAge: 30 * 60 * 1000, // 10 menit
+        sameSite: 'None',
       })
       .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
 });

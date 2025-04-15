@@ -1,4 +1,15 @@
+const logger = require('../utils/logger');
+
 const badRequestHandler = (err, req, res, next) => {
+  logger.error({
+    statusCode: 400,
+    message: err.message || 'Bad Request',
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body,
+    stack: err.stack,
+  });
+
   res.status(400).json({
     status: 'fail',
     message: err.message || 'Bad Request',
@@ -7,6 +18,15 @@ const badRequestHandler = (err, req, res, next) => {
 };
 
 const unauthorizedHandler = (err, req, res, next) => {
+  logger.error({
+    statusCode: 401,
+    message: err.message || 'Unauthorized',
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body,
+    stack: err.stack,
+  });
+
   res.status(401).json({
     status: 'fail',
     message: err.message || 'Unauthorized',
@@ -15,6 +35,15 @@ const unauthorizedHandler = (err, req, res, next) => {
 };
 
 const forbiddenHandler = (err, req, res, next) => {
+  logger.error({
+    statusCode: 403,
+    message: err.message || 'Forbidden',
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body,
+    stack: err.stack,
+  });
+
   res.status(403).json({
     status: 'fail',
     message: err.message || 'Forbidden',
@@ -23,6 +52,15 @@ const forbiddenHandler = (err, req, res, next) => {
 };
 
 const pageNotFoundHandler = (err, req, res, next) => {
+  logger.error({
+    statusCode: 404,
+    message: err.message || 'Page Not Found',
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body,
+    stack: err.stack,
+  });
+
   res.status(404).json({
     status: 'fail',
     message: err.message || 'Page Not Found',

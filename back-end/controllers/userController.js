@@ -156,7 +156,7 @@ const deleteUserByIdHandler = asyncHandler(async (req, res) => {
       httpOnly: true,
       expires: new Date(0),
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'None',
     });
 
     res.status(200).json({

@@ -2,8 +2,13 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const userSchema = new Schema({
+  user_id: {
+    type: Number,
+    unique: true,
+  },
   name: {
     type: String,
     required: [true, 'username must be filled'],
@@ -56,6 +61,7 @@ const userSchema = new Schema({
 userSchema.methods.comparePassword = async function(reqBody) {
   return await bcrypt.compare(reqBody, this.password);
 };
+userSchema.plugin(AutoIncrement, {inc_field: 'user_id'});
 
 const User = mongoose.model('User', userSchema);
 

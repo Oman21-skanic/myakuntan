@@ -17,7 +17,7 @@ const protectedMiddleware = asyncHandler(async (req, res, next) => {
       algorithms: ['HS256'],
     });
 
-    const user = await User.findById(decoded.id).select('_id name email role');
+    const user = await User.findById(decoded.id).select('_id user_id name email role');
     if (!user) {
       return res.status(401).json({
         status: 'fail',

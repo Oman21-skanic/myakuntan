@@ -38,6 +38,7 @@ const resetPasswordByEmail = asyncHandler(async (req, res) => {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
           maxAge: 30 * 60 * 1000, // 10 menit
+          sameSite: 'None',
         })
         .json({status: 'success', message: 'Kode OTP telah dikirim', data: email});
   } catch (error) {
@@ -74,6 +75,7 @@ const verifyResetPasswordByEmail = asyncHandler(async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 15 * 60 * 1000, // 15 menit
+      sameSite: 'None',
     });
 
     return res.status(201).json({status: 'success', message: 'Verifikasi berhasil, password bisa diupdate dalam 15 menit'});

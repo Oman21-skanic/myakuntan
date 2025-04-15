@@ -1,0 +1,4 @@
+models-api/models-api/label_encoders.pkl
+models-api/models-api/time_series_encoders.pkl
+models-api/models-api/timeseries_pipeline_model.pkl
+models-api/models-api/trained_model.pkl

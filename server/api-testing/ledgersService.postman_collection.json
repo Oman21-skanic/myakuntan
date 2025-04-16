@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "e5d438dc-2601-4814-886c-3d39294e3f2c",
+		"name": "ledgersService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "42349141"
+	},
+	"item": [
+		{
+			"name": "create buku besar ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"67e8ed3e6adb75a36de26bbe\",\r\n  \"ledgerName\": \"usaha Lele pak adi\",\r\n  \"ledgerType\": \"manufaktur dan dagang\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}/api/ledgers"
+			},
+			"response": []
+		},
+		{
+			"name": "get ledger by id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/ledgers/:ledgerId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ledgers",
+						":ledgerId"
+					],
+					"variable": [
+						{
+							"key": "ledgerId",
+							"value": "67e936f1fd0ea7ecb966dd3c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update buku besar by id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Toko Pak Joko",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/api/ledgers/:ledgerId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ledgers",
+						":ledgerId"
+					],
+					"variable": [
+						{
+							"key": "ledgerId",
+							"value": "67e8ede2d2028ea8a4c65f3d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete buku besar berdasarkan id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/ledgers/:ledgerId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ledgers",
+						":ledgerId"
+					],
+					"variable": [
+						{
+							"key": "ledgerId",
+							"value": "67e936f1fd0ea7ecb966dd3c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get details account dan transaksi",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/accounts/:accountId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accounts",
+						":accountId"
+					],
+					"variable": [
+						{
+							"key": "accountId",
+							"value": "67ee5a016e7a4d92a6b37ac9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create transaksi",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"accountId\": \"67e936f1fd0ea7ecb966dd3e\",\r\n  \"ledgerId\": \"67e936f1fd0ea7ecb966dd3c\",\r\n  \"amount\": 500000,\r\n  \"description\": \"Tambahan modal usaha\",\r\n  \"action\": \"increase\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}/api/transactions"
+			},
+			"response": []
+		},
+		{
+			"name": "get all accounts yang ada didalam ledger berdasarkan id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/accounts/ledger/:ledgerId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"ledger",
+						":ledgerId"
+					],
+					"variable": [
+						{
+							"key": "ledgerId",
+							"value": "67e936f1fd0ea7ecb966dd3c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get detail transactions use transactionsId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/transactions/:transactionsId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						":transactionsId"
+					],
+					"variable": [
+						{
+							"key": "transactionsId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all transaksi by ledgerId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/transactions/ledger/:ledgerId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"ledger",
+						":ledgerId"
+					],
+					"variable": [
+						{
+							"key": "ledgerId",
+							"value": "67ee5a016e7a4d92a6b37ac8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all transaksi di account spesifik",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/transactions/account/:accountId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"account",
+						":accountId"
+					],
+					"variable": [
+						{
+							"key": "accountId",
+							"value": "67ee5a016e7a4d92a6b37ac9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update transaksi ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 100000,\r\n  \"description\": \"Tambahan modal\",\r\n  \"action\": \"increase\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/transactions/:transactionId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						":transactionId"
+					],
+					"variable": [
+						{
+							"key": "transactionId",
+							"value": "67efdffbcf860d2de157e9f6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete transaksi by transactionId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/transactions/:transactionId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						":transactionId"
+					],
+					"variable": [
+						{
+							"key": "transactionId",
+							"value": "67efdffbcf860d2de157e9f6"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

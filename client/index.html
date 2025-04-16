@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/Logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/assets/styles/landingpage.css" />
+    <title>MyAkuntan</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="sticky top-0 z-999">
+      <div class="header w-full flex bg-white h-[70px]">
+        <div
+          class="header-comp w-full flex justify-between mx-5 md:mx-20 lg:mx-60 items-center"
+        >
+          <div class="logo flex items-center hover:cursor-pointer">
+            <img id="logo" src="/Logo.svg" alt="logo.svg" />
+            <span class="text-base md:text-lg text-black pl-2 font-semibold">
+              MyAkuntan
+            </span>
+          </div>
+          <div class="lang flex hover:cursor-pointer">
+            <img
+              src="/id.png"
+              alt="IndonesiaFlag"
+              class="w-[30px] h-[20px] border-1 border-black"
+            />
+            <span class="text-base text-black pl-2 font-semibold">ID</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="page-wrapper">
+      <section 
+        class="Hero w-full h-[80vh] md:h-[100vh] max-h-[800px] flex items-center mt-[-70px] justify-center"
+      >
+        <figure>
+          <img
+            class="w-full h-full absolute -z-5 top-0 -right-0 opacity-60"
+            src="./src/assets/images/meshblur.png"
+            alt="meshblur/png"
+          />
+        </figure>
+        <div
+          class="h-fit max-w-[1440px] w-4/5 flex justify-between flex-wrap-reverse md:flex-nowrap"
+        >
+          <div class="textaction mx-1 md:mx-5 xl:mx-10">
+            <h1
+              class="text-4xl/10 mt-20 md:mt-0 md:text-5xl/13 xl:text-6xl/17 text-left md:text-center lg:text-left font-semibold md:min-w-[504px] md:max-w-[710px] transition-all duration-300 ease-in-out"
+            >
+              Let's create an
+              <span class="text-[#F8D200]">interesting financial</span>
+              management
+              <span class="text-[#03B321]">experience</span>
+            </h1>
+            <p class="italic text-lg mt-5">Get your experience here!</p>
+            <button
+              class="text-white text-base font-semibold mt-5 bg-[#03B321] hover:bg-[#03C725] active:bg-[#029F1E] w-full lg:w-40 h-[41px] rounded-xl"
+              onclick="window.location.href='/src/pages/signup/index.html'"
+            >
+              START
+            </button>
+          </div>
+          <figure class="element1 md:min-w-80 lg:min-w-96  items-center hidden lg:inline-block">
+            <img
+              class="w-full hidden lg:block"
+              src="./src/assets/images/element1.svg"
+              alt="element1/svg"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section class="max-h-[800px]">
+        <h1
+          class="text-black text-3xl/8 md:text-5xl text-center font-semibold transition-all duration-300 ease-in-out"
+        >
+          MyAkuntan is here for your convenience.
+        </h1>
+        <div
+          class="card-container max-w-[1440px] w-[85%] md:min-w-[700px] lg:min-w-[1000px] text-white flex flex-col lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 my-10 mx-auto justify-center"
+        >
+          <!-- card 1 -->
+          <div
+            class="card bg-[#0F3019] flex p-9 rounded-xl md:max-w-full h-60 items-center"
+          >
+            <figure class="w-20 md:w-28 flex justify-center">
+              <img
+                class="w-full"
+                src="./src/assets/images/accuray-icon.svg"
+                alt="icon.svg"
+              />
+            </figure>
+            <div class="content w-3/4 ml-5">
+              <h2 class="text-lg md:text-xl font-semibold">99% Data Accuracy</h2>
+              <p class="hidden md:block">
+                guarantees fully precise, consistent, and reliable financial
+                data, minimizing errors and supporting confident
+                decision-making.
+              </p>
+              <p class="block md:hidden">
+                Ensures precise, consistent financial data, minimizing errors for confident decisions.
+              </p>
+            </div>
+          </div>
+          <!-- card 2 -->
+          <div
+            class="card bg-[#0F3019] flex p-9 rounded-xl md:max-w-full h-60 items-center"
+          >
+            <figure class="w-20 md:w-28 flex justify-center">
+              <img
+                class="w-full"
+                src="./src/assets/images/auto-icon.svg"
+                alt="icon.svg"
+              />
+            </figure>
+            <div class="content w-3/4 ml-5">
+              <h2 class="text-lg md:text-xl font-semibold">Automation & Templates</h2>
+              <p class="hidden md:block">
+                streamline repetitive tasks with ready-made templates, saving
+                time and ensuring consistency in financial documents.
+              </p>
+              <p class="block md:hidden">
+                Streamline tasks with templates, saving time and ensuring document consistency.
+              </p>
+            </div>
+          </div>
+          <!-- card 3 -->
+          <div
+            class="card bg-[#1B5129] flex p-9 rounded-xl md:col-span-2 h-60 items-center"
+          >
+            <figure class="w-20 md:w-28 flex justify-center">
+              <img
+                class="w-full"
+                src="./src/assets/images/dash-icon.svg"
+                alt="icon.svg"
+              />
+            </figure>
+            <div class="content w-3/4 ml-5">
+              <h2 class="text-xl font-semibold">
+                Interactive Financial Dashboard
+              </h2>
+              <p class="hidden md:block">
+                It provides real-time financial insights through dynamic charts,
+                graphs, and detailed summaries. This platform enables users to
+                monitor cash flow, track profit and loss, and analyze financial
+                trends with greater accuracy. Additionally, users receive
+                automated alerts for payment reminders, low balances, and
+                upcoming financial deadlines, ensuring better financial planning
+                and informed decision-making.
+              </p>
+              <p class="block md:hidden">
+                Real-time insights with charts, alerts, and tracking for better finance.
+              </p>           
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div
+          class="feature-container mx-auto w-5/6 max-w-[1440px] my-40 flex flex-col"
+        >
+          <h1
+            class="text-3xl/8 md:text-5xl font-semibold"
+          >
+            <span class="text-[#F8D200]">Finance Manager</span>
+            has
+            <span class="text-[#03B321]">easy</span>
+            and various features.
+          </h1>
+          <div class="text-container w-full flex flex-col md:flex-row justify-between gap-5 md:gap-20 mt-10">
+            <div class="text text-justify w-full md:w-1/2">
+              <p>
+                Finance Manager offers intuitive tools to streamline financial
+                tasks. Easily track expenses, manage budgets, and generate
+                detailed reports. Its user-friendly interface ensures quick
+                access to vital data, enhancing productivity and business
+                efficiency
+              </p>
+            </div>
+
+            <div class="text text-justify w-full md:w-1/2">
+              <p>
+                Finance Manager offers intuitive tools to streamline financial
+                tasks. Easily track expenses, manage budgets, and generate
+                detailed reports. Its user-friendly interface ensures quick
+                access to vital data, enhancing productivity and business
+                efficiency
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h1
+          class="text-[40px]/10 md:text-5xl/13 lg:text-5xl/15 font-semibold text-center mb-10"
+        >
+          Testimonial
+        </h1>
+        <div class="carousel-wrapper relative w-full px-5 lg:px-0  m-auto h-fit max-w-[1440px]">
+        <div class="carousel-container relative w-full px-5 lg:px-0  m-auto h-fit max-w-[1440px] overflow-hidden">
+          <div class="carousel-track flex gap-[1rem]" id="carouselTrack">
+            <!-- card1 -->
+            <div class="card border-gray-400 border rounded-2xl w-[427px] h-fit min-h-[210px] p-5 bg-[#F1F1F1] flex-shrink-0">
+              <div class="card-content">
+                <p>
+                  MyAkuntan sangat membantu saya memahami dasar-dasar akuntansi. Fitur-fiturnya yang intuitif membuat pencatatan keuangan jadi lebih mudah dan menyenangkan!
+                </p>
+              </div>
+              <div class="card-profile flex items-center mt-7">
+                <figure class="w-[45px]">
+                  <img
+                    class="w-full rounded-full"
+                    src="./src/assets/images/profile1.png"
+                    alt="profile.png"
+                  />
+                </figure>
+                <div class="ml-3">
+                  <span class="font-semibold text-xl block">Rina Susanti</span>
+                  <span class="text-xs font-semibold text-gray-500 block">Siswa, SMK Nusantara</span>
+                </div>
+              </div>
+            </div>
+            <!-- card2 -->
+            <div class="card border-gray-400 border rounded-2xl w-[427px] h-fit min-h-[210px] p-5 bg-[#F1F1F1] flex-shrink-0">
+              <div class="card-content">
+                <p>
+                  Berkat MyAkuntan, saya bisa belajar mengelola laporan keuangan dengan cepat. Aplikasinya sangat ramah pengguna, cocok untuk pemula seperti saya.
+                </p>
+              </div>
+              <div class="card-profile flex items-center mt-7">
+                <figure class="w-[45px]">
+                  <img
+                    class="w-full rounded-full"
+                    src="./src/assets/images/profile1.png"
+                    alt="profile.png"
+                  />
+                </figure>
+                <div class="ml-3">
+                  <span class="font-semibold text-xl block">Budi Santoso</span>
+                  <span class="text-xs font-semibold text-gray-500 block">Siswa, SMA Harapan Bangsa</span>
+                </div>
+              </div>
+            </div>
+            <!-- card3 -->
+            <div class="card border-gray-400 border rounded-2xl w-[427px] h-fit min-h-[210px] p-5 bg-[#F1F1F1] flex-shrink-0">
+              <div class="card-content">
+                <p>
+                  MyAkuntan membuat tugas akuntansi saya jadi lebih terorganisir. Saya bisa melacak transaksi dengan mudah dan memahami alur keuangan secara praktis.
+                </p>
+              </div>
+              <div class="card-profile flex items-center mt-7">
+                <figure class="w-[45px]">
+                  <img
+                    class="w-full rounded-full"
+                    src="./src/assets/images/profile1.png"
+                    alt="profile.png"
+                  />
+                </figure>
+                <div class="ml-3">
+                  <span class="font-semibold text-xl block">Siti Aisyah</span>
+                  <span class="text-xs font-semibold text-gray-500 block">Siswa, SMK Bina Jaya</span>
+                </div>
+              </div>
+            </div>
+            <!-- card4 -->
+            <div class="card border-gray-400 border rounded-2xl w-[427px] h-fit min-h-[210px] p-5 bg-[#F1F1F1] flex-shrink-0">
+              <div class="card-content">
+                <p>
+                  Aplikasi MyAkuntan benar-benar luar biasa! Saya jadi lebih percaya diri dalam mengelola data keuangan berkat panduan dan fitur yang sangat jelas.
+                </p>
+              </div>
+              <div class="card-profile flex items-center mt-7">
+                <figure class="w-[45px]">
+                  <img
+                    class="w-full rounded-full"
+                    src="./src/assets/images/profile1.png"
+                    alt="profile.png"
+                  />
+                </figure>
+                <div class="ml-3">
+                  <span class="font-semibold text-xl block">Ahmad Fauzi</span>
+                  <span class="text-xs font-semibold text-gray-500 block">Siswa, SMA Cendekia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+
+      <section>
+        <div
+          class="cta-border h-fit w-4/5 max-w-[1440px] mx-auto flex justify-center rounded-3xl my-25 p-1 bg-gradient-to-br from-[#1BF343] to-[#FFE100]"
+        >
+          <div
+            class="cta-container w-full h-full max-w-[1440px] flex justify-center rounded-3xl bg-white"
+          >
+            <div class="content-container p-8 w-2/3 text-center">
+              <h1
+                class="bg-gradient-to-br from-[#1BF343] to-[#FFE100] bg-clip-text text-transparent font-semibold text-2xl md:text-4xl"
+              >
+                Don't Just Manage, Master Your Finances With MyAkuntan!
+              </h1>
+              <button
+                class="text-[#b3db00] text-base font-semibold mt-5 md:mt-10 lg:mt-20 bg-[#03b32000] hover:text-white hover:bg-[#9ddd08] active:bg-[#7ac746] w-full md:w-40 h-[41px] border-2 border-[#9ddd08] rounded-xl"
+                onclick="window.location.href='/src/pages/signup/index.html'"
+              >
+                START
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="w-full h-50 flex justify-center">
+          <div class="footer-comp flex justify-between w-4/5">
+            <div class="footer-logo md:flex items-center w-1/2 hidden">
+              <img
+                class="w-[90px]"
+                id="logo"
+                src="/Logo.svg"
+                alt="logo.svg"
+              />
+              <span class="text-[30px] text-black pl-2 font-semibold">
+                MyAkuntan
+              </span>
+            </div>
+            <div class="footer-elements flex mt-10 w-fit">
+              <div class="footer-links">
+                <h1 class="text-xl font-semibold text-[#03B321]">TRAVEL</h1>
+                <div class="link flex flex-col mt-2">
+                  <a class="italic" href="">About Us</a>
+                  <a class="italic" href="">Privacy And Policy</a>
+                  <a class="italic" href="">Terms Of Service</a>
+                </div>
+              </div>
+              <div class="footer-contact flex flex-col ml-10">
+                <h1 class="text-xl font-semibold text-[#03B321]">CONTACT US</h1>
+                <div class="contact-action flex items-center -ml-3">
+                  <a href="mailto:myakuntan.id@gmail.com">
+                    <img
+                      class="size-[65px]"
+                      src="./src/assets/images/gmail.svg"
+                      alt="gmaillogo"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-center italic text-gray-400 pb-3">
+          © 2025 MyAkuntan- All rights reserved.
+        </p>
+      </section>
+      <script src="./src/scripts/main.js" type="module"></script>
+  </body>
+</html>

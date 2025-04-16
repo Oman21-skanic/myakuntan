@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neraca Saldo</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/src/assets/styles/neraca.css">
+</head>
+<body>
+    <div class="main">
+        <nav id="navbar-container"></nav>
+        <script>
+            fetch("/src/pages/navbar.html")
+                .then(response => response.text())
+                .then(data => document.getElementById("navbar-container").innerHTML = data);
+        </script>
+
+        <div class="bar-atas">
+            <h2>Neraca Saldo</h2>
+            <button class="print">Print Neraca</button>
+        </div>
+
+        <div style="max-height: 530px; overflow-y: auto; margin-top: 40px; border: 1px solid var(--abu);">
+            <table>
+            <thead>
+                <tr>
+                <th>Nama Buku</th>
+                <th>Total Kredit</th>
+                <th>Total Debit</th>
+                <th>Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Contoh 10 baris -->
+                <!-- Kamu bisa generate dengan JavaScript kalau dinamis -->
+                <tr>
+                <td>Buku Beban</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku HPP</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Inventaris</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Kas</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Modal</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Pendapatan</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Persediaan</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Piutang</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Prive</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td>Buku Utang</td>
+                <td>Rp. 60.000.000</td>
+                <td>Rp. 50.000</td>
+                <td>Rp. 70.000.000</td>
+                </tr>
+                <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>Rp. 10.000.000</strong></td>
+                <td><strong>Rp. 12.000.000</strong></td>
+                </tr>
+                <!-- Ulangi sesuai kebutuhan -->
+            </tbody>
+            </table>
+        </div>
+
+        <div class="perbandingan">
+            
+            <h2>Perbandingan Saldo</h2>
+            <!-- <div class="saldo">
+                <div class="debit">
+                    <strong>Total Debit Rp. 10.000.000</strong>
+                </div>
+                <div class="kredit">
+                    <strong>Total Debit Rp. 10.000.000</strong>
+                </div>
+            </div> -->
+            <script>
+                // Ambil nilai dari tabel
+                const kreditText = document.querySelector('tbody tr:last-child td:nth-child(2) strong').innerText;
+                const debitText = document.querySelector('tbody tr:last-child td:nth-child(3) strong').innerText;
+              
+                // Hilangkan "Rp." dan titik, lalu ubah ke angka
+                const kredit = parseInt(kreditText.replace(/[^\d]/g, ''));
+                const debit = parseInt(debitText.replace(/[^\d]/g, ''));
+              
+                // Seleksi elemen container perbandingan
+                const perbandinganDiv = document.querySelector('.perbandingan');
+              
+                // Buat elemen hasil perbandingan
+                const hasil = document.createElement('p');
+                hasil.style.marginTop = '10px';
+              
+                if (kredit === debit) {
+                  hasil.innerHTML = '<strong style="color: var(--ijolagi); font-size: 30px; border: 1px solid var(--ijolagi); padding: 10px; border-radius: 7px;">Saldo seimbang</strong>';
+                }  else {
+    const selisih = Math.abs(kredit - debit);
+    const rataRata = (kredit + debit) / 2;
+    const persenSelisih = ((selisih / rataRata) * 100).toFixed(2); // dua angka di belakang koma
+
+    hasil.innerHTML = `
+    <div class="saldo">
+                <div class="debit">
+                    <strong>Total Debit Rp. ${debitText}</strong>
+                </div>
+                <div class="kredit">
+                    <strong>Total Debit Rp. ${kreditText}</strong>
+                </div>
+            </div>
+      <strong style="display: inline-block; margin-bottom: 2rem;color: red; font-size: 30px; border: 1px solid var(--merah); padding: 10px; border-radius: 7px;">Saldo tidak seimbang ${persenSelisih}%</strong><br>
+    <div style="padding: 2rem; background-color: #f8f8f8; border: 1px solid #f5a6a6; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
+  <h3 style="color: #d00000; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+    Ketidakseimbangan Terdeteksi!
+  </h3>
+  <p>Selisih mencapai <strong>${persenSelisih}%</strong></p>
+  <p><strong>Rekomendasi</strong></p>
+  <ul style="padding-left: 20px; margin: 0;">
+    <li>Periksa Jejak Transaksi</li>
+    <li>Hindari Pembayaran Berlebihan</li>
+    <li>Seimbangkan aliran Kas</li>
+  </ul>
+</div>
+
+      `;
+}
+              
+                // Tambahkan ke dalam div perbandingan
+                perbandinganDiv.appendChild(hasil);
+              </script>
+              
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="images/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+  />
+
+    <link rel="stylesheet" href="/src/assets/styles/aboutus.css">
+</head>
+<body>
+   
+    <div id="navbar-container"></div>
+
+<script>
+    fetch("/src/pages/navbar.html")
+        .then(response => response.text())
+        .then(data => document.getElementById("navbar-container").innerHTML = data);
+</script>
+
+            <main>
+                <div class="awal">
+                    <img src="/src/assets/images/bunga1.svg" alt="" class="bunga1">
+                    <h2>
+                        <span class="hijau">My</span><span class="kuning">Akuntan</span> helps small and medium entrepreneurs to 
+                        <span class="hijau">organize and control</span> their business finance.
+                    </h2>
+                    <img src="/src/assets/images/bunga.svg" alt="" class="bunga">
+                </div>
+                <div class="content1">
+                    <p>We always put commitment to always prioritize user satisfaction. Through easy-to-understand user interface and accuracy in data processing.<br /><br />
+                        In the process, we also always try to provide convenience for users.</p>
+                    <img src="/src/assets/images/Logo.svg" alt="Logo" />
+                </div>
+                <div class="content2">
+                    <img src="/src/assets/images/group.jpg" alt="groupCompany" />
+                    <div class="title">
+                        <h3>We want to make it easier for you to manage your business</h3>
+                        <p>Through this application, we have a mission to be able to help users to manage the company's financial reports. In an easier, more practical, faster way. Our team always tries as much as possible to provide accurate, correct results and minimize all forms of calculation errors.<br /><br />
+                            As a team, we continue to work together to improve the quality and performance of the application to continue to improve user comfort in using the application. In the development process too, we always try our best to achieve satisfactory results.</p>
+                    </div>
+                </div>
+                <div class="content3">
+                    <h3>Meet The Team</h3>
+                    <div id="data-team" class="teams-container"></div>
+                    <script src="aboutus.js"></script>
+                </div>
+                
+            </main>
+            <img src="/src/assets/images/FooterEffect.svg" alt="" class="footerEffect">
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="logo">
+                        <img src="/src/assets/images/Logo.svg" alt="Logo MyAkuntan">
+                        <span>MyAkuntan</span>
+                    </div>
+                    <div class="links">
+                        <a href="#" style="color: var(--hijau);">TRAVEL</a>
+                        <a href="/src/page/AboutUs/aboutus.html">About Us</a>
+                        <a href="#">Privacy And Policy</a>
+                        <a href="#">Terms Of Service</a>
+                    </div>
+                    <div class="contact">
+                        <span>CONTACT US</span>
+                        <img src="/src/assets/images/g-mail.svg" alt="Gmail">
+                        <div class="contact-form">
+                            <input type="text" placeholder="Send Us A Note..">
+                            <button>SEND</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="copyright">©2025 MyAkuntan - All rights reserved.</p>
+            </footer>
+        </body>
+    </html>

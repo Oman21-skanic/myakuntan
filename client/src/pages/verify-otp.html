@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otp veerification</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+--hijau: #44EA2F;
+--ijo: #28a745;
+--kuning: #FFC517;
+--abu: #E9E9E9;
+--putih: #FBFBFE;
+--hitam: #050315; 
+}
+
+*,
+*::before,
+*::after {
+box-sizing: border-box;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: "Fira Sans", sans-serif;
+background-color: #ffffff;
+display: flex;
+flex-direction: column;
+align-items: center;
+height: 100vh;
+margin: 0;
+position: relative;
+overflow: hidden;
+}
+
+.logogede {
+position: absolute;
+top: 150px;
+left: -700px;
+width: 400px;
+height: 400px;
+opacity: 1.2;
+z-index: -1;
+border-radius: 50%;
+box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.otp {
+  width: 20%;
+}
+
+main {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+width: 350px;
+border-radius: 10px;
+position: relative;
+}
+
+h3 {
+font-size: 18px;
+font-weight: 700;
+}
+
+.container {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 10rem;
+}
+
+.form-input {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+}
+
+.input-group {
+display: flex;
+align-items: center;
+width: 180%;
+margin-bottom: 10px;
+background-color: var(--putih);
+border: 1px solid #ccc;
+border-radius: 9px;
+padding: 5px;
+}
+
+.input-group img {
+width: 20px;
+margin-right: 10px;
+margin-left: 10px;
+}
+
+.input-group input {
+flex: 1;
+padding: 10px;
+border: none;
+outline: none;
+font-size: 14px;
+background: transparent;
+}
+
+.verify, .resend {
+width: 150%;
+padding: 10px;
+background-color: #28a745;
+border: none;
+color: white;
+font-size: 16px;
+font-weight: bold;
+border-radius: 9px;
+cursor: pointer;
+margin-top: 5px;
+}
+
+.resend {
+  background-color: var(--kuning);
+}
+
+.verify:hover{
+background-color: #218838;
+}
+
+.resend:hover {
+  background-color: #f7bd11;
+}
+
+
+p {
+margin-top: 2px;
+font-size: 14px;
+}
+
+.toast {
+position: fixed;
+bottom: 20px; 
+right: 20px; 
+background-color: var(--ijo);
+color: white;
+padding: 22px 44px;
+border-radius: 5px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+opacity: 0;
+transform: translateY(50px);
+transform: translateY(0);
+transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.error-msg {
+opacity: 1;
+transform: translateY(0);
+background-color: #cc0000;
+}
+
+.succes-msg {
+opacity: 1;
+transform: translateY(0);
+background-color: #4CAF50;
+}
+
+@media screen and (max-width: 1024px) {
+.logogede {
+left: 0;
+transform: translateX(-120%);
+}
+}
+/* media query setengah layar laptop */
+@media screen and (max-width: 768px) {
+.logogede {
+left: 30px;
+}
+}
+
+@media screen and (max-width: 576px) {
+.input-group {
+width: 140%;
+}
+
+.verify, .resend {
+width: 120%;
+}
+
+.logogede {
+left: 80px;
+}
+}
+
+</style>
+</head>
+<body>
+    <main> 
+        <div class="container">
+          <img src="/src/assets/images/Logo.svg" alt="logoguede" class="logogede">
+          <img src="/src/assets/images/mail.svg" alt="email" class="otp">
+            <h3>OTP Code Verification</h3>
+            <p>Verification code has been sent to your email</p>
+
+            <form id="resetForm" class="form-input">
+
+              <div class="input-group">
+                <img src="/src/assets/images/pass.svg" alt="pass">
+                <input type="text" id="otp" class="otp" placeholder="Masukkan kode OTP" maxlength="6" required>
+                </div>
+                <button type="submit" class="verify" id="verifyButton" onclick="verifyOTP()">Verifikasi</button>
+                <button type="submit" class="resend" id="resendButton" onclick="resendOTP()">Kirim Ulang OTP</button>
+            </form>
+            <p class="message" id="result"></p>
+        </div>
+    </main>
+
+    <script>
+        async function verifyOTP() {
+          const otpInput = document.getElementById("otp");
+          const verifyButton = document.getElementById("verifyButton");
+          const resultText = document.getElementById("result");
+  
+          if (!otpInput.value) {
+            resultText.innerText = "OTP wajib diisi!";
+            resultText.className = "error";
+            return;
+          }
+  
+          // Set tombol ke mode loading
+          verifyButton.innerText = "Memverifikasi...";
+          verifyButton.disabled = true;
+          verifyButton.classList.add("loading");
+  
+          try {
+            const response = await fetch("http://localhost:3000/api/v1/auth/otp/verify", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ otp: otpInput.value }),
+            });
+  
+            const data = await response.json();
+  
+            if (!response.ok) {
+              resultText.innerText = `Error: ${data.message}`;
+              resultText.className = "error";
+            } else {
+              resultText.innerText = data.message;
+              resultText.className = "success";
+  
+              if (data.status === "success") {
+                setTimeout(() => {
+                  window.location.href = "../pages/roleumkm/roleumkm.html";
+                }, 2000);
+              }
+            }
+          } catch (error) {
+            resultText.innerText = "Terjadi kesalahan, coba lagi.";
+            resultText.className = "error";
+            console.error("Error:", error);
+          } finally {
+            // Reset tombol setelah selesai
+            verifyButton.innerText = "Verifikasi";
+            verifyButton.disabled = false;
+            verifyButton.classList.remove("loading");
+          }
+        }
+  
+        async function resendOTP() {
+          const resendButton = document.getElementById("resendButton");
+          const resultText = document.getElementById("result");
+  
+          // Set tombol ke mode loading
+          resendButton.innerText = "Mengirim...";
+          resendButton.disabled = true;
+          resendButton.classList.add("loading");
+  
+          try {
+            const response = await fetch("http://localhost:3000/api/v1/auth/otp", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            });
+  
+            const data = await response.json();
+  
+            if (!response.ok) {
+              resultText.innerText = `Error: ${data.message}`;
+              resultText.className = "error";
+            } else {
+              resultText.innerText = "OTP telah dikirim ulang ke email Anda.";
+              resultText.className = "success";
+            }
+          } catch (error) {
+            resultText.innerText = "Terjadi kesalahan, coba lagi.";
+            resultText.className = "error";
+            console.error("Error:", error);
+          } finally {
+            // Reset tombol setelah selesai
+            resendButton.innerText = "Kirim Ulang OTP";
+            resendButton.disabled = false;
+            resendButton.classList.remove("loading");
+          }
+        }
+      </script>
+   
+
+</body>
+</html>

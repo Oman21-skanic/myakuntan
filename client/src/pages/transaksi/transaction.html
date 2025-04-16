@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Transaksi Form -->
+<form id="transactionForm" class="space-y-4">
+    <div class="grid grid-cols-1 gap-4">
+      <!-- Nama Transaksi -->
+      <div>
+        <label for="namaTransaksi" class="block text-sm font-medium mb-1">Nama Transaksi</label>
+        <input type="text" id="namaTransaksi" required class="input" />
+      </div>
+  
+      <!-- Tanggal -->
+      <div>
+        <label for="tanggal" class="block text-sm font-medium mb-1">Tanggal</label>
+        <input type="date" id="tanggal" required class="input" />
+      </div>
+  
+      <!-- Akun Debit -->
+      <div>
+        <label for="akunDebit" class="block text-sm font-medium mb-1">Akun Debit</label>
+        <select id="akunDebit" required class="input"></select>
+      </div>
+  
+      <!-- Nominal Debit -->
+      <div>
+        <label for="nominalDebit" class="block text-sm font-medium mb-1">Nominal Debit</label>
+        <input type="number" id="nominalDebit" min="0" required class="input" />
+      </div>
+    </div>
+  
+    <hr class="my-5 text-[#c0c0c0]" />
+  
+    <!-- Akun Kredit -->
+    <div>
+      <label for="akunKredit" class="block text-sm font-medium mb-1">Akun Kredit</label>
+      <select id="akunKredit" required class="input"></select>
+    </div>
+  
+    <!-- Nominal Kredit -->
+    <div>
+      <label for="nominalKredit" class="block text-sm font-medium mb-1">Nominal Kredit</label>
+      <input type="number" id="nominalKredit" min="0" required class="input" />
+    </div>
+  
+    <!-- Submit Button -->
+    <div class="pt-2">
+      <button type="submit" class="w-full bg-[#03B321] text-white py-2.5 px-4 rounded-md font-medium">
+        Tambahkan
+      </button>
+    </div>
+  </form>
+  
+  <!-- Table Transaksi -->
+  <table class="w-full mt-10 border" border="1">
+    <thead>
+      <tr class="bg-gray-200">
+        <th>Nama</th>
+        <th>Tanggal</th>
+        <th>Nominal</th>
+        <th>Akun Debit</th>
+        <th>Akun Kredit</th>
+      </tr>
+    </thead>
+    <tbody id="resultInput">
+      <tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>
+    </tbody>
+  </table>
+  
+  <style>
+    .input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  </style>
+  
+  <script>
+    const akunDebit = document.getElementById("akunDebit");
+    const akunKredit = document.getElementById("akunKredit");
+    const resultInput = document.getElementById("resultInput");
+    const form = document.getElementById("transactionForm");
+  
+    let userId = null;
+    let akunList = [];
+  
+    async function fetchUser() {
+      const res = await fetch("http://localhost:3000/v1/users/me", { credentials: 'include' });
+      const data = await res.json();
+      if (res.ok) {
+        userId = data.data._id;
+      } else {
+        alert("Gagal ambil user: " + data.message);
+      }
+    }
+  
+    async function fetchAccounts() {
+      const res = await fetch(`http://localhost:3000/v1/users/${userId}/accounts`, { credentials: 'include' });
+      const data = await res.json();
+      if (res.ok) {
+        akunList = data.data;
+        populateSelect(akunDebit, akunList);
+        populateSelect(akunKredit, akunList);
+      } else {
+        alert("Gagal ambil akun: " + data.message);
+      }
+    }
+  
+    function populateSelect(select, accounts) {
+      select.innerHTML = "";
+      accounts.forEach(acc => {
+        const opt = document.createElement("option");
+        opt.value = acc._id;
+        opt.textContent = acc.nama + ` (${acc.jenis})`;
+        select.appendChild(opt);
+      });
+    }
+  
+    async function fetchTransactions() {
+      resultInput.innerHTML = `<tr><td colspan="5" class="text-center py-4">Memuat data...</td></tr>`;
+      const res = await fetch(`http://localhost:3000/v1/transactions?userId=${userId}`, {
+        credentials: "include"
+      });
+      const data = await res.json();
+  
+      if (res.ok) {
+        if (data.data.length === 0) {
+          resultInput.innerHTML = `<tr><td colspan="5" class="text-center py-4">Saat ini Anda belum ada data transaksi</td></tr>`;
+          return;
+        }
+        resultInput.innerHTML = "";
+        data.data.forEach(tx => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${tx.keterangan}</td>
+            <td>${new Date(tx.tanggal).toLocaleDateString()}</td>
+            <td>${tx.nominal.toLocaleString()}</td>
+            <td>${getAkunName(tx.akun_debit_id)}</td>
+            <td>${getAkunName(tx.akun_credit_id)}</td>
+          `;
+          resultInput.appendChild(row);
+        });
+      } else {
+        resultInput.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-500">Gagal memuat transaksi</td></tr>`;
+      }
+    }
+  
+    function getAkunName(id) {
+      const akun = akunList.find(a => a._id === id);
+      return akun ? akun.nama : "Tidak diketahui";
+    }
+  
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      const namaTransaksi = document.getElementById("namaTransaksi").value;
+      const tanggal = new Date(document.getElementById("tanggal").value).toISOString();
+      const nominalDebit = Number(document.getElementById("nominalDebit").value);
+      const nominalKredit = Number(document.getElementById("nominalKredit").value);
+      const akun_debit_id = akunDebit.value;
+      const akun_credit_id = akunKredit.value;
+  
+      if (nominalDebit !== nominalKredit) {
+        return alert("Nominal debit dan kredit harus sama.");
+      }
+  
+      const payload = {
+        tanggal,
+        keterangan: namaTransaksi,
+        nominal: nominalDebit,
+        akun_debit_id,
+        akun_credit_id
+      };
+  
+      const res = await fetch("http://localhost:3000/v1/transactions", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+  
+      const data = await res.json();
+  
+      if (res.ok) {
+        alert("✅ Transaksi berhasil ditambahkan!");
+        form.reset();
+        fetchTransactions();
+      } else {
+        alert("❌ Gagal menambahkan transaksi: " + data.message);
+      }
+    });
+  
+    // Init
+    (async () => {
+      await fetchUser();
+      await fetchAccounts();
+      await fetchTransactions();
+    })();
+  </script>
+  
+</body>
+</html>

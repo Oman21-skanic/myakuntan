@@ -1,0 +1,24 @@
+{
+  "name": "myakuntanreal",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node src/server.js"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "vite": "^6.2.3"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.14",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "mongoose": "^8.13.0",
+    "notyf": "^3.10.0"
+  }
+}

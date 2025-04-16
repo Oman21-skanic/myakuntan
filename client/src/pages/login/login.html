@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login myAkuntan</title>
+    <link rel="stylesheet" href="/src/assets/styles/login.css">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+  />
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+/>
+</head>
+<body>
+    <main>
+
+        <div class="form-container">
+            <h3>Login To MyAkuntan</h3>
+            <form action="" id="loginForm" class="loginInput">
+
+                <div class="input-group">
+                <img src="/src/assets/images/mail.svg" alt="email">
+                <input type="email" name="email" id="email" 
+                maxlength="100"
+                placeholder="Masukkan Email"
+                autocomplete="email"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                title="Masukkan email yang valid (contoh: user@example.com)"
+                required>
+                </div>
+
+                <div class="input-group">
+                <img src="/src/assets/images/pass.svg" alt="password">
+                <input type="password" 
+                name="password" 
+                id="password" 
+                maxlength="50"
+                minlength="5"
+                placeholder="Masukkan Password"
+                autocomplete="current-password"
+                title="Password harus minimal 8 karakter"
+                required
+                >
+                </div>
+
+                <button type="submit" class="button" id="buttonLogin">Let's Go</button>
+            </form>
+            <button type="button" class="buttonGoogle" id="google-login-btn">
+                <img src="/src/assets/images/google 1.svg" alt="google">
+                <a href="/api/auth/google">Login With Google</a>
+            </button>
+            <p>Don't have an account? <a href="/src/pages/signup/index.html">Sign Up</a></p>
+            <a href="../reset-password.html">Forgot Password?</a>
+        </div>
+        <img src="/src/assets/images/ilustrasiLogin.jpg" alt="ilustrasiLogin" class="ilustrasi">
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="./login.js"></script>
+</body>
+</html>

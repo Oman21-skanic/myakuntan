@@ -1,0 +1,531 @@
+
+  @import "tailwindcss";
+
+  :root {
+    --hijau: #44EA2F;
+    --ijomuda: #E7F8E7;
+    --ijo: #28a745;
+    --kuning: #FFC517;
+    --abu: #E9E9E9;
+    --putih: #FBFBFE;
+    --hitam: #050315; 
+    --ijolagi: #03C725;
+  }
+
+  body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: var(--ijomuda);
+      font-family: "Fira Sans", sans-serif;
+    }
+    
+    /* Container dashboard penuh */
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh; /* viewport height */
+    }
+    
+    /* Navbar tetap di atas */
+    #navbar-container {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    /* Bagian utama (sidebar + konten) */
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    /* Sidebar tetap di kiri */
+    .sidebar {
+      width: 200px;
+      background-color: var(--putih);
+      border-radius: 5px;
+      padding: 15px;
+      position: sticky;
+      top: 60px; /* biar ga nutupin navbar */
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+  
+    .dashboard {
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      padding-left: 1rem;
+      background-color: var(--ijomuda);
+      border-radius: 5px;
+    }
+  
+    .dashboard img {
+      margin-right: 1rem;
+      width: 30px;
+    }
+  
+    .item-sidebar {
+      margin-left: 1rem;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .item-sidebar a {
+      padding: 0.5rem;
+      text-decoration: none;
+    } 
+  
+    
+    /* Konten utama yang bisa discroll */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0px 16px;
+    }
+    
+    /* Konten dalamnya */
+    .content-inner {
+      height: fit-content;
+      margin-bottom: 1rem;
+    }
+
+    .profile {
+      background-color: var(--putih);
+      border: 1px solid var(--ijolagi);
+      border-radius: 5px;
+      padding: 0px 20px;
+      display: flex;
+      flex: 1;
+    }
+
+    .profile .img-profile {
+      height: 3rem;
+      width: 3rem;
+      border-radius: 100%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      margin-right: 1rem;
+    }
+
+    .profile .profile-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .profile .profile-text h2,
+    .profile .profile-text p {
+      margin: 0;
+    }
+
+    .profile .profile-text h2 {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .profile .profile-text p {
+      font-size: 15px;
+    }
+
+    .profile-edit {
+      background-color: var(--ijo);
+      border: none;
+      border-radius: 5px;
+      height: 40px;
+      width: 100px;
+      margin-top: 1.2rem;
+      margin-left: 40rem;
+    }
+
+    .profile-edit a {
+      text-decoration: none;
+      color: var(--putih);
+    }
+
+    .profile-edit h2 {
+      font-size: 16px;
+      margin-top: 0.5rem;
+    }
+
+    .buku {
+      display: flex;
+      padding: 8px 0px;
+      
+    }
+
+    .buku h2 {
+      font-size: 18px;
+    }
+
+    .buku .pembukuan1 {
+      background-color: var(--putih);
+      margin-right: 20px;
+      width: 70%;
+      height: 200px;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
+
+    .buku .pembukuan2 {
+      background-color: var(--putih);
+      width: 30%;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
+
+    .aktivitas {
+      background-color: var(--putih);
+      border: 1px solid var(--ijolagi);
+      border-radius: 5px;
+    }
+    
+    .aktivitas h3 {
+      padding: 1rem 0rem 0.5rem;
+      margin-left: 1rem;
+      border-bottom: 1px solid #ccc;
+      width: 7%;
+      font-size: 18px;
+    }
+
+    .aktivitas table {
+      margin-right: 20px;
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 15px;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #e7f9ec; /* hijau muda */
+    }
+
+    td {
+      padding: 12px 16px;
+    }
+
+    td:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .grafik {
+      display: flex;
+      padding: 10px 0px;
+      font-size: 15px;
+    }
+
+    .grafik .diagram-batang {
+      background-color: var(--putih);
+      margin-right: 20px;
+      width: 50%;
+      height: 250px;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
+
+    .grafik .diagram-lingkaran {
+      background-color: var(--putih);
+      width: 50%;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--ijolagi);
+    }
+
+
+    .chart-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* BAR CHART */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-evenly;
+      height: 160px;
+      padding: 0px 2rem;
+      margin-left: 3rem;
+      margin-top: 2rem;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .bar {
+      width: 40px;
+      background-color: var(--hijau);
+      border-radius: 2px;
+      margin-left: 1rem;
+    }
+
+    /* DONUT CHART */
+    .donut-container {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      /* justify-content: space-between; */
+      height: 150px;
+    }
+
+    .donut {
+      width: 300px;
+      height: 250px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #FFD700 25%,
+        #00CC00 0 100%
+      );
+      mask: radial-gradient(white 40%, transparent 41%);
+      -webkit-mask: radial-gradient(white 40%, transparent 41%);
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+    }
+
+    .debit {
+      background-color: #FFD700;
+    }
+
+    .kredit {
+      background-color: #00CC00;
+    }
+
+    /* .transaksi {
+      background-color: var(--putih);
+    } */
+
+    .bar-atas {
+      display: flex;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background-color: #90ee90; /* pastikan ada background */
+      z-index: 2; /* biar nggak ketumpuk */
+    }
+
+    th {
+      background-color: #90ee90;
+      text-align: left;
+      padding: 10px;
+    }
+
+    td {
+      padding: 10px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f6fff6;
+    }
+
+    .action-btn {
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .dropdown,
+    .form-select {
+      font-size: 14px;
+      padding: 5px 10px;
+    }
+
+    /* Biar scroll lebih smooth dan modern */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+
+
+  /* media query */
+
+  @media screen and (max-width: 1024px) {
+    .sidebar {
+      width: 150px;
+      padding: 10px;
+    }
+
+    .dashboard {
+      font-size: 15px;
+      padding-left: 0.5rem;
+    }
+
+    .dashboard img {
+      width: 12px;
+      margin-right: 0.5rem;
+    }
+
+    .item-sidebar {
+      margin-left: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .item-sidebar a {
+      padding-left: 0.2rem;
+      font-size: 14px;
+    }
+
+    .dropdown-menu li .dropdown-item {
+      font-size: 12px;
+    }
+
+    .dropdown-center .btn {
+      font-size: 14px;
+    }
+
+    .profile .img-profile {
+      height: 2.5rem;
+      width: 2.5rem;
+      margin: 0.5rem, 0.5rem, 0rem, 0.5rem;
+    }
+
+    .profile .profile-text h2 {
+      font-size: 15px;
+      margin-bottom: 1px;
+    }
+
+    .profile .profile-text p {
+      font-size: 13px;
+      margin-right: -30px;
+    }
+
+    .profile-edit {
+      height: 30px;
+      width: 90px;
+      /* margin-top: 0.5rem; */
+      margin-left: 30rem;
+    }
+
+    .profile-edit h2 {
+      font-size: 14px;
+      margin-top: 0.5rem;
+    }
+
+    .buku h2 {
+      font-size: 16px;
+    }
+
+    .buku .pembukuan1 , .buku .pembukuan2{
+      height: 170px;
+    }
+
+    .aktivitas h3 {
+      padding: 1rem 0rem 0.5rem;
+      margin-left: 1rem;
+      border-bottom: 1px solid #ccc;
+      width: 6%;
+      font-size: 16px;
+    }
+
+    .aktivitas table {
+      font-size: 13px;
+    }
+
+    .grafik {
+      font-size: 13px;
+    }
+
+    .grafik .diagram-batang, .grafik .diagram-lingkaran{
+      height: 250px;
+    }
+
+    .donut-container {
+      height: 130px;
+    }
+
+    .donut {
+      width: 250px;
+      height: 200px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #FFD700 25%,
+        #00CC00 0 100%
+      );
+      mask: radial-gradient(white 40%, transparent 41%);
+      -webkit-mask: radial-gradient(white 40%, transparent 41%);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tambah button {
+    background-color: var(--hijau);
+      border-radius: 5px;
+      border: none;
+      width: 40px;
+      height: 35.2px;
+    }
+    
+    .tambah button img {
+      width: 14px;
+    }
+
+    .filter-dropdown {
+      margin-right: 10px;
+    }
+    /*
+
+*/
+
+  }
+
+  @media screen and (max-width: 768px) {
+    .profile-edit {
+      height: 30px;
+      width: 90px;
+      /* margin-top: 0.5rem; */
+      margin-left: 20rem;
+    }
+
+    .profile .profile-text p, .profile .profile-text h2 {
+      font-size: 13px;
+      margin-right: -150px;
+    }
+
+    .buku .pembukuan1 , .buku .pembukuan2{
+      height: 150px;
+    }
+
+    .buku h2 {
+      font-size: 13px;
+    }
+  }

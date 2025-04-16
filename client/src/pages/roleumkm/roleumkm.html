@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>MyAkuntan | Plih Bidang</title>
+    <link rel="stylesheet" href="/src/assets/styles/roleumkm.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+  />
+  </head>
+  <body>
+    <header class="sticky top-0 z-999">
+      <div class="header w-full flex bg-white h-[70px]">
+        <div
+          class="header-comp w-full flex justify-between mx-5 md:mx-20 lg:mx-60 items-center"
+        >
+          <div class="logo flex items-center hover:cursor-pointer">
+            <img id="logo" src="/Logo.svg" alt="logo.svg" />
+            <span class="text-base md:text-lg text-black pl-2 font-semibold">
+              MyAkuntan
+            </span>
+          </div>
+          <div class="lang flex hover:cursor-pointer">
+            <img
+              src="/id.png"
+              alt="IndonesiaFlag"
+              class="w-[30px] h-[20px] border-1 border-black"
+            />
+            <span class="text-base text-black pl-2 font-semibold">ID</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="w-full h-10"></div>
+    <section id="content" class="w-full h-[90vh] flex justify-center items-center">
+      <div class="flex flex-col items-center">
+      <div id="container" class="w-fit mx-auto flex flex-col p-5 sm:p-10 rounded-3xl text-center gap-3">
+        <div id="title">
+        <h3 class="text-2xl font-bold">
+          PILIH SALAH SATU
+        </h3>
+        <p>
+          Silahkan pilih tipe bidang usaha kamu
+        </p>
+      </div>
+        <form id="roleForm" class="flex flex-wrap w-full">
+          <div class="role-wrapper w-full h-fit flex flex-wrap justify-center gap-4">
+            <label class="card border-4 border-[#013b1583] w-full h-[13rem] sm:h-fit sm:w-50 md:w-60 items-center flex flex-wrap-reverse sm:flex-col-reverse justify-between cursor-pointer duration-300 bg-[#E8E6DC] hover:-translate-y-3 hover:border-[#013b15] hover:*:opacity-100 has-checked:border-[#013b15] has-checked:*:opacity-100  rounded-3xl">
+              <input type="radio" name="bidangUsaha" value="jasa" class="hidden"/>
+              <img
+              src="/src/assets/images/logojasa.svg"
+              alt="jasalogo"
+              class="opacity-40 -mb-5 sm:-mb-3 w-50 sm:w-50 md:w-60 transition-all ease-in-out"
+            />
+              <h3 class="text-center text-[3em] sm:text-[2.5em] font-extrabold italic opacity-40 mt-2 mr-4 sm:mr-0 text-[#119C24] transition-all ease-in-out">
+                JASA
+              </h3>
+            </label>
+
+            <label class="card border-4 border-[#013b1583] w-full h-[13rem] sm:h-fit sm:w-50 md:w-60 items-center flex flex-wrap-reverse sm:flex-col-reverse justify-between cursor-pointer duration-300 bg-[#E8E6DC] hover:-translate-y-3 hover:border-[#013b15] hover:*:opacity-100 has-checked:border-[#013b15] has-checked:*:opacity-100  rounded-3xl">
+              <input type="radio" name="bidangUsaha" value="perdagangan" class="hidden"/>
+              <img
+                src="/src/assets/images/logobarang.svg"
+                alt="produklogo"
+                class="opacity-40 -mb-3 sm:-mb-1.5 w-50 sm:w-50 md:w-60 transition-all ease-in-out"
+              />
+              <h3 class="text-center text-[2em] sm:text-[2.5em] font-extrabold italic opacity-40 mt-2 mr-3 sm:mr-0 text-[#119C24] transition-all ease-in-out">
+                DAGANG
+              </h3>
+            </label>
+          </div>
+
+          <br />
+
+          <button
+            type="submit"
+            class="signupBtn bg-[#03B321] text-white text-base md:text-xl w-full mx-auto h-[40px] rounded-xl hover:cursor-pointer hover:bg-[#01961A] font-semibold transition-colors mt-6"
+          >
+            LANJUT
+          </button>
+        </form>
+</div>
+    </div>
+  </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="/src/scripts/roleumkm.js"></script>
+  </body>
+</html>

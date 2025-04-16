@@ -1,0 +1,419 @@
+:root {
+    --hijau: #44EA2F;
+    --kuning: #ffc517;
+    --abu: #E9E9E9;
+    --putih: #FBFBFE;
+    --hitam: #050315; 
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+ 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    /* font-family: 'poppins', Courier, monospace; */
+    font-family: "Fira Sans", sans-serif;
+
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+ 
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-weight: 500;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    margin-left: 4rem;
+}
+.logo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+.language {
+    margin-right: 4rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.language img {
+    width: 20px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+main {
+    padding: 5rem 10rem;
+}
+
+main .awal {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* awal */
+main .awal h2 {
+    font-size: 32px;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+main .awal h2 .hijau {
+    color: var(--hijau);
+}
+
+main .awal h2 .kuning {
+    color: var(--kuning);
+}
+
+main .awal .bunga1 {
+    margin-left: 30rem;
+}
+
+main .awal .bunga {
+    margin-right: 35rem;
+}
+
+/* konten1 */
+main .content1 {
+    padding: 3.5rem 8rem 2rem 9rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+main .content1 p {
+    font-size: 16px;
+    flex: 1 1;
+    line-height: 1.7rem;
+}
+
+main .content1 img {
+    width: 50%;  
+    height: 50%;
+    border-radius: 50%;
+    box-shadow: 2px 8px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* konten2 */
+main .content2 {
+    padding: 5rem 7rem;
+    display: flex;
+}
+
+main .content2 img {
+    width: 20rem;
+    height: 25rem;
+    border-radius: 15px;
+    box-shadow: 10px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+main .content2 .title {
+    margin-left: 3rem;
+}
+
+main .content2 .title h3 {
+    font-size: 24px;
+}
+
+main .content3 h3 {
+    font-size: 24px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* main .content3 {
+    background-image: url('/src/assets/images/meshblur.png');
+    padding: 0;
+} */
+
+.teams-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    column-gap: 34px;
+    row-gap: 38px;
+    justify-items: center;
+}
+
+.teams-container h3 {
+    font-size: 40px;
+}
+.footerEffect {
+    width: 100%
+}
+.footer {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    margin-top: auto;
+}
+
+.footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.footer .logo {
+    display: flex;
+    align-items: center;
+    padding-right: 20rem;
+}
+.footer .links {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.footer .links a {
+    color: var(--hitam);
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.footer .contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer .contact img {
+    width: 30px;
+    margin-bottom: 5px;
+}
+.footer .contact .contact-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.footer .contact input {
+    padding: 5px;
+    border: 1px solid #adadad;
+    background-color: var(--abu);
+    border-radius: 5px;
+    flex: 1;
+}
+.footer .contact button {
+    padding: 5px 10px;
+    border: 1px solid var(--hijau);
+    background-color: var(--putih);
+    color: var(--hijau);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer .copyright {
+    text-align: center;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 14px;
+            color: gray;
+}
+
+
+
+
+
+
+ /* Medium devices (768px dan di bawahnya) */
+ @media screen and (max-width: 768px) {
+
+    main {
+        padding: 2rem;
+        margin-top: 3rem;
+    }
+    main .awal h2 {
+        font-size: 25px;
+        padding: 1rem;
+    }
+    /* main .awal .bunga1 {
+        margin-left: 23rem;
+        width: 65px;
+    } */
+    main .awal .bunga1 {
+        margin-left: auto;
+        margin-right: auto;
+        width: 65px;
+        display: block;
+    }
+    
+    main .content2 img {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        margin: 1rem auto;
+        display: block;
+    }
+
+    main .content1 {
+        display: block;
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    main .content1 p {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    main .content1 img {
+        display: none;
+    }
+
+    main .content2 {
+        display: block;
+        padding: 0rem 1rem 3rem 0rem;
+    }
+/* 
+    main .content2 img {
+        width: 25rem;
+        height: 20rem;   
+        margin-left: 5rem;
+    } */
+
+    main .content2 p {
+        font-size: 14px;
+        padding: 5px;   
+    }
+    .teams-container {
+        grid-template-columns: repeat(3, 1fr);
+        margin-right: 1rem;
+        row-gap: 1rem;
+        }
+        .footer .footer-content {
+            align-items: center;
+            text-align: center;
+        }
+        .footer .logo {
+            margin-bottom: 15px;
+        }
+        .footer .links-form {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .footer .contact .contact-form {
+            flex-direction: column;
+            width: 100%;
+        }
+        .footer .contact input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .footer .contact button {
+            width: 100%;
+        }
+    }
+
+    
+ @media screen and (max-width: 576px) {
+    main .awal .bunga1,
+main .awal .bunga {
+    width: 45px;
+    margin: 0 auto;
+    display: block;
+}
+
+main .content2 img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
+}
+
+main .content2 .title h3 {
+    margin-left: 0;
+    text-align: center;
+}
+
+.header {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.logo,
+.language {
+    margin: 0.5rem;
+}
+
+    main {
+        padding: 1rem;
+        margin-top: 3rem;
+    }
+
+    main .awal h2 {
+        font-size: 20px;
+        padding: 1rem;
+    }
+
+    /* main .awal .bunga1 {
+        margin-left: 13rem;
+        width: 45px;
+    }
+    main .awal .bunga {
+        width: 45px;
+    } */
+
+    main .content1 p {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    main .content2 {
+        display: block;
+        padding: 0rem 1rem 1rem 0rem;
+    }
+
+    /* main .content2 .title h3 {
+        margin-left: 1rem;
+        font-size: 16px;
+    } */
+
+    /* main .content2 img {
+        width: 20rem;
+        height: 12rem;   
+        margin-left: 3rem;
+    } */
+
+    .teams-container {
+        grid-template-columns: repeat(2, 1fr);
+        margin-left: 2rem;
+        row-gap: 1rem;
+        }
+
+        .footer .footer-content {
+            align-items: center;
+            text-align: center;
+            font-size: 13px;
+        }    
+ }

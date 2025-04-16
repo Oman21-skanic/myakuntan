@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+html{
+    font-family: "Fira Sans", sans-serif;
+}
+
+html::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.images{
+    background-image: url(../../assets/images/illustrasi2.png);
+    background-position: center;
+    background-size: cover;
+}

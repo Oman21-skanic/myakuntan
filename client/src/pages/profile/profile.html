@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/profile.css">
+    <title>Aplikasi Transaksi Sederhana</title>
+  </head>
+  <body>
+    <div id="page-container" class="h-screen flex">
+      <aside id="sidebar" class="flex flex-col border border-gray-400 w-1/6 min-w-52 p-3">
+        <div id="sidebar-header" class="flex flex-row  items-center gap-3">
+          <img src="/Logo.svg" class="w-13" alt="logo.svg"/>
+          <div id="header-text" class=" flex flex-col justify-center">
+            <p class="text-sm">Welcome member</p>
+            <span id="sidebar-name" class="font-semibold text-xl p-0">Oman</span>
+          </div>
+        </div>
+        <div id="sidebar-body">
+
+        </div>
+      </aside>
+      <div id="content" class="w-full h-full flex flex-col  ">
+        <div id="content-nav" class="w-full h-[70px] p-5 flex items-center border-b-2 border-b-gray-400 gap-3">
+            <button
+            class="text-white text-base font-semibold bg-[#03B321] hover:bg-[#03C725] active:bg-[#029F1E] w-10 h-[30px] p-1 rounded-lg flex justify-center items-center"
+            id="prev-page"
+          >
+           <img src="/src/assets/images/arrow-back.svg" alt="arrow.svg" class="invert w-7">
+          </button>
+          <span class="font-medium text-2xl">Account Settings</span>
+
+        </div>
+        <div id="content-body" class="w-full h-full p-5">
+        <form action="" class="w-full flex flex-col gap-5">
+          <h3 class="font-medium text-xl">Profile Picture</h3>
+          <div id="profile-container" class=" flex  items-center gap-3">
+            <div id="profile-photo" class="profile-photo size-40 rounded-full" style="background-image: url('/src/assets/images/401.svg'); background-position: center; background-size: cover;"></div>
+          </div>
+          <div id="user-information" class="flex flex-col gap-3 w-1/2">
+            <div class="userinfo-title" class="border-t-1 border-black">
+              <h3 class="font-medium text-xl">User information</h3>
+              <p class="text-sm max-w-[403px]">Di sini kamu bisa mengedit informasi pengguna, seperti nama dan foto profil, dengan mudah. Data disimpan aman, dan baik.</p>
+            </div>
+            
+              <div id="bidang-wrapper" class="flex flex-col w-90">
+                <label for="bidang" class="font-medium">Bidang</label>
+                <select name="bidang" id="bidang" class="shadow-sm rounded-md w-full max-w-90 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                  <option value="jasa">Jasa</option>
+                  <option value="barang">Barang</option>
+                </select>
+              </div>
+
+              <div id="email-wrapper" class="flex flex-col w-90 ">
+                <label for="email" class="font-medium">Email address</label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    placeholder="user@example.com"
+                    autocomplete="email"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    title="Masukkan email yang valid (contoh: user@example.com)"
+                    class="shadow-sm rounded-md w-full max-w-90 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    disabled
+                  />
+              </div>
+
+              <div id="name-wrapper" class="flex flex-col w-90">
+                <label for="nama" class="font-medium">Nama</label>
+                <input
+                    type="text"
+                    name="nama"
+                    id="nama"
+                    required
+                    maxlength="25"
+                    placeholder="nama"
+                    autocomplete="name"
+                    pattern="[A-Za-z\s]+"
+                    title="Nama hanya boleh mengandung huruf dan spasi"
+                    class="shadow-sm rounded-md max-w-90 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  />
+              </div>
+
+              <div id="password-wrapper" class="flex flex-col w-90">
+                <div class="flex flex-row justify-between max-w-90">
+                  <label for="password" class="font-medium">Password</label>
+                  <span>
+                    Lupa kata sandi? <a href="/src/pages/update-password.html" class="text-[#03B321] underline">Klik ini</a>
+                  </span>
+                </div>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                    placeholder="Password"
+                    autocomplete="new-password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                    title="Password harus memiliki setidaknya satu huruf besar, satu huruf kecil, dan satu angka. Panjang minimal 8 karakter."
+                    class="shadow-sm rounded-md w-full max-w-90 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  />
+              </div>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/src/scripts/profile.js"></script>
+  </body>
+</html>

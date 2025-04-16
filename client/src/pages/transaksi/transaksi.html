@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/assets/styles/tablefield.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/transaksi.css" />
+    <title>Aplikasi Transaksi Sederhana</title>
+  </head>
+  <body>
+    <div id="page-container" class="h-screen flex flex-col">
+      <header class="sticky top-0 z-999">
+        <div class="header w-full flex bg-white h-[70px]">
+          <div
+            class="header-comp w-full flex justify-between mx-5 md:mx-20 lg:mx-60 items-center"
+          >
+            <div class="logo flex items-center hover:cursor-pointer">
+              <img id="logo" src="/Logo.svg" alt="logo.svg" />
+              <span class="text-base md:text-lg text-black pl-2 font-semibold">
+                MyAkuntan
+              </span>
+            </div>
+            <div class="lang flex hover:cursor-pointer">
+              <img
+                src="/id.png"
+                alt="IndonesiaFlag"
+                class="w-[30px] h-[20px] border-1 border-black"
+              />
+              <span class="text-base text-black pl-2 font-semibold">ID</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section id="app-layout" class="h-[92.5vh] flex flex-row gap-3 p-3">
+        <aside
+          id="sidebar"
+          class="sidebar border-1 w-1/6 min-w-52 h-full bg-white rounded-xl border-[#117E00]"
+        >
+          <div class="dashboard w-full flex flex-row items-center p-3">
+            <img src="/src/assets/images/kotakdash.svg" alt="dashboardLogo"/>
+            <h2 style="font-size: 20px;" class="font-medium">Dashboard</h2>
+          </div>
+          <div class="item-sidebar">
+            <a class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out" href="../dashboard/index.html">Aktivitas</a>
+            <a class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out" href="./transaksi.html">Transaksi</a>
+            <div class="relative inline-block text-left">
+              <button id="dropdownBtn"
+                class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out px-2 py-2 rounded-md focus:outline-none hover:cursor-pointer"
+                type="button"
+              >
+                Buku Besar
+                <svg class="w-4 h-4 inline ml-1" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            
+              <div id="dropdownMenu"
+                class="hidden absolute z-20 mt-2 w-35 bg-white border border-gray-200 rounded-md shadow-lg text-sm">
+                <a
+                  href="/src/pages/dashboard/buku/kas.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Kas</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/modal.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Modal</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/persediaan.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Persediaan</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/invetaris.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Inventaris</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/hpp.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku HPP</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/utang.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Utang</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/piutang.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Piutang</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/beban.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Beban</a
+                >
+                <a
+                  href="/src/pages/dashboard/buku/prive.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Prive</a>
+              </div>
+            </div>
+            <a class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out" href="./neraca.html">Neraca Saldo</a>
+          </div>
+        </aside>
+        <section id="workspace" class="w-full flex flex-col gap-3">
+          <div id="toolbar" class="w-full h-10">
+            <button
+              id="openModalBtn"
+              class="bg-[#ffffff] hover:bg-[#9AE4A7] text-black px-5 py-2 rounded-md text-base font-medium transition-colors hover:cursor-pointer"
+            >
+              <img
+                class="w-5"
+                src="/src/assets/images/plus.svg"
+                alt="plus.svg"
+              />
+            </button>
+          </div>
+          <div
+            class="relative max-h-[700px] overflow-hidden rounded-lg shadow-md"
+          >
+            <div class="overflow-y-auto h-full">
+              <table class="w-full text-sm text-left">
+                <thead class="sticky top-0 z-10">
+                  <tr class="bg-[#93f696]">
+                    <th class="p-2 w-[25%]">Transaksi</th>
+                    <th class="p-2 w-[15%]">Tanggal</th>
+                    <th class="p-2 w-[15%]">Akun</th>
+                    <th class="p-2 w-[15%]">Debit</th>
+                    <th class="p-2 w-[15%]">Kredit</th>
+                    <th class="p-2 w-[15%]">Action</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="resultInput"
+                  class="bg-white divide-y divide-gray-200"
+                ></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </section>
+      <div
+        id="modalOverlay"
+        class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
+      >
+        <!-- Modal Box -->
+        <div
+          class="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto scrollbar-hidden"
+        >
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-4">
+            <button class="close-btn hover:text-gray-700 text-4xl leading-none">
+              &times;
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-4">
+            <form id="transactionForm" class="space-y-4">
+              <div class="grid grid-cols-1 gap-4">
+                <!-- Nama Transaksi -->
+                <div>
+                  <label
+                    for="namaTransaksi"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Nama Transaksi
+                  </label>
+                  <input
+                    type="text"
+                    id="namaTransaksi"
+                    required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  />
+                </div>
+
+                <!-- Tanggal -->
+                <div>
+                  <label
+                    for="tanggal"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Tanggal
+                  </label>
+                  <input
+                    type="date"
+                    id="tanggal"
+                    required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  />
+                </div>
+
+                <!-- Akun Debit -->
+                <div>
+                  <label
+                    for="akun"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Akun Debit
+                  </label>
+                  <select
+                    id="akun"
+                    required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="modal">Modal</option>
+                    <option value="kas">Kas</option>
+                  </select>
+                </div>
+                
+
+                <!-- Nominal Debit -->
+                <div>
+                  <label
+                    for="nominal"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Nominal Debit
+                  </label>
+                  <input
+                    type="number"
+                    id="nominal"
+                    min="0"
+                    required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  />
+                </div>
+              </div>
+
+              <hr class="my-5 text-[#c0c0c0]"/>
+
+              <!-- Akun Kredit -->
+              <div>
+                <label
+                  for="akun"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Akun Kredit
+                </label>
+                <select
+                  id="akun"
+                  required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="modal">Modal</option>
+                  <option value="kas">Kas</option>
+                </select>
+              </div>
+              
+
+              <!-- Nominal Kredit -->
+              <div>
+                <label
+                  for="nominal"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Nominal Kredit
+                </label>
+                <input
+                  type="number"
+                  id="nominal"
+                  min="0"
+                  required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
+            </div>
+
+              <!-- Submit Button -->
+              <div class="pt-2">
+                <button
+                  type="submit"
+                  class="w-full bg-[#03B321] hover:cursor-pointer hover:bg-primary-600 text-white py-2.5 px-4 rounded-md font-medium transition-colors"
+                >
+                  Tambahkan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="/src/scripts/transaksi.js" type="module"></script>
+  </body>
+</html>

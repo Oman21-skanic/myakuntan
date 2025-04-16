@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | MyAkuntan</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <header class="sticky top-0 z-999">
+        <div class="header w-full flex bg-white h-[70px]">
+          <div
+            class="header-comp w-full flex justify-between mx-5 md:mx-20 lg:mx-60 items-center"
+          >
+            <div class="logo flex items-center hover:cursor-pointer">
+              <img id="logo" src="/Logo.svg" alt="logo.svg" />
+              <span class="text-base md:text-lg text-black pl-2 font-semibold">
+                MyAkuntan
+              </span>
+            </div>
+            <div class="lang flex hover:cursor-pointer">
+              <img
+                src="/id.png"
+                alt="IndonesiaFlag"
+                class="w-[30px] h-[20px] border-1 border-black"
+              />
+              <span class="text-base text-black pl-2 font-semibold">ID</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content mt-3">
+        <aside
+          id="sidebar"
+          class="sidebar border-1 w-1/6 min-w-52 h-full bg-white rounded-xl border-[#117E00]"
+        >
+          <div class="dashboard w-full flex flex-row items-center p-3">
+            <img src="/src/assets/images/kotakdash.svg" alt="dashboardLogo" />
+            <span style="font-size: 20px" class="font-medium">Dashboard</span>
+          </div>
+          <div class="item-sidebar">
+            <a
+              class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out"
+              href="../dashboard/index.html"
+              >Aktivitas</a
+            >
+            <a
+              class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out"
+              href="../transaksi/transaksi.html"
+              >Transaksi</a
+            >
+            <div class="relative inline-block text-left">
+              <button
+                id="dropdownBtn"
+                class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out px-2 py-2 rounded-md focus:outline-none hover:cursor-pointer"
+                type="button"
+              >
+                Buku Besar
+                <svg
+                  class="w-4 h-4 inline ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="dropdownMenu"
+                class="hidden absolute z-20 mt-2 w-35 bg-white border border-gray-200 rounded-md shadow-lg text-sm"
+              >
+                <a
+                  href="./buku/kas.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Kas</a
+                >
+                <a
+                  href="./buku/modal.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Modal</a
+                >
+                <a
+                  href="./buku/persediaan.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Persediaan</a
+                >
+                <a
+                  href="./buku/invetaris.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Inventaris</a
+                >
+                <a
+                  href="./buku/hpp.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku HPP</a
+                >
+                <a
+                  href="./buku/utang.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Utang</a
+                >
+                <a
+                  href="./buku/piutang.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Piutang</a
+                >
+                <a
+                  href="./buku/beban.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Beban</a
+                >
+                <a
+                  href="./buku/prive.html"
+                  class="block px-4 py-2 hover:bg-gray-100 text-black"
+                  >Buku Prive</a
+                >
+              </div>
+            </div>
+            <a
+              class="font-medium text-black hover:text-[#326937] transition duration-200 ease-in-out"
+              href="./neraca.html"
+              >Neraca Saldo</a
+            >
+          </div>
+        </aside>
+        <section class="content">
+          <div class="content-inner">
+            <div class="profile w-full flex flex-row justify-between">
+              <div class="profile-wrapper flex flex-row">
+                <img
+                  src="/src/assets/images/default-profile.jpeg"
+                  alt="ProfileDashboard"
+                  class="img-profile"
+                />
+                <div class="profile-text">
+                  <h2>Welcome, Member!</h2>
+                </div>
+              </div>
+
+              <button class="profile-edit flex justify-center">
+                <a class="text-center" href="/src/pages/profile/profile.html"><h2>Edit</h2></a>
+              </button>
+            </div>
+
+            <div class="buku">
+              <div class="pembukuan1">
+                <h2>Buku Kas</h2>
+              </div>
+              <div class="pembukuan2">
+                <h2>Buku Kas</h2>
+              </div>
+            </div>
+
+            <div class="aktivitas">
+              <h3>Aktivitas</h3>
+              <table>
+                <tbody>
+                  
+                    <td colspan="2" style="text-align: center">
+                      <a href="#" style="color: #aaa9a9; text-decoration: none"
+                        >Lihat lainnya</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="grafik">
+              <div class="diagram-batang">
+                <div class="chart-box">
+                  <div class="chart-title">Sample Charts</div>
+                  <div class="bar-chart">
+                    <div class="bar" style="height: 50%"></div>
+                    <div class="bar" style="height: 65%"></div>
+                    <div class="bar" style="height: 75%"></div>
+                    <div class="bar" style="height: 65%"></div>
+                    <div class="bar" style="height: 55%"></div>
+                    <div class="bar" style="height: 75%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="diagram-lingkaran">
+                <div class="chart-box">
+                  <div class="chart-title">Sample Charts</div>
+                  <div class="donut-container">
+                    <div class="donut"></div>
+                    <div class="legend">
+                      <div class="legend-item">
+                        <div class="legend-color debit"></div>
+                        <div>Debit</div>
+                      </div>
+                      <div class="legend-item">
+                        <div class="legend-color kredit"></div>
+                        <div>Kredit</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="transaksi">
+              <div
+                class="bar-atas flex w-full flex-row items-center justify-between mb-3"
+              >
+                <div
+                  class="flex items-center w-full max-w-md px-2 py-2 bg-white border border-gray-300 rounded-lg shadow-sm"
+                >
+                  <button id="searchBtn">
+                    <img
+                      src="/src/assets/images/search.png"
+                      alt="Logo-search"
+                      class="w-5 h-5 opacity-100 invert mr-3"
+                    />
+                  </button>
+                  <input
+                    type="text"
+                    name="search"
+                    id="cari"
+                    placeholder="Cari Transaksi Kamu"
+                    class="w-full outline-none bg-transparent placeholder-gray-400 text-sm"
+                  />
+                </div>
+                <div class="flex flex-wrap gap-4 justify-end mr-5">
+                  <!-- Filter by -->
+                  <div class="relative inline-block text-left">
+                    <button
+                      id="filterBtn"
+                      class="bg-[#FBFBFE] text-[#5BAF5E] font-semibold px-4 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2"
+                    >
+                      Filter by
+                      <svg
+                        class="w-4 h-4 inline ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      id="filterMenu"
+                      class="hidden absolute right-0 z-20 mt-2 w-40 bg-white border border-[#117E00] rounded-md shadow-lg text-sm"
+                    >
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                        >Menu item</a
+                      >
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                        >Menu item</a
+                      >
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                        >Menu item</a
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Sort by -->
+                  <div class="relative inline-block text-left">
+                    <button
+                      id="sortBtn"
+                      class="bg-[#FBFBFE] text-[#5BAF5E] font-semibold px-4 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2"
+                    >
+                      Sort by
+                      <svg
+                        class="w-4 h-4 inline ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      id="sortMenu"
+                      class="hidden absolute right-0 z-20 mt-2 w-40 bg-white border border-[#117E00] rounded-md shadow-lg text-sm"
+                    >
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                        >Menu item</a
+                      >
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                        >Menu item</a
+                      >
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                        >Menu item</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="relative max-h-[700px] overflow-hidden rounded-lg shadow-md"
+              >
+                <div class="overflow-y-auto h-full">
+                  <table class="w-full text-sm text-left">
+                    <thead class="sticky top-0 z-10">
+                      <tr class="bg-[#93f696]">
+                        <th class="p-2 w-[25%]">Transaksi</th>
+                        <th class="p-2 w-[15%]">Tanggal</th>
+                        <th class="p-2 w-[15%]">Akun</th>
+                        <th class="p-2 w-[15%]">Debit</th>
+                        <th class="p-2 w-[15%]">Kredit</th>
+                        <th class="p-2 w-[15%]">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      id="resultInput"
+                      class="bg-white divide-y divide-gray-200"
+                    ></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script type="module" src="/src/scripts/dashboard.js"></script>
+  </body>
+</html>

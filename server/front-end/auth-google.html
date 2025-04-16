@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login dengan Google...</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+      flex-direction: column;
+    }
+
+    .spinner {
+      border: 8px solid #eee;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .error {
+      display: none;
+      text-align: center;
+    }
+
+    .error h2 {
+      color: #e74c3c;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .back-btn:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="message">Sedang login dengan Google...</div>
+  </div>
+
+  <div class="error" id="error-container">
+    <h2 id="error-title">Login Gagal</h2>
+    <p id="error-message">Terjadi kesalahan saat login dengan Google.</p>
+    <button class="back-btn" onclick="window.location.href='/login'">Kembali ke Login</button>
+  </div>
+
+  <script>
+    async function handleGoogleLogin() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const error = params.get("error");
+
+      if (error === "access_denied") {
+        showError("Anda membatalkan proses login dengan Google.");
+        return;
+      } 
+      if (error) {
+        showError("Terjadi kesalahan saat login dengan Google.");
+        return;
+      }
+
+      if (!code) {
+        showError("Kode otorisasi tidak ditemukan.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/api/v1/auth/google", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ code })
+        });
+
+        const data = await response.json();
+
+        if (data.status !== 'success') {
+          showError(data.message || "Login gagal.");
+          return;
+        }
+        setTimeout(() => {
+            window.location.href = "/dashboard";
+        }, 1000);
+
+      } catch (err) {
+        console.error("Error:", err);
+        showError("Terjadi kesalahan pada koneksi.");
+      }
+    }
+
+    function showError(message) {
+      document.querySelector(".loading").style.display = "none";
+      const errorContainer = document.getElementById("error-container");
+      document.getElementById("error-message").textContent = message;
+      errorContainer.style.display = "block";
+    }
+    handleGoogleLogin();
+  </script>
+</body>
+</html>

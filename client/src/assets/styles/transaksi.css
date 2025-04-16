@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+:root {
+  --hijau: #44EA2F;
+  --ijomuda: #E7F8E7;
+  --ijo: #28a745;
+  --kuning: #FFC517;
+  --abu: #E9E9E9;
+  --putih: #FBFBFE;
+  --hitam: #050315; 
+  --ijolagi: #03C725;
+}
+
+
+html{
+    font-family: "Fira Sans", sans-serif;
+}
+html::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+}
+
+body{
+    background-color: #E7F8E7;
+}
+
+  form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  label {
+    min-width: 100px;
+    color: #555;
+  }
+
+  input,
+  select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+  }
+
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: auto;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    background-color: #93f696;
+    color: black;
+    font-size: 1em;
+    font-weight: 500;
+  }
+
+  tr:nth-child(even) {
+    background-color: #ebffeb;
+  }
+
+  tr:hover {
+    background-color: #ccf3cc;
+  }
+
+  .sidebar {
+    width: 200px;
+    background-color: var(--putih);
+    border-radius: 5px;
+    padding: 15px;
+    position: sticky;
+    top: 60px; /* biar ga nutupin navbar */
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  .dashboard {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    padding-left: 1rem;
+    background-color: var(--ijomuda);
+    border-radius: 5px;
+  }
+
+  .dashboard img {
+    margin-right: 1rem;
+    width: 30px;
+  }
+
+  .item-sidebar {
+    margin-left: 1rem;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-sidebar a {
+    padding: 0.5rem;
+    text-decoration: none;
+  } 

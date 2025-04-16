@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>400</title>
+    <link rel="stylesheet" href="../../assets/styles/forbidden.css">
+</head>
+<body>
+    <header class="sticky top-0 z-999">
+        <div class="header w-full flex bg-white h-[70px]">
+          <div
+            class="header-comp w-full flex justify-between mx-5 md:mx-20 lg:mx-60 items-center"
+          >
+            <div class="logo flex items-center hover:cursor-pointer">
+              <img id="logo" src="/Logo.svg" alt="logo.svg" />
+              <span class="text-base md:text-lg text-black pl-2 font-semibold">
+                MyAkuntan
+              </span>
+            </div>
+            <div class="lang flex hover:cursor-pointer">
+              <img
+                src="/id.png"
+                alt="IndonesiaFlag"
+                class="w-[30px] h-[20px] border-1 border-black"
+              />
+              <span class="text-base text-black pl-2 font-semibold">ID</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section id="content">
+        <div class="wrapper flex justify-center items-center flex-col h-[78vh]">
+            <div class="a flex">
+            <div class="images flex items-center h-[22rem]">
+                <span class="first-num font-extrabold text-[15rem] absolute z-3 left-[40%]">4</span>
+                <img src="../../assets/images/400.svg" alt="" class="absolute z-2 left-[45%]">
+                <span class="second-num font-extrabold text-[15rem] absolute z-1 left-[53%]">0</span>
+            </div>
+        </div>
+            <div class="headline text-center -mt-10">
+                <h1 class="text-2xl font-semibold">BAD REQUEST</h1>
+                <p>OOPS! Ada Yang Salah.</p>
+            </div>
+            <button
+            class="text-white text-base font-semibold mt-5 bg-[#03B321] hover:bg-[#03C725] active:bg-[#029F1E] w-full lg:w-40 h-[41px] rounded-xl"
+            id="prev-page"
+          >
+            BACK
+          </button>
+        </div>
+      </section>
+      <script src="error-pages.js"></script>
+</body>
+</html>

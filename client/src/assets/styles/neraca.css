@@ -1,0 +1,202 @@
+:root {
+    --hijau: #44EA2F;
+    --ijomuda: #E7F8E7;
+    --ijo: #28a745;
+    --kuning: #FFC517;
+    --abu: #E9E9E9;
+    --putih: #FBFBFE;
+    --hitam: #050315; 
+    --ijolagi: #03C725;
+    --merah: #f60200;
+  }
+
+  body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+.main {
+    padding: 4rem 9rem;
+}
+
+.bar-atas h2 {
+    margin-bottom: 5px;
+}
+
+.bar-atas .print {
+    background-color: var(--ijo);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem;
+    color: var(--putih);
+}
+
+.bar-atas .print:hover {
+    background-color: var(--ijolagi);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background-color: #90ee90; /* pastikan ada background */
+    z-index: 2; /* biar nggak ketumpuk */
+  }
+
+  th {
+    background-color: #90ee90;
+    text-align: left;
+    padding: 10px;
+  }
+
+  td {
+    padding: 10px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f6fff6;
+  }
+
+  .action-btn {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .dropdown,
+  .form-select {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  /* Biar scroll lebih smooth dan modern */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.perbandingan {
+    text-align: center;
+    padding: 2rem;
+}
+
+.perbandingan .saldo {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 13.8rem;
+}
+
+
+.saldo .debit {
+    background-color: var(--merah);
+    padding: 20px;
+    color: var(--putih);
+    border-radius: 5px;
+    margin-right: 2rem;
+}
+.saldo .kredit {
+    background-color: var(--ijo);
+    padding: 20px;
+    color: var(--putih);
+    border-radius: 5px;
+}
+
+/* Mobile Devices (≤ 576px) */
+@media (max-width: 576px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+
+  .bar-atas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bar-atas h2 {
+    font-size: 20px;
+  }
+
+  .bar-atas .print {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .perbandingan .saldo {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .saldo .debit,
+  .saldo .kredit {
+    margin-bottom: 1rem;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  thead th,
+  td {
+    padding: 8px;
+  }
+}
+
+/* Tablet Devices (577px - 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .main {
+    padding: 5rem 2rem;
+  }
+
+  .perbandingan .saldo {
+    padding: 1rem 3rem;
+    flex-direction: column;
+  }
+
+  .saldo .debit,
+  .saldo .kredit {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  table {
+    font-size: 15px;
+  }
+}
+
+/* Small Laptops (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main {
+    padding: 5rem 5rem;
+  }
+
+  .perbandingan .saldo {
+    padding: 1rem 6rem;
+  }
+
+  table {
+    font-size: 16px;
+  }
+}
+
+/* Large Laptops and Desktops (≥ 1025px) */
+@media (min-width: 1025px) {
+  .main {
+    padding: 4rem 9rem;
+  }
+
+  .perbandingan .saldo {
+    padding: 1rem 13.8rem;
+  }
+}
+

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM Profit/Loss Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --secondary-green: #27ae60;
+            --primary-yellow: #f1c40f;
+            --secondary-yellow: #f39c12;
+            --light-green: #e8f8f1;
+            --light-yellow: #fef9e7;
+            --dark-text: #2c3e50;
+            --light-text: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-green) !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-text) !important;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green) !important;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-green);
+            border-color: var(--secondary-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-yellow);
+            border-color: var(--primary-yellow);
+            color: var(--dark-text);
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-yellow);
+            border-color: var(--secondary-yellow);
+            color: var(--dark-text);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--light-green) 0%, white 100%);
+            padding: 100px 0;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--dark-text);
+            max-width: 90%;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-container {
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-green);
+        }
+
+        .card-img-container i {
+            font-size: 80px;
+            color: var(--primary-green);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-green);
+        }
+
+        .card-text {
+            color: var(--dark-text);
+            margin-bottom: 20px;
+        }
+
+        .feature-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--primary-green);
+        }
+
+        .feature-item {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            color: var(--primary-yellow);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 50px 0 20px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-yellow);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            color: white;
+            margin-right: 20px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-yellow);
+            transform: scale(1.2);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-graph-up-arrow"></i> UMKM Predictor
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prediksi/regresi">Model Regresi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prediksi/timeseries">Model Time Series</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/historylabarugis">Riwayat Prediksi</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="hero-title">Prediksi Laba Rugi UMKM</h1>
+                    <p class="hero-subtitle">Platform prediksi keuangan berbasis AI untuk membantu UMKM merencanakan
+                        bisnis dengan lebih baik dan mengambil keputusan strategis.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="/prediksi/regresi" class="btn btn-primary">Mulai Prediksi Sekarang</a>
+                        <a href="/historylabarugis" class="btn btn-secondary">Lihat Riwayat</a>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-center">
+                    <img src="/api/placeholder/500/400" alt="UMKM Prediction" class="img-fluid mt-4 mt-md-0">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section class="container py-5">
+        <h2 class="section-title">Model Prediksi Kami</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-container">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Model Regresi</h5>
+                        <p class="card-text">Prediksi laba/rugi bisnis Anda menggunakan model regresi yang dilatih
+                            dengan data historis. Cocok untuk prediksi jangka pendek dengan parameter yang lebih
+                            sederhana.</p>
+                        <a href="/prediksi/regresi" class="btn btn-primary">Gunakan Model Regresi</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-container">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Model Time Series</h5>
+                        <p class="card-text">Gunakan model Time Series yang memperhitungkan pola dan tren historis untuk
+                            prediksi yang lebih akurat dengan mempertimbangkan faktor waktu.</p>
+                        <a href="/prediksi/timeseries" class="btn btn-primary">Gunakan Model Time Series</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="feature-section">
+        <div class="container">
+            <h2 class="section-title">Keunggulan Kami</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="bi bi-lightning-charge feature-icon"></i>
+                        <h4 class="feature-title">Prediksi Akurat</h4>
+                        <p>Algoritma machine learning yang dilatih dengan data keuangan UMKM nyata untuk hasil yang
+                            lebih akurat.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="bi bi-bar-chart feature-icon"></i>
+                        <h4 class="feature-title">Analisis Mendalam</h4>
+                        <p>Dapatkan insight tentang faktor-faktor yang mempengaruhi performa keuangan bisnis Anda.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="bi bi-cloud-download feature-icon"></i>
+                        <h4 class="feature-title">Ekspor Data</h4>
+                        <p>Unduh riwayat prediksi dalam format Excel untuk analisis lebih lanjut dan pelaporan.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="bi bi-shield-check feature-icon"></i>
+                        <h4 class="feature-title">Keamanan Data</h4>
+                        <p>Data bisnis Anda aman dengan sistem keamanan terbaik dan tidak dibagikan ke pihak ketiga.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="bi bi-phone feature-icon"></i>
+                        <h4 class="feature-title">Responsif</h4>
+                        <p>Akses platform kami dari berbagai perangkat, termasuk desktop, tablet, dan smartphone.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="bi bi-calendar-check feature-icon"></i>
+                        <h4 class="feature-title">Riwayat Lengkap</h4>
+                        <p>Lihat dan bandingkan semua prediksi sebelumnya untuk melacak performa bisnis dari waktu ke
+                            waktu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="container py-5">
+        <h2 class="section-title">Cara Kerja</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="bg-light-green rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 80px; height: 80px;">
+                        <h3 class="m-0 text-primary-green">1</h3>
+                    </div>
+                    <h5>Input Data Keuangan</h5>
+                    <p>Masukkan data keuangan bisnis UMKM Anda seperti pendapatan, beban, dan pajak</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="bg-light-green rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 80px; height: 80px;">
+                        <h3 class="m-0 text-primary-green">2</h3>
+                    </div>
+                    <h5>Pilih Model Prediksi</h5>
+                    <p>Pilih model Regresi atau Time Series sesuai kebutuhan prediksi Anda</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="bg-light-green rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 80px; height: 80px;">
+                        <h3 class="m-0 text-primary-green">3</h3>
+                    </div>
+                    <h5>Dapatkan Hasil</h5>
+                    <p>Lihat hasil prediksi laba/rugi beserta nilai prediksinya secara instan</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="bg-light-green rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 80px; height: 80px;">
+                        <h3 class="m-0 text-primary-green">4</h3>
+                    </div>
+                    <h5>Analisis Riwayat</h5>
+                    <p>Review dan export riwayat prediksi untuk analisis lebih lanjut</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5" style="background-color: var(--light-yellow);">
+        <div class="container text-center">
+            <h2 class="mb-4">Siap Untuk Memprediksi Keuangan Bisnis Anda?</h2>
+            <p class="mb-4">Mulai gunakan model prediksi kami dan dapatkan insight berharga untuk bisnis UMKM Anda.</p>
+            <a href="/prediksi/regresi" class="btn btn-primary btn-lg mx-2 mb-2">Mulai Prediksi</a>
+            <a href="/historylabarugis" class="btn btn-secondary btn-lg mx-2 mb-2">Lihat Riwayat</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">UMKM Predictor</h4>
+                    <p>Platform prediksi keuangan berbasis AI untuk membantu UMKM merencanakan bisnis dengan lebih baik
+                        dan mengambil keputusan strategis.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h4 class="footer-title">Navigasi</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Beranda</a></li>
+                        <li><a href="/prediksi/regresi">Model Regresi</a></li>
+                        <li><a href="/prediksi/timeseries">Model Time Series</a></li>
+                        <li><a href="/historylabarugis">Riwayat Prediksi</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-5 mb-4">
+                    <h4 class="footer-title">Kontak Kami</h4>
+                    <p><i class="bi bi-geo-alt me-2"></i> Jl. Contoh No. 123, Jakarta, Indonesia</p>
+                    <p><i class="bi bi-telephone me-2"></i> (021) 1234-5678</p>
+                    <p><i class="bi bi-envelope me-2"></i> info@umkmpredictor.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 UMKM Predictor. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

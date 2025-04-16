@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, send_file
+from flask import Blueprint, request, jsonify, send_file, render_template, redirect, url_for
 import pickle
 import os
 import gdown
@@ -13,15 +13,15 @@ from io import BytesIO
 api = Blueprint('api', __name__)
 
 #MongoDB setup
-client = MongoClient("mongodb+srv://my-akuntan-admin:AdminMyAkuntan@cluster0.zf5zg.mongodb.net/umkm_db?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient("mongodb://my-akuntan-admin:AdminMyAkuntan@cluster0-shard-00-00.zf5zg.mongodb.net:27017,cluster0-shard-00-01.zf5zg.mongodb.net:27017,cluster0-shard-00-02.zf5zg.mongodb.net:27017/umkm_db?ssl=true&replicaSet=atlas-xxxxx-shard-0&authSource=admin&retryWrites=true&w=majority")
 db = client["umkm_db"]
 collection = db["laporanlabarugis"]
 
 # Load model & encoder
-model_regresi = pickle.load(open('./models-api/trained_model.pkl', 'rb'))
-model_time_series = pickle.load(open('./models-api/timeseries_pipeline_model.pkl', 'rb'))
-encoder_regresi = pickle.load(open('./models-api/label_encoders.pkl', 'rb'))
-encoder_timeseries = pickle.load(open('./models-api/time_series_encoders.pkl', 'rb'))
+model_regresi = pickle.load(open('models-api/models-api/trained_model.pkl', 'rb'))
+model_time_series = pickle.load(open('models-api/models-api/timeseries_pipeline_model.pkl', 'rb'))
+encoder_regresi = pickle.load(open('models-api/models-api/label_encoders.pkl', 'rb'))
+encoder_timeseries = pickle.load(open('models-api/models-api/time_series_encoders.pkl', 'rb'))
 
 features_regresi = ["User_ID", "Bidang_Usaha", "Tahun", "Bulan", "Pendapatan", "Beban_Operasional", "Pajak"]
 features_timeseries = ["Bidang_Usaha", "Tahun", "Bulan", "Pendapatan", "Beban_Operasional", "Pajak", "Laba_Rugi_Lag"]
@@ -39,6 +39,22 @@ class JsonEncoder(json.JSONEncoder):
 
 
 #====================ROUTES==========================
+@api.route('/', methods=['GET'])
+def landing_page():
+    return render_template('landing.html')
+
+@api.route('/prediksi/regresi', methods=['GET'])
+def prediksi_regresi():
+    # Logic untuk model regresi
+    return render_template('regresi.html')
+
+@api.route('/prediksi/timeseries', methods=['GET'])
+def prediksi_timeseries():
+    # Logic untuk model time series
+    return render_template('timeseries.html')
+
+
+
 # @api.route('/predict', methods=['POST'])
 # def predict():
 #     data = request.get_json()

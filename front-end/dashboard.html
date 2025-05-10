@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+      }
+
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #333;
+      }
+
+      .btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .logout-btn {
+        background-color: #e53935;
+      }
+      .logout-btn:hover {
+        background-color: #c62828;
+      }
+      .home-btn {
+        background-color: #4285f4;
+      }
+      .home-btn:hover {
+        background-color: #3367d6;
+      }
+      .delete-btn {
+        background-color: #d32f2f;
+      }
+      .delete-btn:hover {
+        background-color: #b71c1c;
+      }
+      .change-password-btn {
+        background-color: #ffa000;
+      }
+      .change-password-btn:hover {
+        background-color: #ff8f00;
+      }
+
+      .user-data {
+        margin-top: 20px;
+        text-align: left;
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-data pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Selamat Datang, <span id="username">User</span>!</h2>
+      <button class="btn logout-btn" onclick="logout()">Logout</button>
+      <button class="btn home-btn" onclick="goHome()">Kembali ke Home</button>
+      <button class="btn delete-btn" onclick="deleteUser()">Hapus Akun</button>
+      <button class="btn change-password-btn" onclick="changePassword()">
+        Ganti Password
+      </button>
+      <div class="user-data">
+        <h3>Data Pengguna:</h3>
+        <pre id="user-data">Memuat data...</pre>
+      </div>
+    </div>
+
+    <script>
+      let userId = "";
+
+      async function fetchUserData() {
+        try {
+          const responseUser = await fetch("/api/v1/users/me");
+          if (!responseUser.ok) throw new Error("Gagal mengambil data user");
+
+          const { data: userData } = await responseUser.json();
+          document.getElementById("username").innerText = userData.name;
+          userId = userData._id;
+
+          const responseDetails = await fetch(`/api/v1/users/${userData._id}`);
+          if (!responseDetails.ok)
+            throw new Error("Gagal mengambil detail user");
+
+          const { data: userDetails } = await responseDetails.json();
+          document.getElementById("user-data").innerText = JSON.stringify(
+            userDetails,
+            null,
+            2
+          );
+        } catch (error) {
+          console.error(error);
+          document.getElementById("user-data").innerText = `${error}`;
+        }
+      }
+
+      async function logout() {
+        try {
+          const response = await fetch("/api/v1/auth/sessions", {
+            method: "DELETE",
+          });
+          if (response.ok) {
+            window.location.href = "/login";
+          } else {
+            alert("Gagal logout");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      function goHome() {
+        window.location.href = "/";
+      }
+
+      async function deleteUser() {
+        if (!userId) {
+          alert("User ID tidak ditemukan");
+          return;
+        }
+
+        if (!confirm("Apakah Anda yakin ingin menghapus akun ini?")) return;
+
+        try {
+        const response = await fetch(`/api/v1/users/${userId}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Gagal menghapus akun");
+        }
+
+        alert("Akun berhasil dihapus");
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Gagal menghapus akun:", error);
+        alert(error.message || "Terjadi kesalahan, coba lagi");
+      }
+
+      }
+
+      function changePassword() {
+        window.location.href = "/users/update-password";
+      }
+
+      fetchUserData();
+    </script>
+  </body>
+</html>
